@@ -1,26 +1,4 @@
-# Laravel Core Admin Panel
-A complete ready to use admin panel built in laravel with PSR coding starnadards and all coding best practices.
-
-
-## Features
-
-- Pre Integrated AdminLte Tempalte
-- All listing comes with Datatable With Server Side rendering
-- With PSR & Laravel Standards
-- All classes are expandable to your need
-- Contains readymade following modules
-   - Users Module
-   - Category with parent category concept
-   - Website Banner Module
-   - My Profile Module
-
-### Prerequisites
-What things you need to install this project and how to setup the project on local
-- PHP `[8.0 or above]`
-- Composer `[2.0 or above]`
-- MySql `[mysqlnd 7.4.33 or above]`
-- Node/NPM
-
+# Urbanclap Clone Project
 ### Step To Install
 
 Follow each and every step to go seamless installation of admin panel
@@ -46,16 +24,3 @@ Instructions on how to use them in your own application are linked below.
 | ------ | ------ |
 | Laravel AdminLTE | https://github.com/jeroennoten/Laravel-AdminLTE |
 | Laravel Datatable | https://yajrabox.com/docs/laravel-datatables/10.0 |
-
-
-### Contribution
-I love to welcome your contributions if you know Laravel / Vue.js & proper PHP Standards.
-
-### Security Vulnerabilities
-If you discover a security vulnerability within this app, please send an e-mail to Tarang Panchal via [tarang.webinfosolutions@gmail.com](mailto:tarang.webinfosolutions@gmail.com). All security vulnerabilities will be promptly addressed.
-
-
-## License
-
-F#ck the license & use it wherever you want. Just Remember the name 
-"WEBSTER"
