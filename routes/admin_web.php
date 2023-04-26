@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\UserController;
 
 Route::prefix(config('app.admin_path_name'))->name('admin.')->group(function () {
@@ -21,6 +22,7 @@ Route::prefix(config('app.admin_path_name'))->name('admin.')->group(function () 
         Route::resource('users', UserController::class);
         Route::resource('categorys', CategoryController::class);
         Route::resource('banners', BannerController::class);
+        Route::resource('providers', ProviderController::class);
         Route::post('logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 
