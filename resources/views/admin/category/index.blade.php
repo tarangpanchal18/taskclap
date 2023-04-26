@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{route('admin.category.index')}}">
+        <form action="{{route('admin.categorys.index')}}">
             <div class="card-body row">
                 <div class="form-group col-md-3">
                     <label>Filter By Status</label>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <button class="btn btn-default filter-search"><i class="fa fa-search"></i> Search</button>
-                    <a href="{{ route('admin.category.index') }}" class="btn btn-default filter-search"><i class="fas fa-undo"></i> Reset</a>
+                    <a href="{{ route('admin.categorys.index') }}" class="btn btn-default filter-search"><i class="fas fa-undo"></i> Reset</a>
                 </div>
             </div>
         </form>
@@ -41,7 +41,7 @@
     <div class="card">
         <div class="card-header">
             <div class="float-right">
-                <a href="{{ route('admin.category.create') }}" class="btn btn-default"><i class="fa fa-plus"></i> Add Data</a>
+                <a href="{{ route('admin.categorys.create') }}" class="btn btn-default"><i class="fa fa-plus"></i> Add Data</a>
             </div>
         </div>
         <div class="card-body">
@@ -74,7 +74,7 @@
 
 <script>
 $(document).ready(function() {
-    generateDataTable('{{ route("admin.category.index") }}', [
+    generateDataTable('{{ route("admin.categorys.index") }}', [
             {data: 'parent', name: 'parent', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'status', name: 'status'},
@@ -89,7 +89,7 @@ $(document).ready(function() {
 });
 
 function removeData(id) {
-    removeDataFromDatabase('{{route("admin.category.index")}}', id);
+    removeDataFromDatabase('{{route("admin.categorys.index")}}', id);
 }
 </script>
 @stop

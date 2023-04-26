@@ -40,7 +40,7 @@ class CategoryController extends Controller
                     })
                     ->addColumn('action', function($row) {
                             return '<div style="width: 150px">' .
-                            '<a href="'. route('admin.category.edit', $row->id) .'" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>' .
+                            '<a href="'. route('admin.categorys.edit', $row->id) .'" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>' .
                             '<button onclick="removeData('. $row->id. ')" class="edit btn btn-default btn-sm"><i class="fa fa-trash"></i> Remove</button>' .
                             '<div>' .
                             PHP_EOL;
@@ -58,7 +58,7 @@ class CategoryController extends Controller
     {
         return view('admin.category.alter', [
             'action' => 'Add',
-            'actionUrl' => route('admin.category.store'),
+            'actionUrl' => route('admin.categorys.store'),
             'categoryData' => $this->categoryRepository->getParentCategory(),
         ]);
     }
@@ -76,7 +76,7 @@ class CategoryController extends Controller
         }
         $this->categoryRepository->create($validated);
 
-        return redirect(route('admin.category.index'))->with('success', 'Data Created Successfully !');
+        return redirect(route('admin.categorys.index'))->with('success', 'Data Created Successfully !');
     }
 
     public function edit(Category $category): View
@@ -84,7 +84,7 @@ class CategoryController extends Controller
         return view('admin.category.alter', [
             'category' => $category,
             'action' => 'Edit',
-            'actionUrl' => route('admin.category.update', $category),
+            'actionUrl' => route('admin.categorys.update', $category),
             'categoryData' => $this->categoryRepository->getParentCategory($category->id),
         ]);
     }
@@ -103,7 +103,7 @@ class CategoryController extends Controller
         }
 
         $this->categoryRepository->update($category->id, $validated);
-        return redirect(route('admin.category.index'))->with('success', 'Data Updated Successfully !');
+        return redirect(route('admin.categorys.index'))->with('success', 'Data Updated Successfully !');
     }
 
     public function destroy(Category $category): RedirectResponse
@@ -113,6 +113,6 @@ class CategoryController extends Controller
         }
 
         $this->categoryRepository->delete($category->id);
-        return redirect(route('admin.category.index'))->with('success', 'Data Deleted Successfully !');
+        return redirect(route('admin.categorys.index'))->with('success', 'Data Deleted Successfully !');
     }
 }

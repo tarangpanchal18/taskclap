@@ -19,8 +19,8 @@ Route::prefix(config('app.admin_path_name'))->name('admin.')->group(function () 
         Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
         Route::put('profile', [DashboardController::class, 'updateProfile'])->name('updateProfile');
         Route::resource('users', UserController::class);
-        Route::resource('category', CategoryController::class);
-        Route::resource('banner', BannerController::class);
+        Route::resource('categorys', CategoryController::class);
+        Route::resource('banners', BannerController::class);
         Route::post('logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 

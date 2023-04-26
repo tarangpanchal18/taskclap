@@ -36,7 +36,7 @@ class BannerController extends Controller
                     })
                     ->addColumn('action', function($row){
                             return '<div style="width: 150px">' .
-                            '<a href="'. route('admin.banner.edit', $row->id) .'" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>' .
+                            '<a href="'. route('admin.banners.edit', $row->id) .'" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>' .
                             '<button onclick="removeData('. $row->id. ')" class="edit btn btn-default btn-sm"><i class="fa fa-trash"></i> Remove</button>' .
                             '<div>' .
                             PHP_EOL;
@@ -54,7 +54,7 @@ class BannerController extends Controller
     {
         return view('admin.banner.alter', [
             'action' => 'Add',
-            'actionUrl' => route('admin.banner.store'),
+            'actionUrl' => route('admin.banners.store'),
         ]);
     }
 
@@ -71,7 +71,7 @@ class BannerController extends Controller
         }
         $this->bannerRepository->create($validated);
 
-        return redirect(route('admin.banner.index'))->with('success', 'Data Created Successfully !');
+        return redirect(route('admin.banners.index'))->with('success', 'Data Created Successfully !');
     }
 
     public function edit(Banner $banner)
@@ -79,7 +79,7 @@ class BannerController extends Controller
         return view('admin.banner.alter', [
             'banner' => $banner,
             'action' => 'Edit',
-            'actionUrl' => route('admin.banner.update', $banner),
+            'actionUrl' => route('admin.banners.update', $banner),
         ]);
     }
 
@@ -97,7 +97,7 @@ class BannerController extends Controller
         }
 
         $this->bannerRepository->update($banner->id, $validated);
-        return redirect(route('admin.banner.index'))->with('success', 'Data Updated Successfully !');
+        return redirect(route('admin.banners.index'))->with('success', 'Data Updated Successfully !');
     }
 
     public function destroy(Banner $banner)
@@ -107,6 +107,6 @@ class BannerController extends Controller
         }
 
         $this->bannerRepository->delete($banner->id);
-        return redirect(route('admin.banner.index'))->with('success', 'Data Deleted Successfully !');
+        return redirect(route('admin.banners.index'))->with('success', 'Data Deleted Successfully !');
     }
 }

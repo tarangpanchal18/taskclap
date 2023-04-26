@@ -324,12 +324,12 @@ return [
         ],
         [
             'text' => 'Category',
-            'url'  => env('ADMIN_PATH') . '/category',
+            'url'  => env('ADMIN_PATH') . '/categorys',
             'icon' => 'fas fa-th-large',
         ],
         [
             'text' => 'Website Banner',
-            'url'  => env('ADMIN_PATH') . '/banner',
+            'url'  => env('ADMIN_PATH') . '/banners',
             'icon' => 'fas fa-pager',
         ],
         [
