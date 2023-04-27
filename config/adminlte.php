@@ -328,6 +328,11 @@ return [
             'icon' => 'fas fa-th-large',
         ],
         [
+            'text' => 'Providers Directory',
+            'url'  => env('ADMIN_PATH') . '/providers',
+            'icon' => 'fas fa-atlas',
+        ],
+        [
             'text' => 'Website Banner',
             'url'  => env('ADMIN_PATH') . '/banners',
             'icon' => 'fas fa-pager',
