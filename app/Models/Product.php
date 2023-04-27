@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const UPLOAD_PATH = "uploads/category";
+    const UPLOAD_PATH = "uploads/products";
 
     /**
      * The attributes that are mass assignable.
@@ -20,25 +19,25 @@ class Category extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'parent_id',
-        'name',
+        'category_id',
+        'sub_category_id',
+        'title',
         'description',
+        'long_description',
         'image',
+        'price',
+        'commission',
+        'approx_duration',
         'status',
     ];
 
-    public function children(): HasMany
+    public function category(): BelongsTo
     {
-        return $this->hasMany(Category::class , 'parent_id');
+        return $this->belongsTo(Category::class);
     }
 
-    public function parent(): BelongsTo
+    public function subCategory(): BelongsTo
     {
-        return $this->belongsTo(Category::class , 'parent_id');
-    }
-
-    public function product(): HasMany
-    {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Category::class);
     }
 }

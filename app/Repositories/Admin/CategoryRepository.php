@@ -13,6 +13,8 @@ class CategoryRepository implements MasterInterface
     }
 
     /**
+     * Returns the parent category data
+     *
      * @param int $except [Single Id to be ignored]
      */
     public function getParentCategory($igore = '')
@@ -20,6 +22,21 @@ class CategoryRepository implements MasterInterface
         $data = Category::whereNull('parent_id');
         if ($igore) {
             $data->where('id', '!=', $igore);
+        }
+
+        return $data->get();
+    }
+
+    /**
+     * Returns the Child category data
+     *
+     * @param int $parentId [Category_id]
+     */
+    public function getChildCategory($parentId = '')
+    {
+        $data = Category::whereNotNull('parent_id');
+        if ($parentId) {
+            $data->where('parent_id', $parentId);
         }
 
         return $data->get();

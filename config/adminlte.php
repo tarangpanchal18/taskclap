@@ -333,6 +333,11 @@ return [
             'icon' => 'fas fa-atlas',
         ],
         [
+            'text' => 'Product',
+            'url'  => env('ADMIN_PATH') . '/products',
+            'icon' => 'fas fa-archive',
+        ],
+        [
             'text' => 'Website Banner',
             'url'  => env('ADMIN_PATH') . '/banners',
             'icon' => 'fas fa-pager',
