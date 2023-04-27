@@ -14,7 +14,7 @@ class DashboardRepository
         return [
             'totalActiveUser' => User::where('status', 'Active')->count(),
             'totalInActiveUser' => User::where('status', 'InActive')->count(),
-            'totalCategory' => Category::where('status', 'InActive')->count(),
+            'totalCategory' => Category::count(),
             'totalBanner' => Banner::where('status', 'Active')->count(),
         ];
     }

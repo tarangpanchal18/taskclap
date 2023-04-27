@@ -30,12 +30,12 @@
         <div class="small-box bg-success">
         <div class="inner">
             <h3>{{ $data['totalCategory'] }}</h3>
-            <p>Active Category</p>
+            <p>Total Category</p>
         </div>
         <div class="icon">
-            <i class="fas fa-certificate"></i>
+            <i class="fas fa-th-large"></i>
         </div>
-        <a href="{{ route('admin.category.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
+        <a href="{{ route('admin.categorys.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
         </a>
         </div>
     </div>
@@ -48,7 +48,7 @@
         <div class="icon">
             <i class="fas fa-credit-card"></i>
         </div>
-        <a href="{{ route('admin.banner.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
+        <a href="{{ route('admin.banners.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
         </a>
         </div>
     </div>
@@ -102,7 +102,7 @@
     generatBarChart('bar-chart-data', barChartLable, barChartData);
     generatPieChart('pie-chart-data', pieChartLable, [{
         data: pieChartData,
-        backgroundColor : ['#f56954', '#00a65a'],
+        backgroundColor : ['#00a65a', '#f56954'],
     }]);
 </script>
 @stop

@@ -15,7 +15,7 @@
             @if ($action != 'Add') @method('PUT') @endif
             <div class="card-header">
                 <div class="float-right">
-                    <a href="{{ route('admin.category.index') }}" class="btn btn-default"><i class="fa fa-arrow-alt-circle-left"></i> Back</a>
+                    <a href="{{ route('admin.categorys.index') }}" class="btn btn-default"><i class="fa fa-arrow-alt-circle-left"></i> Back</a>
                 </div>
                 <p>Please add appropriate details to {{ $action }} Category</p>
             </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-success">{{ $action }} Data</button>
-                <a href="{{ route('admin.category.index') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ route('admin.categorys.index') }}" class="btn btn-default">Cancel</a>
             </div>
         </form>
     </div>

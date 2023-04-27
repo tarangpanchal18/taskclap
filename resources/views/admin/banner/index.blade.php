@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{route('admin.banner.index')}}">
+        <form action="{{route('admin.banners.index')}}">
             <div class="card-body row">
                 <div class="form-group col-md-3">
                     <label>Filter By Status</label>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <button class="btn btn-default filter-search"><i class="fa fa-search"></i> Search</button>
-                    <a href="{{ route('admin.banner.index') }}" class="btn btn-default filter-search"><i class="fas fa-undo"></i> Reset</a>
+                    <a href="{{ route('admin.banners.index') }}" class="btn btn-default filter-search"><i class="fas fa-undo"></i> Reset</a>
                 </div>
             </div>
         </form>
@@ -32,7 +32,7 @@
     <div class="card">
         <div class="card-header">
             <div class="float-right">
-                <a href="{{ route('admin.banner.create') }}" class="btn btn-default"><i class="fa fa-plus"></i> Add Data</a>
+                <a href="{{ route('admin.banners.create') }}" class="btn btn-default"><i class="fa fa-plus"></i> Add Data</a>
             </div>
         </div>
         <div class="card-body">
@@ -67,7 +67,7 @@
 
 <script>
 $(document).ready(function() {
-    generateDataTable('{{ route("admin.banner.index") }}', [
+    generateDataTable('{{ route("admin.banners.index") }}', [
             {
                 data: 'image',
                 name: 'image',
@@ -84,7 +84,7 @@ $(document).ready(function() {
 });
 
 function removeData(id) {
-    removeDataFromDatabase('{{route("admin.banner.index")}}', id);
+    removeDataFromDatabase('{{route("admin.banners.index")}}', id);
 }
 </script>
 @stop
