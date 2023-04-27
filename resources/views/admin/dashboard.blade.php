@@ -102,7 +102,7 @@
     generatBarChart('bar-chart-data', barChartLable, barChartData);
     generatPieChart('pie-chart-data', pieChartLable, [{
         data: pieChartData,
-        backgroundColor : ['#f56954', '#00a65a'],
+        backgroundColor : ['#00a65a', '#f56954'],
     }]);
 </script>
 @stop
