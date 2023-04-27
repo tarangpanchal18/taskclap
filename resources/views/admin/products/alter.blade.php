@@ -23,9 +23,9 @@
 
                 <div class="row">
 
-                    <x-form-select name="category_id" label="Select Category" data="{{ $categoryData->pluck('id','name') }}" value="{{ $product->category_id }}" />
+                    <x-form-select name="category_id" label="Select Category" id="category" event="onchange='fetchAndSetSubCategory(this.value)'" />
 
-                    <x-form-select name="sub_category_id" label="Select Sub Category" data="{{ $subCategoryData->pluck('id','name') }}" value="{{ $product->sub_category_id }}" />
+                    <x-form-select name="sub_category_id" label="Select Sub Category" id="subcategory" />
 
                     <x-form-input name="title" type="text" label="Title" value="{{ $product->title }}" />
 
@@ -75,4 +75,12 @@
             </div>
         </form>
     </div>
+@stop
+
+@section('js')
+<script>
+
+    fetchAndSetCategory({{ $product->category_id}});
+    fetchAndSetSubCategory({{ $product->category_id }}, {{ $product->sub_category_id }});
+</script>
 @stop

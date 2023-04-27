@@ -191,3 +191,67 @@ function generatBarChart(chartElement, chartLabel, chartData) {
         }
     })
 }
+
+/**
+ * Function to Fetch categories and set to option value
+ *
+ * @param int selected
+ */
+function fetchAndSetCategory(selected = '') {
+    var options = "<option value=''>Select Category</option>";
+    $.ajax({
+        type : "GET",
+        url : "/api/category",
+        data : {},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success : function(response) {
+            if (response.success) {
+                response.data.forEach(function (key) {
+                    if (selected == key.id) {
+                        options += "<option selected value='" + key.id + "'>" + key.name + "</option>";
+                    } else {
+                        options += "<option value='" + key.id + "'>" + key.name + "</option>";
+                    }
+
+                })
+            }
+            $("#category").html(options);
+        }
+    });
+}
+
+/**
+ * Function to Fetch sub-categories and set to option value
+ *
+ * @param int cat
+ * @param int selected
+ */
+function fetchAndSetSubCategory(cat, selected = '') {
+    if (cat) {
+        var options = "<option value=''>Select Sub Category</option>";
+        $.ajax({
+            type : "GET",
+            url : "/api/subcategory",
+            data : {
+                category: cat
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success : function(response) {
+                if (response.success) {
+                    response.data.forEach(function (key) {
+                        if (selected == key.id) {
+                            options += "<option selected value='" + key.id + "'>" + key.name + "</option>";
+                        } else {
+                            options += "<option value='" + key.id + "'>" + key.name + "</option>";
+                        }
+                    })
+                }
+                $("#subcategory").html(options);
+            }
+        });
+    }
+}
