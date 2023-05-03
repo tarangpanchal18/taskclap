@@ -23,7 +23,7 @@ function generateDataTable(dataUrl, coloumnsData, filterData = [], coloumnsToExp
         processing: true,
         serverSide: true,
         pageLength: 15,
-        bFilter: false,
+        bFilter: true,
         ajax: {
             url: dataUrl,
             data: function (d) {
