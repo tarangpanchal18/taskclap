@@ -19,17 +19,7 @@ $(document).ready(function() {
  */
 function generateDataTable(dataUrl, coloumnsData, filterData = [], coloumnsToExport = [1,2,3,4]) {
 
-    $('#data-table tfoot th').each( function (counter) {
-		var title = $(this).text();
-		var totalLen = $('#data-table tfoot th').length;
-        if (counter == 0 || counter == (totalLen-1)) {
-            $(this).html( '<input class="form-control" disabled type="text" />' );
-        } else {
-            $(this).html( '<input class="form-control" type="text" placeholder="'+ title +' Search" />' );
-        }
-	});
-
-    var dtTable = $('#data-table').DataTable({
+    $('#data-table').DataTable({
         processing: true,
         serverSide: true,
         pageLength: 15,
@@ -72,17 +62,6 @@ function generateDataTable(dataUrl, coloumnsData, filterData = [], coloumnsToExp
             },
         ],
     });
-
-    dtTable.columns().every( function () {
-		var that = this;
-		$( 'input', this.footer() ).on( 'keyup change', function () {
-			if ( that.search() !== this.value ) {
-				that
-					.search( this.value )
-					.draw();
-			}
-		});
-	});
 }
 
 /**

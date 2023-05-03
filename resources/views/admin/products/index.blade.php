@@ -49,6 +49,8 @@
                         <th>Action</th>
                     </tr>
                 </thead>
+                <tbody>
+                </tbody>
                 <tfoot>
                     <tr>
                         <th>Category</th>
@@ -60,8 +62,6 @@
                         <th>Action</th>
                     </tr>
                 </tfoot>
-                <tbody>
-                </tbody>
         </table>
         </div>
     </div>
