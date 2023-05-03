@@ -81,6 +81,8 @@
 <script>
 
     fetchAndSetCategory({{ $product->category_id}});
+    @if ($action != "Add")
     fetchAndSetSubCategory({{ $product->category_id }}, {{ $product->sub_category_id }});
+    @endif
 </script>
 @stop
