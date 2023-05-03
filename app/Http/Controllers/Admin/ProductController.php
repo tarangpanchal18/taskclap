@@ -64,8 +64,6 @@ class ProductController extends Controller
         return view('admin.products.alter', [
             'action' => 'Add',
             'actionUrl' => route('admin.products.store'),
-            'categoryData' => $this->categoryRepository->getParentCategory(),
-            'subCategoryData' => $this->categoryRepository->getChildCategory(),
         ]);
     }
 
@@ -91,8 +89,6 @@ class ProductController extends Controller
             'product' => $product,
             'action' => 'Edit',
             'actionUrl' => route('admin.products.update', $product),
-            'categoryData' => $this->categoryRepository->getParentCategory(),
-            'subCategoryData' => $this->categoryRepository->getChildCategory(),
         ]);
     }
 

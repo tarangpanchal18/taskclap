@@ -19,21 +19,11 @@ $(document).ready(function() {
  */
 function generateDataTable(dataUrl, coloumnsData, filterData = [], coloumnsToExport = [1,2,3,4]) {
 
-    $('#data-table tfoot th').each( function (counter) {
-		var title = $(this).text();
-		var totalLen = $('#data-table tfoot th').length;
-        if (counter == 0 || counter == (totalLen-1)) {
-            $(this).html( '<input class="form-control" disabled type="text" />' );
-        } else {
-            $(this).html( '<input class="form-control" type="text" placeholder="'+ title +' Search" />' );
-        }
-	});
-
-    var dtTable = $('#data-table').DataTable({
+    $('#data-table').DataTable({
         processing: true,
         serverSide: true,
         pageLength: 15,
-        bFilter: false,
+        bFilter: true,
         ajax: {
             url: dataUrl,
             data: function (d) {
@@ -72,17 +62,6 @@ function generateDataTable(dataUrl, coloumnsData, filterData = [], coloumnsToExp
             },
         ],
     });
-
-    dtTable.columns().every( function () {
-		var that = this;
-		$( 'input', this.footer() ).on( 'keyup change', function () {
-			if ( that.search() !== this.value ) {
-				that
-					.search( this.value )
-					.draw();
-			}
-		});
-	});
 }
 
 /**
@@ -190,4 +169,68 @@ function generatBarChart(chartElement, chartLabel, chartData) {
             datasetFill             : false
         }
     })
+}
+
+/**
+ * Function to Fetch categories and set to option value
+ *
+ * @param int selected
+ */
+function fetchAndSetCategory(selected = '') {
+    var options = "<option value=''>Select Category</option>";
+    $.ajax({
+        type : "GET",
+        url : "/api/category",
+        data : {},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success : function(response) {
+            if (response.success) {
+                response.data.forEach(function (key) {
+                    if (selected == key.id) {
+                        options += "<option selected value='" + key.id + "'>" + key.name + "</option>";
+                    } else {
+                        options += "<option value='" + key.id + "'>" + key.name + "</option>";
+                    }
+
+                })
+            }
+            $("#category").html(options);
+        }
+    });
+}
+
+/**
+ * Function to Fetch sub-categories and set to option value
+ *
+ * @param int cat
+ * @param int selected
+ */
+function fetchAndSetSubCategory(cat, selected = '') {
+    if (cat) {
+        var options = "<option value=''>Select Sub Category</option>";
+        $.ajax({
+            type : "GET",
+            url : "/api/subcategory",
+            data : {
+                category: cat
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success : function(response) {
+                if (response.success) {
+                    response.data.forEach(function (key) {
+                        if (selected == key.id) {
+                            options += "<option selected value='" + key.id + "'>" + key.name + "</option>";
+                        } else {
+                            options += "<option value='" + key.id + "'>" + key.name + "</option>";
+                        }
+                    })
+                }
+                $("#subcategory").html(options);
+            }
+        });
+    }
 }

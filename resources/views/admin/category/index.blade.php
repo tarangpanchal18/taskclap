@@ -14,20 +14,20 @@
         <form action="{{route('admin.categorys.index')}}">
             <div class="card-body row">
                 <div class="form-group col-md-3">
-                    <label>Filter By Status</label>
-                    <select name="status" id="filter_status" class="form-control select2">
-                        <option value="">Select Status</option>
-                        <option {{ request()->query('status') == "Active" ? 'selected' : '' }} value="Active">Filter By Active</option>
-                        <option {{ request()->query('status') == "InActive" ? 'selected' : '' }} value="InActive">Filter By InActive</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
                     <label>Filter By Parent Category</label>
                     <select name="category" id="filter_category" class="form-control select2">
                         <option value="">Select Category</option>
                         @foreach ($categoryData as $cat)
                         <option {{ request()->query('category') == $cat->id ? 'selected' : '' }} value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Filter By Status</label>
+                    <select name="status" id="filter_status" class="form-control select2">
+                        <option value="">Select Status</option>
+                        <option {{ request()->query('status') == "Active" ? 'selected' : '' }} value="Active">Filter By Active</option>
+                        <option {{ request()->query('status') == "InActive" ? 'selected' : '' }} value="InActive">Filter By InActive</option>
                     </select>
                 </div>
                 <div class="form-group col-md-3">
@@ -54,6 +54,8 @@
                         <th>Action</th>
                     </tr>
                 </thead>
+                <tbody>
+                </tbody>
                 <tfoot>
                     <tr>
                         <th>Parent Name</th>
@@ -62,8 +64,6 @@
                         <th>Action</th>
                     </tr>
                 </tfoot>
-                <tbody>
-                </tbody>
         </table>
         </div>
     </div>
