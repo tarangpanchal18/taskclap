@@ -44,8 +44,9 @@ class ProductController extends Controller
                         return ($row?->subCategory->name ? $row->subCategory->name : 'N/A');
                     })
                     ->addColumn('action', function($row) {
-                            return '<div style="width: 150px">' .
-                            '<a href="'. route('admin.products.edit', $row->id) .'" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>' .
+                            return '<div style="width: 230px">' .
+                            '<a href="' . route('admin.products.services.index', $row->id) . '" class="edit btn btn-default btn-sm"><i class="fas fa-tools"></i> Service</a>&nbsp;' .
+                            '<a href="'. route('admin.products.edit', $row->id) . '" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>&nbsp;' .
                             '<button onclick="removeData('. $row->id. ')" class="edit btn btn-default btn-sm"><i class="fa fa-trash"></i> Remove</button>' .
                             '<div>' .
                             PHP_EOL;
