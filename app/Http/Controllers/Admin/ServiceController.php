@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ServiceRequest;
 use App\Models\Product;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ServiceRepository;
@@ -17,7 +18,7 @@ class ServiceController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index(Request $request)
+    public function index(Request $request, Product $product)
     {
         if ($request->ajax()) {
             $data = $this->serviceRepository->getRaw($request?->filterData);
@@ -34,8 +35,8 @@ class ServiceController extends Controller
                     ->addColumn('category', function($row) {
                         return ($row?->category->name ? $row->category->name : 'N/A');
                     })
-                    ->addColumn('subcategory', function($row) {
-                        return ($row?->subCategory->name ? $row->subCategory->name : 'N/A');
+                    ->addColumn('parent', function($row) {
+                        return ($row?->parent->title ? $row->parent->title : 'N/A');
                     })
                     ->addColumn('action', function($row) {
                             return '<div style="width: 150px">' .
@@ -49,32 +50,47 @@ class ServiceController extends Controller
         }
 
         return view('admin.services.index', [
+            'product' => $product,
             'categoryData' => $this->categoryRepository->getParentCategory()
         ]);
     }
 
-    public function create()
+    public function create(Product $product)
     {
-        //
+        return view('admin.services.alter', [
+            'action' => 'Add',
+            'product' => $product,
+            'serviceType' => Product::SERVICE_TYPE,
+            'actionUrl' => route('admin.products.services.store', $product),
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(ServiceRequest $request, Product $product)
     {
-        //
+        $this->serviceRepository->create($request->validated());
+        return redirect(route('admin.products.services.index', $product))->with('success', 'Data Created Successfully !');
     }
 
-    public function edit(Product $product)
+    public function edit(Product $product, Product $service)
     {
-        //
+        return view('admin.services.alter', [
+            'action' => 'Edit',
+            'product' => $product,
+            'service' => $service,
+            'serviceType' => Product::SERVICE_TYPE,
+            'actionUrl' => route('admin.products.services.update', [$product, $service]),
+        ]);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(ServiceRequest $request, Product $product, Product $service)
     {
-        //
+        $this->serviceRepository->update($service->id, $request->validated());
+        return redirect(route('admin.products.services.index', [$product, $service]))->with('success', 'Data Updated Successfully !');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Product $product, Product $service)
     {
-        //
+        $this->serviceRepository->delete($service->id);
+        return redirect(route('admin.products.services.index', [$product, $service]))->with('success', 'Data Deleted Successfully !');
     }
 }

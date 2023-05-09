@@ -17,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ServiceRepository::class, function ($app, $id) {
-            return new ServiceRepository(2);
+            $request = array_filter(explode('/', $_SERVER['REQUEST_URI']));
+            return new ServiceRepository($request[3]);
         });
     }
 
