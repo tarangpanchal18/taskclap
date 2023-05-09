@@ -4,6 +4,7 @@
     'event' => '',
     'type' => 'text',
     'data' => '',
+    'useDataAsKeyVal' => false,
     'value' => '',
     'size' => 6,
     'label' => 'Input Field',
@@ -16,9 +17,15 @@
     <label>{{ $label }}</label>
     <select id="{{ $id }}" {!! $event !!}  name="{{ $name }}" class="{{ $class }} select2" {{ $required ? 'required' : '' }} {{ $disabled ? 'disabled' : '' }}>
         <option value="">-- Select --</option>
-        @foreach (json_decode( html_entity_decode($data), TRUE) as $name => $id)
-        <option {{ $value == $id ? 'selected' : '' }} value="{{ $id }}">{{ $name }}</option>
-        @endforeach
+        @if ($useDataAsKeyVal)
+            @foreach (json_decode( html_entity_decode($data), TRUE) as $name => $id)
+            <option {{ $value == $id ? 'selected' : '' }} value="{{ $id }}">{{ $name }}</option>
+            @endforeach
+        @else
+            @foreach (json_decode( html_entity_decode($data), TRUE) as $name)
+            <option {{ $value == $name ? 'selected' : '' }} value="{{ $name }}">{{ $name }}</option>
+            @endforeach
+        @endif
     </select>
-    @error($name)<p>{{ $message }}</p> @enderror
+    @error($name)<p style="color: #dc3545;font-style: italic">{{ $message }}</p> @enderror
 </div>
