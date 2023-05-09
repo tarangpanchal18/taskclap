@@ -9,12 +9,12 @@ class ProductRepository implements MasterInterface
 {
     public function getAll()
     {
-        return Product::all();
+        return Product::whereNull('parent_id');
     }
 
     public function getRaw($filterData = "")
     {
-        $query = Product::query();
+        $query = Product::whereNull('parent_id');
         if ($filterData['category']) {
             $query = $query->where('category_id', $filterData['category']);
         }
