@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             UserSeeder::class,
             ServiceCategorySeeder::class,
+            CountryStateCitySeeder::class,
+            AreaSeeder::class,
         ]);
     }
 }
