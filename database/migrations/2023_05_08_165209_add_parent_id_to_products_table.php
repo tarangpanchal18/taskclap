@@ -14,15 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('parent_id')->nullable()->after('id');
-            $table->enum('service_type', [
-                'Service',
-                'Repair',
-                'InstallUninstall'
-            ])->nullable()->after('sub_category_id');
+            $table->unsignedBigInteger('parent_id')->nullable()->after('id')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('service_category_id')->nullable()->after('sub_category_id')->onDelete('cascade')->onUpdate('cascade');
             $table->float('strike_price', 8, 2)->default(0)->after('image');
 
             $table->foreign('parent_id')->references('id')->on('products');
+            $table->foreign('service_category_id')->references('id')->on('service_categories');
         });
     }
 
@@ -35,11 +32,11 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign('products_parent_id_foreign');
-            $table->dropColumn([
-                'parent_id',
-                'service_type',
-                'strike_price',
-            ]);
+            $table->dropForeign('products_service_category_id_foreign');
+
+            $table->dropColumn('parent_id');
+            $table->dropColumn('service_category_id');
+            $table->dropColumn('strike_price');
         });
     }
 };
