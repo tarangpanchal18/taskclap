@@ -37,7 +37,9 @@
                         value="{{ $product->service_category_id }}" required="true"
                     />
 
-                    <x-form-input name="title" type="text" label="Title" value="{{ $product->title }}" size="12" />
+                    <x-form-input name="title" type="text" label="Title" value="{{ $product->title }}" />
+
+                    <x-form-input name="warranty" type="number" label="Warranty (in days)" value="{{ ($product->warranty) ? $product->warranty : 0 }}" />
 
                     <x-form-textarea name="description" type="text" label="Description" value="{{ $product->description }}" size="12" />
 

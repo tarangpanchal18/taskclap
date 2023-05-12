@@ -31,6 +31,7 @@ class Product extends Model
         'strike_price',
         'price',
         'commission',
+        'warranty',
         'approx_duration',
         'status',
     ];

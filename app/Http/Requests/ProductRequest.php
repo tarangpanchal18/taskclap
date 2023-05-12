@@ -32,6 +32,7 @@ class ProductRequest extends FormRequest
             'long_description' => 'nullable|min:5|max:5000',
             'price' => 'required|decimal:0,4',
             'commission' => 'required|integer',
+            'warranty' => 'nullable|integer',
             'approx_duration' => 'required|min:1|max:100',
             'image' => 'nullable|mimes:jpg,jpeg,png,gif|max:5120',
             'status' => 'required',
