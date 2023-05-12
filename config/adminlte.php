@@ -435,6 +435,11 @@ return [
                     'asset' => true,
                     'location' => '/css/custom_admin.css',
                 ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/ckeditor/editor.min.js',
+                ],
             ],
         ],
         'Datatables' => [

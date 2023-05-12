@@ -31,11 +31,11 @@
 
                     <x-form-input name="title" type="text" label="Title" value="{{ $service->title }}" />
 
-                    <x-form-input name="description" type="text" label="Description" value="{{ $service->description }}" />
-
                     <x-form-input name="strike_price" type="text" label="Strike Price" value="{{ $service->strike_price }}" />
 
                     <x-form-input name="price" type="text" label="Price" value="{{ $service->price }}" />
+
+                    <x-form-textarea name="description" type="text" label="Description" value="{!! $service->description !!}" id="editor" size="12" />
 
                     <x-form-input name="commission" type="text" label="Commission (in %)" value="{{ $service->commission }}" />
 

@@ -27,11 +27,11 @@
 
                     <x-form-select name="sub_category_id" label="Select Sub Category" id="subcategory" />
 
-                    <x-form-input name="title" type="text" label="Title" value="{{ $product->title }}" />
+                    <x-form-input name="title" type="text" label="Title" value="{{ $product->title }}" size="12" />
 
-                    <x-form-input name="description" type="text" label="Description" value="{{ $product->description }}" />
+                    <x-form-textarea name="description" type="text" label="Description" value="{{ $product->description }}" size="12" />
 
-                    <x-form-input name="long_description" type="text" label="Long Description" value="{{ $product->long_description }}" />
+                    <x-form-textarea name="long_description" type="text" label="Long Description" value="{!! $product->long_description !!}" id="editor" size="12" />
 
                     <x-form-input name="price" type="text" label="Price" value="{{ $product->price }}" />
 
