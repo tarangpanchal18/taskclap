@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('parent_id')->nullable()->after('id')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('service_category_id')->nullable()->after('sub_category_id')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('parent_id')->nullable()->after('id')->onDelete('cascade');
+            $table->unsignedBigInteger('service_category_id')->nullable()->after('sub_category_id');
             $table->float('strike_price', 8, 2)->default(0)->after('image');
 
             $table->foreign('parent_id')->references('id')->on('products');
