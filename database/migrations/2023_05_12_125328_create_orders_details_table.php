@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('category_id')->constrained();
-            $table->foreignId('sub_category_id')->constrained();
+            $table->foreignId('sub_category_id')->references('id')->on('categories');
             $table->foreignId('service_category_id')->constrained();
             $table->string('product_title');
             $table->text('product_description');

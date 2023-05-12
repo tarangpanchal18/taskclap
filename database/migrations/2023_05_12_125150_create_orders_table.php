@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('address');
             $table->string('pincode');
+            $table->foreignId('country_id')->constrained();
+            $table->foreignId('state_id')->constrained();
+            $table->foreignId('city_id')->constrained();
+            $table->foreignId('area_id')->constrained();
             $table->string('address_lat')->nullable();
             $table->string('address_long')->nullable();
             $table->integer('product_count');
