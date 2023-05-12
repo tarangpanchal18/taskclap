@@ -14,12 +14,6 @@ class Product extends Model
 
     const UPLOAD_PATH = "uploads/products";
 
-    const SERVICE_TYPE = [
-        'Service',
-        'Repair',
-        'InstallUninstall',
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -29,7 +23,7 @@ class Product extends Model
         'parent_id',
         'category_id',
         'sub_category_id',
-        'service_type',
+        'service_category_id',
         'title',
         'description',
         'long_description',

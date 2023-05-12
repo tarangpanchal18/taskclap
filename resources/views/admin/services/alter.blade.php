@@ -27,8 +27,6 @@
                     <input type="hidden" name="category_id" value="{{ $product->category_id }}">
                     <input type="hidden" name="sub_category_id" value="{{ $product->sub_category_id }}">
 
-                    <x-form-select name="service_type" label="Select Service Type" id="service_type" value="{{ $service->service_type }}" data="{{ json_encode($serviceType) }}"/>
-
                     <x-form-input name="title" type="text" label="Title" value="{{ $service->title }}" />
 
                     <x-form-input name="strike_price" type="text" label="Strike Price" value="{{ $service->strike_price }}" />

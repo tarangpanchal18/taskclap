@@ -60,7 +60,6 @@ class ServiceController extends Controller
         return view('admin.services.alter', [
             'action' => 'Add',
             'product' => $product,
-            'serviceType' => Product::SERVICE_TYPE,
             'actionUrl' => route('admin.products.services.store', $product),
         ]);
     }
@@ -77,7 +76,6 @@ class ServiceController extends Controller
             'action' => 'Edit',
             'product' => $product,
             'service' => $service,
-            'serviceType' => Product::SERVICE_TYPE,
             'actionUrl' => route('admin.products.services.update', [$product, $service]),
         ]);
     }

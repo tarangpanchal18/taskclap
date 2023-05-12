@@ -27,7 +27,6 @@ class ServiceRequest extends FormRequest
             'parent_id' => 'required|integer',
             'category_id' => 'required|integer',
             'sub_category_id' => 'nullable|integer',
-            'service_type' => 'required',
             'title' => 'required|min:3|max:100',
             'description' => 'required|min:5|max:1000',
             'long_description' => 'nullable|min:5|max:5000',

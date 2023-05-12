@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ProductRepository;
+use App\Repositories\Admin\ServiceCategoryRepository;
 use App\Services\FilesService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -16,11 +17,14 @@ class ProductController extends Controller
 
     public function __construct(
         private ProductRepository $productRepository,
+        private ServiceCategoryRepository $serviceCategory,
         private CategoryRepository $categoryRepository,
         private FilesService $fileService
     ) {
-        $this->productRepository = $productRepository;
         $this->fileService = $fileService;
+        $this->serviceCategory = $serviceCategory;
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function index(Request $request)
@@ -67,6 +71,8 @@ class ProductController extends Controller
     {
         return view('admin.products.alter', [
             'action' => 'Add',
+            'serviceCount' => 0,
+            'serviceCategory' => $this->serviceCategory->getRaw(['status' => 'Active'])->get(),
             'actionUrl' => route('admin.products.store'),
         ]);
     }
@@ -92,6 +98,8 @@ class ProductController extends Controller
         return view('admin.products.alter', [
             'product' => $product,
             'action' => 'Edit',
+            'serviceCount' => $product->children->count(),
+            'serviceCategory' => $this->serviceCategory->getRaw(['status' => 'Active'])->get(),
             'actionUrl' => route('admin.products.update', $product),
         ]);
     }

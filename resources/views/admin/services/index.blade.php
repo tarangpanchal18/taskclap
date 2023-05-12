@@ -38,8 +38,8 @@
             <p>Manage Services for <span class="badge badge-info">{{ $product->title }}</span></p>
         </div>
         <div class="float-right">
-            <a href="{{ route('admin.products.services.create', $product) }}" class="btn btn-default"><i class="fa fa-plus"></i> Add Data</a>
             <a href="{{ route('admin.products.index', $product) }}" class="btn btn-default"><i class="fa fa-arrow-alt-circle-left"></i> Back</a>
+            <a href="{{ route('admin.products.services.create', $product) }}" class="btn btn-default"><i class="fa fa-plus"></i> Add Data</a>
         </div>
     </div>
     <div class="card-body">
