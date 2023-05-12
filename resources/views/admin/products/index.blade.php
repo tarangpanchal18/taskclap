@@ -45,6 +45,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Commission</th>
+                        <th>Service</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -58,6 +59,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Commission</th>
+                        <th>Service</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -78,13 +80,14 @@ $(document).ready(function() {
             {data: 'title', name: 'title'},
             {data: 'price', name: 'price'},
             {data: 'commission', name: 'commission'},
+            {data: 'service', name: 'service'},
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
     ], {
         'category' : $("#filter_category").val(),
     },
     [
-        0, 1, 2, 3, 4, 5
+        0, 1, 2, 3, 4, 5, 6
     ]);
 });
 

@@ -21,5 +21,5 @@
         {{ $required ? 'required' : '' }}
         {{ $disabled ? 'disabled' : '' }}
     />
-    @error($name)<p classs="text-danger">{{ $message  }}</p>@enderror
+    @error($name)<p style="color: #dc3545;font-style: italic" classs="text-danger">{{ $message  }}</p>@enderror
 </div>

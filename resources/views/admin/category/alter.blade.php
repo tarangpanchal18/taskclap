@@ -25,7 +25,7 @@
 
                     <x-form-input name="name" type="text" label="Category Name" value="{{ $category->name }}" />
 
-                    <x-form-select name="parent_id" label="Parent Category" data="{{ $categoryData->pluck('id','name') }}" value="{{ $category->parent_id }}" />
+                    <x-form-select name="parent_id" label="Parent Category" data="{{ $categoryData->pluck('id','name') }}" value="{{ $category->parent_id }}" useDataAsKeyVal="true" />
 
                     @if ($category->image)
                     <div class="form-group col-md-12">

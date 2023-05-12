@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ProductRepository;
+use App\Repositories\Admin\ServiceCategoryRepository;
 use App\Services\FilesService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -16,11 +17,14 @@ class ProductController extends Controller
 
     public function __construct(
         private ProductRepository $productRepository,
+        private ServiceCategoryRepository $serviceCategory,
         private CategoryRepository $categoryRepository,
         private FilesService $fileService
     ) {
-        $this->productRepository = $productRepository;
         $this->fileService = $fileService;
+        $this->serviceCategory = $serviceCategory;
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function index(Request $request)
@@ -43,9 +47,13 @@ class ProductController extends Controller
                     ->addColumn('subcategory', function($row) {
                         return ($row?->subCategory->name ? $row->subCategory->name : 'N/A');
                     })
+                    ->addColumn('service', function($row) {
+                        return ($row->children->count() ? $row->children->count() : 'N/A');
+                    })
                     ->addColumn('action', function($row) {
-                            return '<div style="width: 150px">' .
-                            '<a href="'. route('admin.products.edit', $row->id) .'" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>' .
+                            return '<div style="width: 230px">' .
+                            '<a href="' . route('admin.products.services.index', $row->id) . '" class="edit btn btn-default btn-sm"><i class="fas fa-tools"></i>Service</a>&nbsp;' .
+                            '<a href="'. route('admin.products.edit', $row->id) . '" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>&nbsp;' .
                             '<button onclick="removeData('. $row->id. ')" class="edit btn btn-default btn-sm"><i class="fa fa-trash"></i> Remove</button>' .
                             '<div>' .
                             PHP_EOL;
@@ -63,6 +71,8 @@ class ProductController extends Controller
     {
         return view('admin.products.alter', [
             'action' => 'Add',
+            'serviceCount' => 0,
+            'serviceCategory' => $this->serviceCategory->getRaw(['status' => 'Active'])->get(),
             'actionUrl' => route('admin.products.store'),
         ]);
     }
@@ -88,6 +98,8 @@ class ProductController extends Controller
         return view('admin.products.alter', [
             'product' => $product,
             'action' => 'Edit',
+            'serviceCount' => $product->children->count(),
+            'serviceCategory' => $this->serviceCategory->getRaw(['status' => 'Active'])->get(),
             'actionUrl' => route('admin.products.update', $product),
         ]);
     }

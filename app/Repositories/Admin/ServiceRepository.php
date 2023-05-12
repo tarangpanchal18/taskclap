@@ -5,16 +5,20 @@ namespace App\Repositories\Admin;
 use App\Interfaces\Admin\MasterInterface;
 use App\Models\Product;
 
-class ProductRepository implements MasterInterface
+class ServiceRepository implements MasterInterface
 {
+    public function __construct(private $productId) {
+        $this->productId = $productId;
+    }
+
     public function getAll()
     {
-        return Product::whereNull('parent_id');
+        return Product::where('parent_id', $this->productId)->get();
     }
 
     public function getRaw($filterData = "")
     {
-        $query = Product::whereNull('parent_id');
+        $query = Product::where('parent_id', $this->productId);
         if ($filterData['category']) {
             $query = $query->where('category_id', $filterData['category']);
         }
