@@ -29,7 +29,7 @@ class ServiceRequest extends FormRequest
             'sub_category_id' => 'nullable|integer',
             'service_type' => 'required',
             'title' => 'required|min:3|max:100',
-            'description' => 'required|min:5|max:500',
+            'description' => 'required|min:5|max:1000',
             'long_description' => 'nullable|min:5|max:5000',
             'image' => 'nullable|mimes:jpg,jpeg,png,gif|max:5120',
             'strike_price' => 'required|decimal:0,4',
