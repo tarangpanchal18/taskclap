@@ -338,6 +338,11 @@ return [
             'icon' => 'fas fa-archive',
         ],
         [
+            'text' => 'Orders',
+            'url'  => env('ADMIN_PATH') . '/orders',
+            'icon' => 'fas fa-truck',
+        ],
+        [
             'text' => 'Website Banner',
             'url'  => env('ADMIN_PATH') . '/banners',
             'icon' => 'fas fa-pager',
