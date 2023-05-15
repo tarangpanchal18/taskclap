@@ -24,6 +24,10 @@ return new class extends Migration
             $table->string('product_title');
             $table->text('product_description');
             $table->float('product_strike_price', 8, 2);
+            $table->float('material_charge')->nullable();
+            $table->text('material_description')->nullable();
+            $table->float('additional_charge')->nullable();
+            $table->text('additional_charge_description')->nullable();
             $table->float('product_price', 8, 2);
             $table->float('product_commission', 8, 2);
             $table->integer('warranty')->comment('in days');

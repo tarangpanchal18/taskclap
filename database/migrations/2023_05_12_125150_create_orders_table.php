@@ -33,11 +33,12 @@ return new class extends Migration
             $table->string('promocode')->nullable();
             $table->float('discount')->nullable()->comment('Promocode discount, Other discount');
             $table->float('tax')->nullable();
-            $table->float('material_charge')->nullable();
-            $table->text('material_description')->nullable();
-            $table->float('cancellation_charge')->nullable();
+            $table->float('material_charge_amount_total')->nullable();
+            $table->float('provider_pay_amount_total')->nullable();
+            $table->float('system_earn_amount_total')->nullable();
             $table->float('subtotal')->comment('without taxes, discount, etc.');
             $table->float('total')->comment('including taxes, discount, etc.');
+            $table->float('cancellation_charge')->nullable();
             $table->enum('is_warranty_order', ['Yes', 'No'])->default('No');
             $table->enum('payment_type', ['Cash', 'NetBanking', 'Upi']);
             $table->json('payment_json')->nullable();
