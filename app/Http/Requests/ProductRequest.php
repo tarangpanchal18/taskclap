@@ -30,6 +30,7 @@ class ProductRequest extends FormRequest
             'title' => 'required|min:3|max:100',
             'description' => 'required|min:5|max:500',
             'long_description' => 'nullable|min:5|max:5000',
+            'strike_price' => 'required|decimal:0,4',
             'price' => 'required|decimal:0,4',
             'commission' => 'required|integer',
             'warranty' => 'nullable|integer',
