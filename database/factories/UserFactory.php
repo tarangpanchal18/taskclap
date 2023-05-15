@@ -39,9 +39,16 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'phone' => $this->convertToIndianFormat($this->faker->phoneNumber()),
-            'email' => 'user_'. bin2hex(random_bytes(16)) . '@test.com',
+            'email' => $this->faker->email(),
             'email_verified_at' => now(),
             'password' => Hash::make('123456'),
+            'country_id' => 1,
+            'state_id' => 1,
+            'city_id' => 1,
+            'area_id' => 1,
+            'address' => '2, Yash Bunglows Opp Manipal House. Ghodasar Ahmedabad - 380050',
+            'address_lat' => '22.9755',
+            'address_long' => '72.6155',
             'remember_token' => null,
             'status' => $status[rand(0, 1)],
         ];
