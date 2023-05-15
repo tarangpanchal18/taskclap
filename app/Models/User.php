@@ -25,6 +25,7 @@ class User extends Authenticatable
         'state_id',
         'city_id',
         'area_id',
+        'address',
         'address_lat',
         'address_long',
         'is_blocked',

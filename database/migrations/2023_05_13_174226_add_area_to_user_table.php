@@ -18,7 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('state_id')->after('country_id')->nullable();
             $table->unsignedBigInteger('city_id')->after('state_id')->nullable();
             $table->unsignedBigInteger('area_id')->after('city_id')->nullable();
-            $table->string('address_lat')->after('area_id')->nullable();
+            $table->string('address')->after('area_id')->nullable();
+            $table->string('address_lat')->after('address')->nullable();
             $table->string('address_long')->after('address_lat')->nullable();
             $table->string('is_blocked')->after('remember_token')->default('No');
 
@@ -46,6 +47,8 @@ return new class extends Migration
             $table->dropColumn('state_id');
             $table->dropColumn('city_id');
             $table->dropColumn('area_id');
+            $table->dropColumn('address');
+            $table->dropColumn('is_blocked');
             $table->dropColumn('address_lat');
             $table->dropColumn('address_long');
         });
