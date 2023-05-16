@@ -14,4 +14,10 @@ class OrderController extends Controller
             'orderData' => Order::paginate(10),
         ]);
     }
+
+    public function orderDetail(Order $order) {
+        return view('admin.order.detail', [
+            'order' => $order,
+        ]);
+    }
 }

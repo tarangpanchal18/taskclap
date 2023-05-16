@@ -53,6 +53,28 @@
             </thead>
             <tbody>
             @forelse ($orderData as $order)
+                <tr>
+                    <td>{{ $order->order_id }}</td>
+                    <td>{{ $order->name }}</td>
+                    <td>{{ $order->phone }}</td>
+                    <td>{{ $order->area->name }}</td>
+                    <td>{{ $order->pincode }}</td>
+                    <td>
+                        <span class="text-info">{{ $order->subtotal }}</span>
+                    </td>
+                    <td>
+                        <span class="text-danger">{{ $order->total }}</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-success">{{ $order->payment_status }}</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-success">{{ $order->order_status }}</span>
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.orders.detail', $order) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> View</a>
+                    </td>
+                </tr>
             @empty
             <td colspan="10">
                 <p style="text-align: center">No Orders Found !</p>
