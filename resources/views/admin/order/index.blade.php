@@ -46,6 +46,7 @@
                     <th>Pincode</th>
                     <th>Subtotal</th>
                     <th>Total</th>
+                    <th>Provider</th>
                     <th>Payment Status</th>
                     <th>Order Status</th>
                     <th>Action</th>
@@ -59,21 +60,18 @@
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->area->name }}</td>
                     <td>{{ $order->pincode }}</td>
+                    <td><span class="text-info">{{ $order->subtotal }}</span></td>
+                    <td><span class="text-danger">{{ $order->total }}</span></td>
                     <td>
-                        <span class="text-info">{{ $order->subtotal }}</span>
+                        @if($order->provider)
+                            <a href="{{ route('admin.providers.edit', $order->provider->id) }}" target="_blank">{{ $order->provider->name }}</a>
+                        @else
+                            <a href="{{ route('admin.orders.detail', $order) }}" class="btn btn-default btn-sm">Assign Now</a>
+                        @endif
                     </td>
-                    <td>
-                        <span class="text-danger">{{ $order->total }}</span>
-                    </td>
-                    <td>
-                        <span class="badge badge-success">{{ $order->payment_status }}</span>
-                    </td>
-                    <td>
-                        <span class="badge badge-success">{{ $order->order_status }}</span>
-                    </td>
-                    <td>
-                        <a href="{{ route('admin.orders.detail', $order) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> View</a>
-                    </td>
+                    <td>{{ generate_badge($order->payment_status) }}</td>
+                    <td>{{ generate_badge($order->order_status) }}</td>
+                    <td><a href="{{ route('admin.orders.detail', $order) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> View</a></td>
                 </tr>
             @empty
             <td colspan="10">

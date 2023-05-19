@@ -6,13 +6,70 @@
 @section('plugins.AdminCustom', true)
 
 @section('content_header')
-
+<style>
+    .select2-container{
+        width: 100%!important;
+    }
+</style>
 <div class="card">
     <div class="card-header">
-        <h1>Order Detail</h1>
+        <div class="float-left">
+            <h1>Order Detail</h1>
+        </div>
+        <div class="float-right">
+            <a href="{{ route('admin.orders') }}" class="btn btn-default"><i class="fa fa-arrow-alt-circle-left"></i> Back</a>
+        </div>
     </div>
+</div>
+@stop
+
+@section('content')
+<div class="card">
     <div class="card-body">
+        @include('layouts.alert-msg')
         <div class="row">
+            <!-- Manage Order -->
+            <div class="col-md-12">
+                <div class="card card-outline card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-cog"></i> Manage Order</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body row" style="padding-bottom: 0px;">
+
+                        @if(in_array($order->payment_status, ['Placed', 'Pending']))
+                        <div class="form-group col-md-3">
+                            <label>Change Order Status To</label>
+                            <select class="form-control select2">
+                                <option value="" disabled selected>Select Order Status</option>
+                                @foreach($orderStatus as $status)
+                                <option value="{{ $status }}">{{ $status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
+
+                        @if(in_array($order->payment_status, ['Started', 'Pending']))
+                        <div class="form-group col-md-3">
+                            <label>Change Payment Status To</label>
+                            <select class="form-control select2">
+                                <option value="" disabled selected>Select Order Status</option>
+                                @foreach($paymentStatus as $status)
+                                <option value="{{ $status }}">{{ $status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
+                        <div class="form-group col-md-12" style="margin-bottom: 0px;">
+                            <p class="text-sm text-danger"><strong>Note:</strong> Once you change order status to <strong>Completed/Failed/Rejected/Cancelled</strong> you want be able to add additional or material charge.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- User Details -->
             <div class="col-md-6">
@@ -34,7 +91,7 @@
                                 <tr><th>Address (Map)</th><td>{{ $order->user->address_lat }},{{ $order->user->address_long }}</td></tr>
                                 <tr>
                                     <th>Status</th>
-                                    <td><span class="badge badge-{{($order->user->status == "Active") ? 'success' : 'danger' }}">{{ $order->user->status }}</span></td>
+                                    <td>{{ generate_badge($order->user->status) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -60,6 +117,7 @@
                                 <tr><th>Name</th><td>{{ $order->provider->name }}</td></tr>
                                 <tr><th>Phone</th><td>{{ $order->provider->phone }}</td></tr>
                                 <tr><th>Email</th><td>{{ $order->provider->email }}</td></tr>
+                                <tr><th>Address</th><td>{{ $order->provider->address }}</td></tr>
                                 <tr>
                                     <th>Status</th>
                                     <td><span class="badge badge-{{($order->provider->status == "Active") ? 'success' : 'danger' }}">{{ $order->user->status }}</span></td>
@@ -68,6 +126,7 @@
                         </table>
                         @else
                         <h4>No Provider assigned yet !</h4>
+                        <button class="btn btn-success btn-sm" id="assignProviderBtn" data-toggle="modal" data-target="#assignProviderMdl">Assign Now</button>
                         @endif
                     </div>
                 </div>
@@ -156,8 +215,9 @@
                         <div class="row">
                             <div class="col-6">
                                 <p class="lead">Order Placed On : <strong>{{ date('d M Y (h:ia)', strtotime($order->created_at)) }}</strong></p>
+                                <p class="lead">Order Status : <strong>{{ $order->order_status }}</strong></p>
                                 <p class="lead">Payment Status: <strong>{{ $order->payment_status }}</strong></p>
-                                <p class="lead">Payment Type:</p>
+                                <p class="lead">Payment Type</p>
                                 @if($order->payment_type == "Cash")
                                 <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" alt="Cash" style="height: 55px;">
                                 @elseif($order->payment_type == "Upi")
@@ -210,7 +270,34 @@
         </div>
     </div>
 </div>
-@stop
 
-@section('content')
+<!-- Modal -->
+<div class="modal fade" id="assignProviderMdl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('admin.orders.detail', $order) }}" method="POST">
+            <div class="modal-header">
+                <h4 class="modal-title">Assign Service Provider</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @csrf
+                <input type="hidden" name="type" value="assign_provider">
+                <select name="provider_id" class="select2 form-control" required>
+                    <option value="" selected disabled>Select Provider</option>
+                    @foreach($providerList as $provider)
+                    <option value="{{ $provider->id }}">{{ $provider->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Assign Now</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
 @stop

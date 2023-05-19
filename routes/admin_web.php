@@ -30,6 +30,7 @@ Route::prefix(config('app.admin_path_name'))->name('admin.')->group(function () 
         Route::resource('products.services', ServiceController::class);
         Route::get('orders', [OrderController::class, 'index'])->name('orders');
         Route::get('orders/{order}', [OrderController::class, 'orderDetail'])->name('orders.detail');
+        Route::post('orders/{order}', [OrderController::class, 'updateOrderDetail']);
         Route::post('logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 

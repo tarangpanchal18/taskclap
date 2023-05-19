@@ -12,6 +12,22 @@ class Order extends Model
 {
     use HasFactory;
 
+    const PAYMENT_STATUS = [
+        'Started',
+        'Pending',
+        'Completed',
+        'Failed'
+    ];
+    const ORDER_STATUS = [
+        'Placed',
+        'Completed',
+        'Pending',
+        'Cancelled',
+        'Failed',
+        'Rejected'
+    ];
+
+
     protected function total(): Attribute{
         return Attribute::make(get: fn (string $value) => number_format($value, 2));
     }
