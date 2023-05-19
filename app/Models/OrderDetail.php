@@ -10,8 +10,6 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
-    protected $table = "orders_details";
-
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

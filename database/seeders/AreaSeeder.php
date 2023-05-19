@@ -28,6 +28,7 @@ class AreaSeeder extends Seeder
         foreach ($areas as $area) {
             DB::table('areas')->insert([
                 'name' => $area,
+                'pincode' => '380050',
                 'city_id' => 1,
                 'state_id' => 1,
                 'country_id' => 1,
