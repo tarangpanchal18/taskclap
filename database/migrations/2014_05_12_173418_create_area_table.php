@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('areas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('pincode');
             $table->foreignId('city_id')->constrained();
             $table->foreignId('state_id')->constrained();
             $table->foreignId('country_id')->constrained();
