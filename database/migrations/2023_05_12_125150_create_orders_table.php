@@ -37,6 +37,7 @@ return new class extends Migration
             $table->float('discount')->nullable()->comment('Promocode discount, Other discount');
             $table->float('tax')->nullable();
             $table->float('material_charge_amount_total')->nullable();
+            $table->float('additional_charge_amount_total')->nullable();
             $table->float('provider_pay_amount_total')->nullable();
             $table->float('system_earn_amount_total')->nullable();
             $table->float('subtotal')->comment('without taxes, discount, etc.');
