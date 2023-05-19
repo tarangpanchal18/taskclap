@@ -9,6 +9,38 @@ $(document).ready(function() {
     .catch( error => {
         console.error( error );
     });
+
+    //For Order Detail Page
+    $(".addMaterialCharge").click(function () {
+        var inputText = "";
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Material charge</label>';
+        inputText += '<input type="number" name="material_charge" class="form-control" required />';
+        inputText += '</div>';
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Material charge Description</label>';
+        inputText += '<textarea name="material_description" class="form-control" required></textarea>';
+        inputText += '</div>';
+        $(".chargeTypeBtn").html("Add Material Charge");
+        $("#chargeType").val("add_material_charge");
+        $(".chargeModalInput").html(inputText);
+        $("#addChargesMdl").modal("show");
+    });
+    $(".addAdditionalCharge").click(function () {
+        var inputText = "";
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Additional charge</label>';
+        inputText += '<input type="number" name="additional_charge" class="form-control" required />';
+        inputText += '</div>';
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Additional charge Description</label>';
+        inputText += '<textarea name="additional_charge_description" class="form-control" required></textarea>';
+        inputText += '</div>';
+        $(".chargeTypeBtn").html("Add Additional Charge");
+        $("#chargeType").val("add_additional_charge");
+        $(".chargeModalInput").html(inputText);
+        $("#addChargesMdl").modal("show");
+    });
 });
 
 /**

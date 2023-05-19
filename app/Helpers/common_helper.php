@@ -1,5 +1,9 @@
 <?php
 
+function formatNumber ($value, $decimal = 2) {
+    return number_format($value, $decimal);
+}
+
 function generate_badge($label) {
     switch ($label) {
         case 'Started':

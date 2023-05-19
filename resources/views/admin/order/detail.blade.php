@@ -29,6 +29,7 @@
         @include('layouts.alert-msg')
         <div class="row">
             <!-- Manage Order -->
+            @if(in_array($order->order_status, ['Placed', 'Pending']))
             <div class="col-md-12">
                 <div class="card card-outline card-danger">
                     <div class="card-header">
@@ -39,12 +40,14 @@
                             </button>
                         </div>
                     </div>
+                    <form action="{{ route('admin.orders.detail', $order) }}" method="post" class="form-group">
                     <div class="card-body row" style="padding-bottom: 0px;">
-
-                        @if(in_array($order->payment_status, ['Placed', 'Pending']))
+                        @csrf
+                        <input type="hidden" name="type" value="order_status">
+                        @if(in_array($order->order_status, ['Placed', 'Pending']))
                         <div class="form-group col-md-3">
                             <label>Change Order Status To</label>
-                            <select class="form-control select2">
+                            <select class="form-control select2" name="order_status">
                                 <option value="" disabled selected>Select Order Status</option>
                                 @foreach($orderStatus as $status)
                                 <option value="{{ $status }}">{{ $status }}</option>
@@ -56,20 +59,38 @@
                         @if(in_array($order->payment_status, ['Started', 'Pending']))
                         <div class="form-group col-md-3">
                             <label>Change Payment Status To</label>
-                            <select class="form-control select2">
-                                <option value="" disabled selected>Select Order Status</option>
+                            <select class="form-control select2" name="payment_status">
+                                <option value="" disabled selected>Select Payment Status</option>
                                 @foreach($paymentStatus as $status)
                                 <option value="{{ $status }}">{{ $status }}</option>
                                 @endforeach
                             </select>
                         </div>
                         @endif
-                        <div class="form-group col-md-12" style="margin-bottom: 0px;">
-                            <p class="text-sm text-danger"><strong>Note:</strong> Once you change order status to <strong>Completed/Failed/Rejected/Cancelled</strong> you want be able to add additional or material charge.</p>
+
+                        @if(in_array($order->payment_status, ['Started', 'Pending']))
+                        <div class="form-group col-md-3">
+                            <label>Payment Type</label>
+                            <select class="form-control select2" name="payment_type">
+                                <option value="" disabled selected>Select Payment Type</option>
+                                @foreach(['Upi', 'NetBanking', 'Cash'] as $status)
+                                <option value="{{ $status }}">{{ $status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
+
+                        <div class="form-group col-md-3">
+                            <label>&nbsp;</label>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-default" value="Change Status">
+                            </div>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
+            @endif
 
             <!-- User Details -->
             <div class="col-md-6">
@@ -195,6 +216,9 @@
                                             <th>Warranty</th>
                                             <th>Price</th>
                                             <th>Subtotal</th>
+                                            @if(in_array($order->order_status, ['Placed', 'Pending']))
+                                            <th>Action</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -205,6 +229,16 @@
                                             <td>{{ $orderDetail->warranty }} Days</td>
                                             <td>₹ {{ $orderDetail->product_price }}</td>
                                             <td>₹ {{ $orderDetail->product_price }}</td>
+                                            @if(in_array($order->order_status, ['Placed', 'Pending']))
+                                            <td>
+                                                @if($orderDetail->material_charge === null)
+                                                <button class="btn btn-sm btn-default addMaterialCharge">Add Material Charge</button><br>
+                                                @endif
+                                                @if($orderDetail->additional_charge === null)
+                                                <button class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charge</button>
+                                                @endif
+                                            </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -239,24 +273,24 @@
                                                 <td>₹ {{ $order->subtotal }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Material Total</th>
-                                                <td>₹ {{ ($order->material_charge_amount_total) ? $order->material_charge_amount_total : "0.00" }}</td>
+                                                <th>Material Charges Total</th>
+                                                <td>₹ {{ ($order->material_charge_amount_total) ? formatNumber($order->material_charge_amount_total) : "0.00" }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Additional Total</th>
-                                                <td>₹ {{ ($order->orderDetail[0]->additional_charge) ? $order->orderDetail[0]->additional_charge : "0.00" }}</td>
+                                                <th>Additional Charges Total</th>
+                                                <td>₹ {{ ($order->additional_charge_amount_total) ? formatNumber($order->additional_charge_amount_total) : "0.00" }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount</th>
-                                                <td>₹ {{ ($order->discount) ? $order->discount : "0.00" }}</td>
+                                                <td>₹ {{ ($order->discount) ? formatNumber($order->discount) : "0.00" }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Tax</th>
-                                                <td>₹ {{ ($order->tax) ? $order->tax : "0.00" }}</td>
+                                                <th>Tax (0%)</th>
+                                                <td>₹ {{ ($order->tax) ? formatNumber($order->tax) : "0.00" }}</td>
                                             </tr>
                                             <tr style="background: rgba(0,0,0,.05);">
                                                 <th>Total:</th>
-                                                <td>₹ {{ $order->total }}</td>
+                                                <td><strong>₹ {{ $order->total }}</strong></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -295,6 +329,29 @@
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Assign Now</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addChargesMdl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('admin.orders.detail', $order) }}" method="POST">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Charges Detail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @csrf
+                <input type="hidden" id="chargeType" name="type" value="">
+                <div class="chargeModalInput"></div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary chargeTypeBtn"></button>
             </div>
         </form>
         </div>

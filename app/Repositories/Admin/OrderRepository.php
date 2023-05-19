@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Support\Facades\DB;
 
 class OrderRepository
@@ -20,6 +21,11 @@ class OrderRepository
     public function update($id, array $newDetails)
     {
         return Order::whereId($id)->update($newDetails);
+    }
+
+    public function updateOrderDetail($id, array $newDetails)
+    {
+        return OrderDetail::where('order_id', $id)->update($newDetails);
     }
 
     public function delete($id)
