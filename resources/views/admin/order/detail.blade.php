@@ -54,6 +54,7 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if($order->provider)
                         <table class="table table-bordered">
                             <tbody>
                                 <tr><th>Name</th><td>{{ $order->provider->name }}</td></tr>
@@ -65,11 +66,14 @@
                                 </tr>
                             </tbody>
                         </table>
+                        @else
+                        <h4>No Provider assigned yet !</h4>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Order Details -->
+            <!-- Order Details
             <div class="col-md-12">
                 <div class="card card-outline card-info">
                     <div class="card-header">
@@ -108,7 +112,7 @@
                     </div>
                     @endforeach
                 </div>
-            </div>
+            </div> -->
 
             <!-- Invoice Details -->
              <div class="col-md-12">
@@ -122,47 +126,28 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 6em;">
                             <div class="col-12 table-responsive">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>Qty</th>
                                             <th>Product</th>
-                                            <th>Serial #</th>
-                                            <th>Description</th>
+                                            <th>Warranty</th>
+                                            <th>Price</th>
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($order->orderDetail as $orderDetail)
                                         <tr>
                                             <td>1</td>
-                                            <td>Call of Duty</td>
-                                            <td>455-981-221</td>
-                                            <td>El snort testosterone trophy driving gloves handsome</td>
-                                            <td>$64.50</td>
+                                            <td>{{ $orderDetail->product_title}}</td>
+                                            <td>{{ $orderDetail->warranty }} Days</td>
+                                            <td>₹ {{ $orderDetail->product_price }}</td>
+                                            <td>₹ {{ $orderDetail->product_price }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Need for Speed IV</td>
-                                            <td>247-925-726</td>
-                                            <td>Wes Anderson umami biodiesel</td>
-                                            <td>$50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Monsters DVD</td>
-                                            <td>735-845-642</td>
-                                            <td>Terry Richardson helvetica tousled street art master</td>
-                                            <td>$10.70</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Grown Ups Blue Ray</td>
-                                            <td>422-568-642</td>
-                                            <td>Tousled lomo letterpress</td>
-                                            <td>$25.99</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -170,13 +155,20 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <p class="lead">Payment Methods:</p>
-                                <img src="https://adminlte.io/themes/v3/dist/img/credit/visa.png" alt="Visa">
-                                <img src="https://adminlte.io/themes/v3/dist/img/credit/mastercard.png" alt="Mastercard">
-                                <img src="https://adminlte.io/themes/v3/dist/img/credit/american-express.png" alt="American Express">
-                                <img src="https://adminlte.io/themes/v3/dist/img/credit/paypal2.png" alt="Paypal">
+                                <p class="lead">Order Placed On : <strong>{{ date('d M Y (h:ia)', strtotime($order->created_at)) }}</strong></p>
+                                <p class="lead">Payment Status: <strong>{{ $order->payment_status }}</strong></p>
+                                <p class="lead">Payment Type:</p>
+                                @if($order->payment_type == "Cash")
+                                <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" alt="Cash" style="height: 55px;">
+                                @elseif($order->payment_type == "Upi")
+                                <img src="https://www.vectorlogo.zone/logos/upi/upi-ar21.png" alt="UPI" style="height: 55px;">
+                                @elseif($order->payment_type == "NetBanking")
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKceKsLy4OFxVl6N0Qxh577deTABrBKYoxMPmmoY6ifg&usqp=CAU&ec=48665698" alt="UPI" style="height: 55px;">
+                                @else
+                                <img src="https://t3.ftcdn.net/jpg/04/87/13/40/360_F_487134056_ttJAg56QAcB15RKhdOQUKPXGxwGt5xqB.jpg" alt="UPI" style="height: 55px;">
+                                @endif
                                 <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem</p>
-                                <p class="lead">Order Placed On : {{ $order->created_at }}</p>
+
                             </div>
                             <div class="col-6">
                                 <div class="table-responsive">
@@ -188,11 +180,11 @@
                                             </tr>
                                             <tr>
                                                 <th>Material Total</th>
-                                                <td>₹ {{ $order->material_charge_amount_total }}</td>
+                                                <td>₹ {{ ($order->material_charge_amount_total) ? $order->material_charge_amount_total : "0.00" }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Additional Total</th>
-                                                <td>₹ {{ $order->orderDetail[0]->additional_charge }}</td>
+                                                <td>₹ {{ ($order->orderDetail[0]->additional_charge) ? $order->orderDetail[0]->additional_charge : "0.00" }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Discount</th>
@@ -202,7 +194,7 @@
                                                 <th>Tax</th>
                                                 <td>₹ {{ ($order->tax) ? $order->tax : "0.00" }}</td>
                                             </tr>
-                                            <tr>
+                                            <tr style="background: rgba(0,0,0,.05);">
                                                 <th>Total:</th>
                                                 <td>₹ {{ $order->total }}</td>
                                             </tr>
