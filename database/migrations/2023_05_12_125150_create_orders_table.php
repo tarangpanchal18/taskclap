@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('order_id');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('provider_id')->constrained()->nullable();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('sub_category_id')->references('id')->on('categories');
             $table->string('name');
             $table->string('phone');
             $table->string('email')->nullable();
