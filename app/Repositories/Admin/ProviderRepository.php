@@ -15,10 +15,10 @@ class ProviderRepository implements MasterInterface
     public function getRaw($filterData = "")
     {
         $query = Provider::query();
-        if ($filterData['status']) {
+        if ($filterData && $filterData['status']) {
             $query = $query->where('status', $filterData['status']);
         }
-        if ($filterData['name']) {
+        if ($filterData && $filterData['name']) {
             $query = $query->where('name', 'like', '%'.$filterData['name'] .'%');
         }
 

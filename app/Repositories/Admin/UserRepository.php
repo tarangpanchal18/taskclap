@@ -15,7 +15,7 @@ class UserRepository implements MasterInterface
     public function getRaw($filterData = "")
     {
         $query = User::query();
-        if ($filterData['status']) {
+        if ($filterData && $filterData['status']) {
             $query = $query->where('status', $filterData['status']);
         }
 
