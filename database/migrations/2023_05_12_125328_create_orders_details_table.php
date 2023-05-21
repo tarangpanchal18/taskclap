@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('product_description');
             $table->float('product_strike_price', 8, 2);
             $table->float('material_charge')->nullable();
+            $table->float('material_charge_actual')->nullable();
             $table->text('material_description')->nullable();
             $table->float('additional_charge')->nullable();
             $table->text('additional_charge_description')->nullable();
