@@ -77,12 +77,14 @@ class OrderController extends Controller
     {
         if ($chargeType == "material") {
             $request->validate([
-                'material_charge' => 'required|int',
+                'material_charge' => 'required|int|gt:0',
+                'material_charge_actual' => 'required|int|gt:0',
                 'material_description' => 'required|min:3|max:500',
             ]);
 
             $this->orderRepository->updateOrderDetail($order->id, [
                 'material_charge' => $request->material_charge,
+                'material_charge_actual' => $request->material_charge_actual,
                 'material_description' => $request->material_description,
             ]);
             $this->orderRepository->update($order->id, [
@@ -91,7 +93,7 @@ class OrderController extends Controller
             ]);
         } else {
             $request->validate([
-                'additional_charge' => 'required|int',
+                'additional_charge' => 'required|int|gt:0',
                 'additional_charge_description' => 'required|min:3|max:500',
             ]);
 

@@ -18,6 +18,10 @@ $(document).ready(function() {
         inputText += '<input type="number" name="material_charge" class="form-control" required />';
         inputText += '</div>';
         inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Material charge (Actual)</label>';
+        inputText += '<input type="number" name="material_charge_actual" class="form-control" required />';
+        inputText += '</div>';
+        inputText += '<div class="form-group col-md-12">';
         inputText += '<label>Material charge Description</label>';
         inputText += '<textarea name="material_description" class="form-control" required></textarea>';
         inputText += '</div>';

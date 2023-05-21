@@ -96,7 +96,7 @@
             <div class="col-md-6">
                 <div class="card card-outline card-primary">
                     <div class="card-header">
-                        <h3 class="card-title"><i class="fa fa-user"></i> User Detail</h3>
+                        <h3 class="card-title"><i class="fa fa-user"></i> Customer Detail</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -110,10 +110,6 @@
                                 <tr><th>Phone</th><td>{{ $order->phone }}</td></tr>
                                 <tr><th>Email</th><td>{{ $order->email }}</td></tr>
                                 <tr><th>Address (Map)</th><td>{{ $order->user->address_lat }},{{ $order->user->address_long }}</td></tr>
-                                <tr>
-                                    <th>Status</th>
-                                    <td>{{ generate_badge($order->user->status) }}</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -139,10 +135,6 @@
                                 <tr><th>Phone</th><td>{{ $order->provider->phone }}</td></tr>
                                 <tr><th>Email</th><td>{{ $order->provider->email }}</td></tr>
                                 <tr><th>Address</th><td>{{ $order->provider->address }}</td></tr>
-                                <tr>
-                                    <th>Status</th>
-                                    <td><span class="badge badge-{{($order->provider->status == "Active") ? 'success' : 'danger' }}">{{ $order->user->status }}</span></td>
-                                </tr>
                             </tbody>
                         </table>
                         @else
@@ -212,11 +204,11 @@
                                     <thead>
                                         <tr>
                                             <th>Qty</th>
-                                            <th>Product</th>
-                                            <th>Warranty</th>
-                                            <th>Price</th>
-                                            <th>Subtotal</th>
-                                            @if(in_array($order->order_status, ['Placed', 'Pending']))
+                                            <th style="width: 20%;">Product</th>
+                                            <th style="width: 60%">Description</th>
+                                            <th style="width: 10%;">Warranty</th>
+                                            <th style="width: 10%;">Price</th>
+                                            @if((empty($orderDetail->material_charge) && empty($orderDetail->additional_charge)))
                                             <th>Action</th>
                                             @endif
                                         </tr>
@@ -225,21 +217,39 @@
                                         @foreach ($order->orderDetail as $orderDetail)
                                         <tr>
                                             <td>1</td>
-                                            <td>{{ $orderDetail->product_title}}</td>
+                                            <td>{{ $orderDetail->product_title }}</td>
+                                            <td>-</td>
                                             <td>{{ $orderDetail->warranty }} Days</td>
                                             <td>₹ {{ $orderDetail->product_price }}</td>
-                                            <td>₹ {{ $orderDetail->product_price }}</td>
-                                            @if(in_array($order->order_status, ['Placed', 'Pending']))
+                                            @if((empty($orderDetail->material_charge) && empty($orderDetail->additional_charge)))
                                             <td>
                                                 @if($orderDetail->material_charge === null)
-                                                <button class="btn btn-sm btn-default addMaterialCharge">Add Material Charge</button><br>
+                                                <button class="btn btn-sm btn-default addMaterialCharge">Add Material Charges</button><br>
                                                 @endif
                                                 @if($orderDetail->additional_charge === null)
-                                                <button class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charge</button>
+                                                <button class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charges</button>
                                                 @endif
                                             </td>
                                             @endif
                                         </tr>
+                                        @if($orderDetail->material_description)
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Material Charges</td>
+                                            <td>{{ $orderDetail->material_description }}</td>
+                                            <td>{{ $orderDetail->warranty }} Days</td>
+                                            <td>₹ {{ $orderDetail->material_charge }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($orderDetail->additional_charge_description)
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Additional Charges</td>
+                                            <td>{{ $orderDetail->additional_charge_description }}</td>
+                                            <td>{{ $orderDetail->warranty }} Days</td>
+                                            <td>₹ {{ $orderDetail->additional_charge }}</td>
+                                        </tr>
+                                        @endif
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -261,7 +271,7 @@
                                 @else
                                 <img src="https://t3.ftcdn.net/jpg/04/87/13/40/360_F_487134056_ttJAg56QAcB15RKhdOQUKPXGxwGt5xqB.jpg" alt="UPI" style="height: 55px;">
                                 @endif
-                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem</p>
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;"><strong>Notes: </strong>Warranty will be covered only on changed parts.</p>
 
                             </div>
                             <div class="col-6">
