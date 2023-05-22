@@ -30,6 +30,10 @@ class UserReqeust extends FormRequest
             'name' => 'required|min:3|max:100',
             'email' => ['required','min:3','max:100','email:rfc',Rule::unique('users', 'email')->ignore($this->user->id) ],
             'phone' => 'required|numeric|digits_between:9,12',
+            'address' => 'required|min:3|max:1000',
+            'address_lat' => 'required|decimal:2,16',
+            'address_long' => 'required|decimal:2,16',
+            'is_blocked' => 'required',
             'status' => 'required',
         ];
 
