@@ -1,11 +1,11 @@
 @extends('adminlte::page')
-@section('title', $action . ' Users')
+@section('title', $action . ' Customer')
 @section('plugins.Sweetalert2', true)
 @section('plugins.Select2', true)
 @section('plugins.AdminCustom', true)
 
 @section('content_header')
-    <h1>{{ $action }} User</h1>
+    <h1>{{ $action }} Customer</h1>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
                 <div class="float-right">
                     <a href="{{ route('admin.users.index') }}" class="btn btn-default"><i class="fa fa-arrow-alt-circle-left"></i> Back</a>
                 </div>
-                <p>Please add appropriate details to {{ $action }} User</p>
+                <p>Please add appropriate details to {{ $action }} Customer</p>
             </div>
             <div class="card-body">
 

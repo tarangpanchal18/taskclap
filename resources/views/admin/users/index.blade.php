@@ -6,7 +6,7 @@
 @section('plugins.AdminCustom', true)
 
 @section('content_header')
-    <h1>User Module</h1>
+    <h1>Customer Module</h1>
 @stop
 
 @section('content')
