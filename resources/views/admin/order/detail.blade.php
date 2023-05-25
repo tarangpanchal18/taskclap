@@ -208,48 +208,48 @@
                                             <th style="width: 60%">Description</th>
                                             <th style="width: 10%;">Warranty</th>
                                             <th style="width: 10%;">Price</th>
-                                            @if((empty($orderDetail->material_charge) && empty($orderDetail->additional_charge)))
+                                            @if((empty($orderDetail->material_charge) || empty($orderDetail->additional_charge)))
                                             <th>Action</th>
                                             @endif
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($order->orderDetail as $orderDetail)
-                                        <tr>
-                                            <td>1</td>
-                                            <td>{{ $orderDetail->product_title }}</td>
-                                            <td>-</td>
-                                            <td>{{ $orderDetail->warranty }} Days</td>
-                                            <td>₹ {{ $orderDetail->product_price }}</td>
-                                            @if((empty($orderDetail->material_charge) && empty($orderDetail->additional_charge)))
-                                            <td>
-                                                @if($orderDetail->material_charge === null)
-                                                <button class="btn btn-sm btn-default addMaterialCharge">Add Material Charges</button><br>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>{{ $orderDetail->product_title }}</td>
+                                                <td>-</td>
+                                                <td>{{ $orderDetail->warranty }} Days</td>
+                                                <td>₹ {{ $orderDetail->product_price }}</td>
+                                                @if((empty($orderDetail->material_charge) || empty($orderDetail->additional_charge)))
+                                                <td>
+                                                    @if($orderDetail->material_charge === null)
+                                                    <button class="btn btn-sm btn-default addMaterialCharge">Add Material Charges</button><br>
+                                                    @endif
+                                                    @if($orderDetail->additional_charge === null)
+                                                    <button class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charges</button>
+                                                    @endif
+                                                </td>
                                                 @endif
-                                                @if($orderDetail->additional_charge === null)
-                                                <button class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charges</button>
-                                                @endif
-                                            </td>
+                                            </tr>
+                                            @if($orderDetail->material_description)
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Material Charges</td>
+                                                <td>{{ $orderDetail->material_description }}</td>
+                                                <td>{{ $orderDetail->warranty }} Days</td>
+                                                <td>₹ {{ $orderDetail->material_charge }}</td>
+                                            </tr>
                                             @endif
-                                        </tr>
-                                        @if($orderDetail->material_description)
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Material Charges</td>
-                                            <td>{{ $orderDetail->material_description }}</td>
-                                            <td>{{ $orderDetail->warranty }} Days</td>
-                                            <td>₹ {{ $orderDetail->material_charge }}</td>
-                                        </tr>
-                                        @endif
-                                        @if($orderDetail->additional_charge_description)
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Additional Charges</td>
-                                            <td>{{ $orderDetail->additional_charge_description }}</td>
-                                            <td>{{ $orderDetail->warranty }} Days</td>
-                                            <td>₹ {{ $orderDetail->additional_charge }}</td>
-                                        </tr>
-                                        @endif
+                                            @if($orderDetail->additional_charge_description)
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Additional Charges</td>
+                                                <td>{{ $orderDetail->additional_charge_description }}</td>
+                                                <td>{{ $orderDetail->warranty }} Days</td>
+                                                <td>₹ {{ $orderDetail->additional_charge }}</td>
+                                            </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

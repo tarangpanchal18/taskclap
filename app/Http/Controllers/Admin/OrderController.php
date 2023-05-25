@@ -56,7 +56,7 @@ class OrderController extends Controller
             $msg = $this->addCharges($request, $order, 'additional');
         }
         if ($request->type == "order_status") {
-            $msg = $this->updateStatus($request, $order, 'additional');
+            $msg = $this->updateStatus($request, $order);
         }
 
 
@@ -119,5 +119,20 @@ class OrderController extends Controller
         ]));
 
         return "Order Status Updated Successfully !";
+    }
+
+    public function providerPayReport()
+    {
+        //
+    }
+
+    public function paymentReport(Request $request)
+    {
+        $paymentReportData = $this->orderRepository->getPaymentReportData($request->all());
+
+        return view('admin.report.payment', [
+            'params' => $request->all(),
+            'pageData' => $paymentReportData
+        ]);
     }
 }

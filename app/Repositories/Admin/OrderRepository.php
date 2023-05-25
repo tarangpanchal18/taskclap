@@ -32,4 +32,27 @@ class OrderRepository
     {
         Order::destroy($id);
     }
+
+    public function getPaymentReportData($filterParams = array())
+    {
+        $ordersQuery = Order::with([
+            'orderDetail' => function ($query) {
+                return $query->select('id', 'order_id', 'product_strike_price', 'material_charge', 'material_charge_actual', 'material_description', 'additional_charge',	'product_price', 'product_commission', 'created_at', 'updated_at');
+            },
+            'provider' => function ($query) {
+                return $query->select('id', 'name', 'phone');
+            }
+        ])->where([
+            'payment_status' => 'Completed',
+            'order_status' =>'completed'
+        ]);
+
+        if(! empty($filterParams['order'])) {
+            $ordersQuery->where('order_id', $filterParams['order']);
+        }
+
+        $ordersData = $ordersQuery->paginate(15);
+
+        return $ordersData;
+    }
 }

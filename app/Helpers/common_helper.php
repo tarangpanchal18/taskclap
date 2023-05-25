@@ -26,3 +26,27 @@ function generate_badge($label) {
         default: echo "<span class='badge badge-primary'> N/A <span>"; break;
     }
 }
+
+/**
+ * Returns the order commission based on order object
+ * @param Object $order
+ * @return float
+ *
+ */
+function getOrderCommission($order): float
+{
+    if (! $order->orderDetail) {
+        return 0;
+    }
+    $total = $materialCharge = $additionalCharge = $commissionAmt = 0;
+    foreach ($order->orderDetail as $orderDetail) {
+        $total += $orderDetail->product_price;
+        $materialCharge += $orderDetail->material_charge_actual;
+        $additionalCharge += $orderDetail->additional_charge;
+        //Finding Commission Amount
+        $baseAmount = ($orderDetail->product_price + $orderDetail->additional_charge + ($orderDetail->material_charge - $orderDetail->material_charge_actual));
+        $commissionAmt += ($baseAmount * $orderDetail->product_commission) / 100;
+    }
+
+    return number_format((float)$commissionAmt, 2);
+}

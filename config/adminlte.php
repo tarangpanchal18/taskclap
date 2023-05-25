@@ -343,6 +343,20 @@ return [
             'icon' => 'fas fa-truck',
         ],
         [
+            'text'    => 'Reports',
+            'icon'    => 'fas fa-regular fa-folder-open',
+            'submenu' => [
+                [
+                    'text' => 'Payment Report',
+                    'url'  => env('ADMIN_PATH') . '/report/payment',
+                ],
+                [
+                    'text' => 'Provider Pay Amount',
+                    'url'  => env('ADMIN_PATH') . '/report/provider-pay',
+                ],
+            ],
+        ],
+        [
             'text' => 'Website Banner',
             'url'  => env('ADMIN_PATH') . '/banners',
             'icon' => 'fas fa-pager',
