@@ -1,11 +1,11 @@
 @extends('adminlte::page')
-@section('title', $action . ' Users')
+@section('title', $action . ' Customer')
 @section('plugins.Sweetalert2', true)
 @section('plugins.Select2', true)
 @section('plugins.AdminCustom', true)
 
 @section('content_header')
-    <h1>{{ $action }} User</h1>
+    <h1>{{ $action }} Customer</h1>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
                 <div class="float-right">
                     <a href="{{ route('admin.users.index') }}" class="btn btn-default"><i class="fa fa-arrow-alt-circle-left"></i> Back</a>
                 </div>
-                <p>Please add appropriate details to {{ $action }} User</p>
+                <p>Please add appropriate details to {{ $action }} Customer</p>
             </div>
             <div class="card-body">
 
@@ -34,6 +34,33 @@
                     @else
                     <x-form-input name="password" type="password" label="Password" />
                     @endif
+
+                    <div class="form-group col-md-12">
+                        <label>Set location on map</label>
+                        <input id="map-canvas-input" class="controls form-control" style="width: 50%;margin-left:15em;border-color:black;box-shadow:0 0 21px #000000a3;" type="text" placeholder="Search Box" />
+                        <div id="map-canvas" style="min-height: 500px;"></div>
+                    </div>
+
+                    <x-form-input name="address_lat" id="address_lat" readonly="true" type="text" label="Address Latitude" placeholder="Enter Address Latitude" value="{{ $user->address_lat }}" />
+
+                    <x-form-input name="address_long" id="address_long" readonly="true" type="text" label="Address Longitude" placeholder="Enter Address Longitude" value="{{ $user->address_long }}" />
+
+                    <x-form-textarea size="12" name="address" label="Address" placeholder="Enter Address" value="{{ $user->address }}" />
+
+                    <div class="form-group col-md-6">
+                        <label>Is Blocked ?</label>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input class="custom-control-input custom-control-input-success" type="radio" id="statusYes" value="Yes" {{ $user->is_blocked == "Yes" ? 'checked' : '' }} name="is_blocked">
+                                <label for="statusYes" class="custom-control-label">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input class="custom-control-input custom-control-input-danger" type="radio" id="statusNo" value="No" {{ $user->is_blocked == "No" ? 'checked' : '' }} name="is_blocked">
+                                <label for="statusNo" class="custom-control-label">No</label>
+                            </div>
+                        </div>
+                        @error('status')<p classs="text-danger">{{ $message  }}</p>@enderror
+                    </div>
 
                     <div class="form-group col-md-6">
                         <label>Status</label>
@@ -59,3 +86,8 @@
         </form>
     </div>
 @stop
+
+@section('js')
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{config('app.google_map_key')}}&callback=initAutocomplete&libraries=places" defer ></script>
+@endsection

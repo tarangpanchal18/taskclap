@@ -29,13 +29,53 @@
 
                 <x-form-input name="name" type="text" label="Provider Name" value="{{ $provider->name }}" />
 
+                <div class="form-group col-md-6">
+                    <label>Categories Serve</label>
+                    <select name="category_id[]" class="form-control select2" multiple="" tabindex="-1" aria-hidden="true">
+                        @foreach($categoryData as $category)
+                            @if($provider->category_id && in_array("$category->id" , $provider->category_id))
+                            <option selected value="{{ $category->id }}">{{ $category->name }}</option>
+                            @else
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('category_id')<p style="color: #dc3545;font-style: italic">{{ $message }}</p> @enderror
+                </div>
+
                 <x-form-input name="email" type="email" label="Provider Email" value="{{ $provider->email }}" />
 
                 <x-form-input name="phone" type="phone" label="Provider Phone" value="{{ $provider->phone }}" />
 
+                <x-form-input name="vehicle_number" type="text" label="Provider Vehicle Number" value="{{ $provider->vehicle_number }}" />
+
                 <x-form-textarea name="address" label="Address" value="{{ $provider->address }}" size="12" />
 
                 <x-form-textarea name="notes" label="Notes" value="{{ $provider->notes }}" size="12" />
+
+                @if ($provider->image)
+                <div class="form-group col-md-12">
+                    <label>Preview Image</label><br>
+                    <img style="width: 150px;height:150px;" src="{{ asset('storage/uploads/provider/' . $provider->image) }}" alt="{{ $provider->name }}" class="admin-preview img-thumbnail">
+                </div>
+                @endif
+                <div class="form-group col-md-12">
+                    <label>Image</label>
+                    <input type="file" class="form-control" name="image">
+                    @error('image')<p classs="text-danger">{{ $message }}</p>@enderror
+                </div>
+
+                @if ($provider->id_proof)
+                <div class="form-group col-md-12">
+                    <label>Preview Id Proof</label><br>
+                    <img style="width: 250px;height:150px;" src="{{ asset('storage/uploads/provider/documents/' . $provider->id_proof) }}" alt="{{ $provider->name }}" class="admin-preview img-thumbnail">
+                </div>
+                @endif
+                <div class="form-group col-md-12">
+                    <label>Id Proof</label>
+                    <input type="file" class="form-control" name="id_proof">
+                    @error('id_proof')<p classs="text-danger">{{ $message }}</p>@enderror
+                </div>
 
                 <div class="form-group col-md-6">
                     <label>Status</label>
@@ -53,7 +93,7 @@
                             <label for="statusInActive" class="custom-control-label">InActive</label>
                         </div>
                     </div>
-                    @error('status')<p classs="text-danger">{{ $message }}</p>@enderror
+                    @error('status')<p style="color: #dc3545;font-style: italic" classs="text-danger">{{ $message }}</p>@enderror
                 </div>
 
             </div>

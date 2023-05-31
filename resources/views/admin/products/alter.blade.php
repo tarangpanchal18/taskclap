@@ -10,6 +10,9 @@
 
 @section('content')
     <div class="card">
+
+        @include('layouts.alert-msg')
+
         <form action="{{ $actionUrl }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if ($action != 'Add') @method('PUT') @endif
@@ -58,6 +61,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <x-form-input class="form-control primaryFieldInput" size="6 primaryField" name="strike_price" type="text" label="Strike Price" value="{{ ($product->strike_price) ? $product->strike_price : 0 }}" />
 
                     <x-form-input class="form-control primaryFieldInput" size="6 primaryField" name="price" type="text" label="Price" value="{{ ($product->price) ? $product->price : 0 }}" />
 

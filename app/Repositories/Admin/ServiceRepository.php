@@ -19,7 +19,7 @@ class ServiceRepository implements MasterInterface
     public function getRaw($filterData = "")
     {
         $query = Product::where('parent_id', $this->productId);
-        if ($filterData['category']) {
+        if ($filterData && $filterData['category']) {
             $query = $query->where('category_id', $filterData['category']);
         }
 

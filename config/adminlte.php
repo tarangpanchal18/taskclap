@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Laravel Admin',
+    'title' => 'TaskClap Admin',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Lara</b> Admin',
+    'logo' => '<b>Task Clap</b> Admin',
     'logo_img' => '',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -318,7 +318,7 @@ return [
             'icon' => 'fab fa-dashcube',
         ],
         [
-            'text' => 'Users List',
+            'text' => 'Customers List',
             'url'  => env('ADMIN_PATH') . '/users',
             'icon' => 'fas fa-fw fa-user',
         ],
@@ -336,6 +336,25 @@ return [
             'text' => 'Product',
             'url'  => env('ADMIN_PATH') . '/products',
             'icon' => 'fas fa-archive',
+        ],
+        [
+            'text' => 'Orders',
+            'url'  => env('ADMIN_PATH') . '/orders',
+            'icon' => 'fas fa-truck',
+        ],
+        [
+            'text'    => 'Reports',
+            'icon'    => 'fas fa-regular fa-folder-open',
+            'submenu' => [
+                [
+                    'text' => 'Payment Report',
+                    'url'  => env('ADMIN_PATH') . '/report/payment',
+                ],
+                [
+                    'text' => 'Provider Pay Amount',
+                    'url'  => env('ADMIN_PATH') . '/report/provider-pay',
+                ],
+            ],
         ],
         [
             'text' => 'Website Banner',

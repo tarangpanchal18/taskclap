@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProviderRequest;
 use App\Models\Provider;
+use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ProviderRepository;
+use App\Services\FilesService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,7 +15,11 @@ use Yajra\DataTables\DataTables;
 
 class ProviderController extends Controller
 {
-    public function __construct(private ProviderRepository $providerRepository)
+    public function __construct(
+        private CategoryRepository $categoryRepository,
+        private ProviderRepository $providerRepository,
+        private FilesService $fileService
+    )
     {
         $this->providerRepository = $providerRepository;
     }
@@ -51,28 +57,69 @@ class ProviderController extends Controller
         return view('admin.provider.alter', [
             'action' => 'Add',
             'actionUrl' => route('admin.providers.store'),
+            'categoryData' => $this->categoryRepository->getChildCategory()->where('status', 'Active'),
         ]);
     }
 
     public function store(ProviderRequest $request)
     {
-        $this->providerRepository->create($request->validated());
+        $validated = $request->validated();
+        if ($request->file('image')) {
+            $validated['image'] = $this->fileService->generateFileName('pro', $request->file('image')->getClientOriginalExtension());
+            $this->fileService->uploadFile(
+                $request->file('image'),
+                Provider::UPLOAD_PATH,
+                $validated['image']
+            );
+        }
+        if ($request->file('id_proof')) {
+            $validated['id_proof'] = $this->fileService->generateFileName('doc-', $request->file('id_proof')->getClientOriginalExtension());
+            $this->fileService->uploadFile(
+                $request->file('id_proof'),
+                Provider::UPLOAD_PATH_DOC,
+                $validated['id_proof']
+            );
+        }
+        $this->providerRepository->create($validated);
+
         return redirect(route('admin.providers.index'))->with('success', 'Data Created Successfully !');
     }
 
     public function edit(Provider $provider)
     {
         return view('admin.provider.alter', [
-            'provider' => $provider,
             'action' => 'Edit',
+            'provider' => $provider,
             'actionUrl' => route('admin.providers.update', $provider),
+            'categoryData' => $this->categoryRepository->getChildCategory()->where('status', 'Active'),
         ]);
     }
 
 
     public function update(ProviderRequest $request, Provider $provider)
     {
-        $this->providerRepository->update($provider->id, $request->validated());
+        $validated = $request->validated();
+        if ($request->file('image')) {
+            $this->fileService->removeFile(Provider::UPLOAD_PATH, $provider->image);
+            $validated['image'] = $this->fileService->generateFileName('pro', $request->file('image')->getClientOriginalExtension());
+            $this->fileService->uploadFile(
+                $request->file('image'),
+                Provider::UPLOAD_PATH,
+                $validated['image']
+            );
+        }
+
+        if ($request->file('id_proof')) {
+            $this->fileService->removeFile(Provider::UPLOAD_PATH_DOC, $provider->image);
+            $validated['id_proof'] = $this->fileService->generateFileName('doc-', $request->file('id_proof')->getClientOriginalExtension());
+            $this->fileService->uploadFile(
+                $request->file('id_proof'),
+                Provider::UPLOAD_PATH_DOC,
+                $validated['id_proof']
+            );
+        }
+        $this->providerRepository->update($provider->id, $validated);
+
         return redirect(route('admin.providers.index'))->with('success', 'Data Updated Successfully !');
     }
 

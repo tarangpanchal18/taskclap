@@ -45,10 +45,10 @@ class CategoryRepository implements MasterInterface
     public function getRaw($filterData = "")
     {
         $query = Category::query();
-        if ($filterData['status']) {
+        if ($filterData && $filterData['status']) {
             $query = $query->where('status', $filterData['status']);
         }
-        if ($filterData['category']) {
+        if ($filterData && $filterData['category']) {
             $query = $query->where('parent_id', $filterData['category']);
         }
 

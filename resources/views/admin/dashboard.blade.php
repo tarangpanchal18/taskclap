@@ -17,7 +17,7 @@
         <div class="small-box bg-info">
         <div class="inner">
             <h3>{{ $data['totalActiveUser'] }}</h3>
-            <p>Active Users</p>
+            <p>Active Customer</p>
         </div>
         <div class="icon">
             <i class="fas fa-user"></i>

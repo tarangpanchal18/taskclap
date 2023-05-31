@@ -9,6 +9,42 @@ $(document).ready(function() {
     .catch( error => {
         console.error( error );
     });
+
+    //For Order Detail Page
+    $(".addMaterialCharge").click(function () {
+        var inputText = "";
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Material charge</label>';
+        inputText += '<input type="number" name="material_charge" class="form-control" required />';
+        inputText += '</div>';
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Material charge (Actual)</label>';
+        inputText += '<input type="number" name="material_charge_actual" class="form-control" required />';
+        inputText += '</div>';
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Material charge Description</label>';
+        inputText += '<textarea name="material_description" class="form-control" required></textarea>';
+        inputText += '</div>';
+        $(".chargeTypeBtn").html("Add Material Charge");
+        $("#chargeType").val("add_material_charge");
+        $(".chargeModalInput").html(inputText);
+        $("#addChargesMdl").modal("show");
+    });
+    $(".addAdditionalCharge").click(function () {
+        var inputText = "";
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Additional charge</label>';
+        inputText += '<input type="number" name="additional_charge" class="form-control" required />';
+        inputText += '</div>';
+        inputText += '<div class="form-group col-md-12">';
+        inputText += '<label>Additional charge Description</label>';
+        inputText += '<textarea name="additional_charge_description" class="form-control" required></textarea>';
+        inputText += '</div>';
+        $(".chargeTypeBtn").html("Add Additional Charge");
+        $("#chargeType").val("add_additional_charge");
+        $(".chargeModalInput").html(inputText);
+        $("#addChargesMdl").modal("show");
+    });
 });
 
 /**
@@ -242,4 +278,93 @@ function fetchAndSetSubCategory(cat, selected = '') {
             }
         });
     }
+}
+
+function initAutocomplete() {
+    var lattitude = $("#address_lat").val();
+    if (! lattitude || lattitude == "") {
+        lattitude = "23.0225";
+    }
+    let longitude = $("#address_long").val();
+    if (! longitude || longitude == "") {
+        longitude = "72.5714";
+    }
+
+    const map = new google.maps.Map(document.getElementById("map-canvas"), {
+      center: {
+        lat: parseFloat(lattitude),
+        lng: parseFloat(longitude)
+    },
+      zoom: 12,
+      mapTypeId: "roadmap",
+    });
+    // Create the search box and link it to the UI element.
+    const input = document.getElementById("map-canvas-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener("bounds_changed", () => {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    let marker;
+    let markers = [];
+
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener("places_changed", () => {
+      const places = searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      // For each place, get the icon, name and location.
+      const bounds = new google.maps.LatLngBounds();
+
+      places.forEach((place) => {
+        const icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25),
+        };
+
+        // Create a marker for each place.
+        markers.push(
+          new google.maps.Marker({
+            map,
+            icon,
+            title: place.name,
+            position: place.geometry.location,
+          })
+        );
+        markers[0].addListener("click", toggleBounce);
+
+        function toggleBounce() {
+            if (marker.getAnimation() !== null) {
+              marker.setAnimation(null);
+            } else {
+              marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+          }
+
+        markers[0].addListener(markers, 'dragend', function(evt) {
+            alert(evt.latLng.lat().toFixed(3));
+            //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+        });
+        $("#address_lat").val(place.geometry['location'].lat());
+        $("#address_long").val(place.geometry['location'].lng());
+
+        if (place.geometry.viewport) {
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+
+      map.fitBounds(bounds);
+    });
 }

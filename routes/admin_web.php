@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -27,6 +28,11 @@ Route::prefix(config('app.admin_path_name'))->name('admin.')->group(function () 
         Route::resource('providers', ProviderController::class);
         Route::resource('products', ProductController::class);
         Route::resource('products.services', ServiceController::class);
+        Route::get('orders', [OrderController::class, 'index'])->name('orders');
+        Route::get('orders/{order}', [OrderController::class, 'orderDetail'])->name('orders.detail');
+        Route::post('orders/{order}', [OrderController::class, 'updateOrderDetail']);
+        Route::get('report/payment', [OrderController::class, 'paymentReport'])->name('report.payment');
+        Route::get('report/provider-pay', [OrderController::class, 'providerPayReport']);
         Route::post('logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 

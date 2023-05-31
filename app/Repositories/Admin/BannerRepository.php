@@ -15,7 +15,7 @@ class BannerRepository implements MasterInterface
     public function getRaw($filterData = "")
     {
         $query = Banner::query();
-        if ($filterData['status']) {
+        if ($filterData && $filterData['status']) {
             $query = $query->where('status', $filterData['status']);
         }
 
