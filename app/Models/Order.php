@@ -27,6 +27,43 @@ class Order extends Model
         'Rejected'
     ];
 
+    protected $fillable = [
+        'order_id',
+        'user_id',
+        'provider_id',
+        'category_id',
+        'sub_category_id',
+        'name',
+        'phone',
+        'email',
+        'address',
+        'pincode',
+        'country_id',
+        'state_id',
+        'city_id',
+        'area_id',
+        'address_lat',
+        'address_long',
+        'product_count',
+        'isPromoApplied',
+        'promocode',
+        'discount',
+        'tax',
+        'material_charge_amount_total',
+        'additional_charge_amount_total',
+        'provider_pay_amount_total',
+        'system_earn_amount_total',
+        'subtotal',
+        'total',
+        'cancellation_charge',
+        'is_warranty_order',
+        'payment_type',
+        'payment_json',
+        'payment_status',
+        'order_status',
+        'order_notes',
+        'is_paid_to_provider',
+    ];
 
     protected function total(): Attribute{
         return Attribute::make(get: fn (string $value) => number_format($value, 2));

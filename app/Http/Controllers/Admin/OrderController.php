@@ -46,21 +46,31 @@ class OrderController extends Controller
 
     public function updateOrderDetail(Request $request, Order $order): RedirectResponse
     {
-        if ($request->type == "assign_provider") {
-            $msg = $this->assignProvider($request, $order);
-        }
-        if ($request->type == "add_material_charge") {
-            $msg = $this->addCharges($request, $order, 'material');
-        }
-        if ($request->type == "add_additional_charge") {
-            $msg = $this->addCharges($request, $order, 'additional');
-        }
-        if ($request->type == "order_status") {
-            $msg = $this->updateStatus($request, $order);
+        $redirectRoute = route('admin.orders.detail', $order);
+
+        switch ($request->type) {
+            case 'assign_provider':
+                $msg = $this->assignProvider($request, $order);
+                break;
+            case 'add_material_charge':
+                $msg = $this->addCharges($request, $order, 'material');
+                break;
+            case 'add_additional_charge':
+                $msg = $this->addCharges($request, $order, 'additional');
+                break;
+            case 'order_status':
+                $msg = $this->updateStatus($request, $order);
+                break;
+            case 'mark_as_paid_for_provider':
+                $msg = $this->markAsPaidToProvider($order);
+                $redirectRoute = route('admin.report.payment', $order);
+                break;
+            default:
+                die('Unknown Type');
+                break;
         }
 
-
-        return redirect(route('admin.orders.detail', $order))->with('success', $msg);
+        return redirect($redirectRoute)->with('success', $msg);
     }
 
     public function assignProvider(Request $request, Order $order): String
@@ -121,9 +131,10 @@ class OrderController extends Controller
         return "Order Status Updated Successfully !";
     }
 
-    public function providerPayReport()
+    public function markAsPaidToProvider(Order $order)
     {
-        //
+        $order->update(['is_paid_to_provider' => 'Yes']);
+        return "Order Updated Successfully !";
     }
 
     public function paymentReport(Request $request)

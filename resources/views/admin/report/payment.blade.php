@@ -11,6 +11,7 @@
 
 @section('content')
 <div class="card">
+    @include('layouts.alert-msg')
     <form action="{{route('admin.report.payment')}}">
         <div class="card-body row">
             <div class="form-group col-md-2">
@@ -57,7 +58,18 @@
                     <td>₹ {{ (getOrderCommission($order) - $order->tax) }}</td>
                     <td>{{ generate_badge($order->order_status) }}</td>
                     <td><span class='badge badge-info'>{{ $order->payment_type }}<span></td>
-                    <td>--</td>
+                    <td>
+                        @if($order->is_paid_to_provider == "Yes")
+                        {{ generate_badge($order->is_paid_to_provider) }}
+                        @else
+                        <form action="{{ route('admin.orders.detail', $order) }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="mark_as_paid_for_provider" name="type">
+                            <button class="btn btn-sm btn-default">Mark As Paid</button>
+                        </form>
+
+                        @endif
+                    </td>
                 </tr>
                 @empty
                 <th colspan="14" style="text-align: center"><h4>No Orders found !</h4></th>
