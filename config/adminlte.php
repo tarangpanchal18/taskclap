@@ -350,6 +350,10 @@ return [
                     'text' => 'Payment Report',
                     'url'  => env('ADMIN_PATH') . '/report/payment',
                 ],
+                [
+                    'text' => 'Wallet Report',
+                    'url'  => env('ADMIN_PATH') . '/report/wallet',
+                ],
             ],
         ],
         [
