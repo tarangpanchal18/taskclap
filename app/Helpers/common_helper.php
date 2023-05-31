@@ -4,6 +4,10 @@ function formatNumber ($value, $decimal = 2) {
     return number_format($value, $decimal);
 }
 
+function formatDate ($date, $format = "d-m-Y") {
+    return date($format, strtotime($date));
+}
+
 function generate_badge($label) {
     switch ($label) {
         case 'Started':

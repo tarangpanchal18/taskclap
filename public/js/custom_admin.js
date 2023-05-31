@@ -45,6 +45,17 @@ $(document).ready(function() {
         $(".chargeModalInput").html(inputText);
         $("#addChargesMdl").modal("show");
     });
+
+    $("#assignProviderBtn").click(function() {
+        var userId = $(this).attr("data-userId");
+        if (userId == "") {
+            Swal.fire('Whoops !', 'Please select User first to do transaction !', 'info');
+            return;
+        }
+
+        $("#wallet_user_id").val(userId);
+        $("#addWalletTransaction").modal("show");
+    });
 });
 
 /**
