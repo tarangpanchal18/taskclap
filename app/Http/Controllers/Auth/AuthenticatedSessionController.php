@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,24 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         return view('auth.login');
+    }
+
+    /**
+     * Handle an incoming authentication request.
+     */
+    public function storeWithOtp(Request $request): RedirectResponse
+    {
+        $this->validate($request, [
+            'phone' => 'required',
+        ]);
+
+        $phone =  trim(str_replace('+91', '', $request->get('phone')));
+
+        $user = User::where('phone', $phone)->first();
+
+        \Auth::login($user);
+
+        return true;
     }
 
     /**
