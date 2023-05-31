@@ -43,6 +43,7 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>Wallet balance</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -55,6 +56,7 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>Wallet balance</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -74,6 +76,7 @@ $(document).ready(function() {
             {data: 'name', name: 'name'},
             {data: 'phone', name: 'phone'},
             {data: 'email', name: 'email'},
+            {data: 'wallet_balance', name: 'wallet_balance'},
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
     ], {'status' : $("#filter_status").val()});

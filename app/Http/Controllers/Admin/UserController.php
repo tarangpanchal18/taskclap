@@ -29,6 +29,9 @@ class UserController extends Controller
 
             return DataTables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('wallet_balance', function($user) {
+                        return "₹ ". number_format($user->balance, '2');
+                    })
                     ->editColumn('status', function($row) {
                         return '<span class="badge badge-'. ($row->status == "Active" ? "success" : "danger") .'">'. $row->status .'</span>' .
                         PHP_EOL;
