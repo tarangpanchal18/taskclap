@@ -350,10 +350,6 @@ return [
                     'text' => 'Payment Report',
                     'url'  => env('ADMIN_PATH') . '/report/payment',
                 ],
-                [
-                    'text' => 'Provider Pay Amount',
-                    'url'  => env('ADMIN_PATH') . '/report/provider-pay',
-                ],
             ],
         ],
         [

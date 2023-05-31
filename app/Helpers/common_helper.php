@@ -15,12 +15,14 @@ function generate_badge($label) {
             break;
         case 'Active':
         case 'Completed':
+        case 'Yes':
             echo "<span class='badge badge-success'>$label<span>";
             break;
         case 'Cancelled':
         case 'Failed':
         case 'Rejected':
         case 'InActive':
+        case 'No':
             echo "<span class='badge badge-danger'>$label<span>";
             break;
         default: echo "<span class='badge badge-primary'> N/A <span>"; break;
