@@ -32,10 +32,6 @@
 		@include('layouts.header')
 		<!-- /Header -->
 
-		<!-- Banner Section -->
-        @include('layouts.home-banner')
-		<!-- /Banner Section -->
-
         @yield('content')
 
         <!-- Footer -->

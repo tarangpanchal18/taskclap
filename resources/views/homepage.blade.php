@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!-- Banner Section -->
+@include('layouts.home-banner')
+<!-- /Banner Section -->
+
 <!-- Service Section -->
 <section class="service-section featured-saloons">
     <div class="saloon-section-circle">

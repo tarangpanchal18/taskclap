@@ -120,7 +120,7 @@ Version      : 1.0
 		}
 	});
 
-	// fade in scroll 
+	// fade in scroll
 
 	if ($('.main-wrapper .aos').length > 0) {
 		AOS.init({
@@ -979,7 +979,7 @@ Version      : 1.0
 		})
 	}
 
-	// Service slider 
+	// Service slider
 	if ($('.owl-carousel.partners-slider').length > 0) {
 		$('.owl-carousel.partners-slider').owlCarousel({
 			loop: true,
@@ -1007,7 +1007,7 @@ Version      : 1.0
 			}
 		})
 	}
-	// Service slider 
+	// Service slider
 	if ($('.owl-carousel.partners-slider-seven').length > 0) {
 		$('.owl-carousel.partners-slider-seven').owlCarousel({
 			loop: true,
@@ -1345,7 +1345,7 @@ Version      : 1.0
 		});
 	}
 
-	// Payment Method 
+	// Payment Method
 
 	$('.payment-card').on('click', function () {
 		$('.card-payment').each(function () {
@@ -1378,17 +1378,17 @@ Version      : 1.0
 
 	//Custom Country Code Selector
 
-	if ($('#phone').length > 0) {
-		var input = document.querySelector("#phone");
-		window.intlTelInput(input, {
-			utilsScript: "assets/plugins/intltelinput/js/utils.js",
-		});
-	}
+	// if ($('#phone').length > 0) {
+	// 	var input = document.querySelector("#phone");
+	// 	window.intlTelInput(input, {
+	// 		utilsScript: "/assets/plugins/intltelinput/js/utils.js",
+	// 	});
+	// }
 
 	if ($('#phone1').length > 0) {
 		var input = document.querySelector("#phone1");
 		window.intlTelInput(input, {
-			utilsScript: "assets/plugins/intltelinput/js/utils.js",
+			utilsScript: "/assets/plugins/intltelinput/js/utils.js",
 		});
 	}
 
