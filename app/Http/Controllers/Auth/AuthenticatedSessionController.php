@@ -13,12 +13,14 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Display the login view.
-     */
     public function create(): View
     {
         return view('auth.login');
+    }
+
+    public function create_v1(): View
+    {
+        return view('auth.login_v1');
     }
 
     /**
@@ -36,7 +38,7 @@ class AuthenticatedSessionController extends Controller
 
         \Auth::login($user);
 
-        return true;
+        return redirect()->intended('/');
     }
 
     /**
