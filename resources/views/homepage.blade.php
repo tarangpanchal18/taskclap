@@ -6,359 +6,43 @@
 @include('layouts.home-banner')
 <!-- /Banner Section -->
 
-<!-- Service Section -->
-<section class="service-section featured-saloons">
-    <div class="saloon-section-circle">
-        <img src="assets/img/side-circle.png">
-    </div>
+<!-- Feature Section -->
+<section class="feature-section">
     <div class="container">
-        <div class="services-header aos" data-aos="fade-up">
+        <div class="section-heading">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="section-content">
-                        <h2>Featured Saloons</h2>
-                        <div class="our-img-all">
-                        <img src="assets/img/icons/scissor.svg" alt="">
-                        </div>
-                        <p>Our Barbershop & Tattoo Salon provides classic services combined with innovative techniques.</p>
-                    </div>
+                <div class="col-md-6 aos" data-aos="fade-up">
+                    <h2>Featured Services</h2>
+                    <p>Just Click it and get it !</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <div class="service-slider aos" data-aos="fade-right">
-                    <div class="service-widget">
-                        <div class="service-img service-show-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-24.jpg">
-                            </a>
-                            <div class="item-info item-infos">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="service-content service-content-three">
-                            <h3 class="title">
-                                <a href="service-details.html">The Rockstar Barber</a>
-                            </h3>
-                            <ul>
-                                <li>Hair Cut</li>
-                                <li>Hair Styling</li>
-                                <li>Clean Shaving</li>
-                                <li>Face Cleaning</li>
-                            </ul>
-                            <div class="main-saloons-profile">
-                                <div class="saloon-profile-left">
-                                    <div class="saloon-img">
-                                        <img src="assets/img/profiles/avatar-20.jpg">
-                                    </div>
-                                    <div class="saloon-content">
-                                        <div class="saloon-content-top">
-                                            <i class="feather-clock"></i>
-                                            <span>07:00 AM - 11:00 PM </span>
-                                        </div>
-                                        <div class="saloon-content-btn">
-                                            <span><i class="feather-map-pin"></i></span>
-                                            <span>Main Boulevard, Lahore,</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="saloon-right">
-                                    <span>$70</span>
-                                </div>
-                            </div>
-                            <div class="saloon-bottom">
-                                <a href="service-details.html"><i class="feather-calendar me-2"></i>MAKE AN APPOINTMENT</a>
-                            </div>
-                        </div>
+            @forelse($categories as $cateogry)
+            <div class="col-6 col-md-4">
+                <a href="{{ route('category', $cateogry) }}" class="feature-box aos" data-aos="fade-up">
+                    <div class="feature-icon">
+                        <span>
+                            <img style="max-height: 80px;" src="{{ asset('storage/uploads/category/' . $cateogry->image) }}" alt="{{ $cateogry->name }}">
+                        </span>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <div class="service-slider aos" data-aos="fade-up">
-                    <div class="service-widget">
-                        <div class="service-img service-show-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-25.jpg">
-                            </a>
-                            <div class="item-info item-infos">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="service-content service-content-three">
-                            <h3 class="title">
-                                <a href="service-details.html">Femina Hairstyle</a>
-                            </h3>
-                            <ul>
-                                <li>Hair Cut</li>
-                                <li>Hair Styling</li>
-                                <li>Clean Shaving</li>
-                                <li>Face Cleaning</li>
-                            </ul>
-                            <div class="main-saloons-profile">
-                                <div class="saloon-profile-left">
-                                    <div class="saloon-img">
-                                        <img src="assets/img/profiles/avatar-19.jpg">
-                                    </div>
-                                    <div class="saloon-content">
-                                        <div class="saloon-content-top">
-                                            <i class="feather-clock"></i>
-                                            <span>07:00 AM - 11:00 PM </span>
-                                        </div>
-                                        <div class="saloon-content-btn">
-                                            <i class="feather-map-pin"></i>
-                                            <span>Main Boulevard, Lahore,</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="saloon-right">
-                                    <span>$70</span>
-                                </div>
-                            </div>
-                            <div class="saloon-bottom">
-                                <a href="service-details.html"><i class="feather-calendar me-2"></i>MAKE AN APPOINTMENT</a>
-                            </div>
-                        </div>
+                    <h5>{{ $cateogry->name }}</h5>
+                    <div class="feature-overlay">
+                        <img class="fo-image" src="https://png.pngtree.com/background/20210716/original/pngtree-swirl-round-neon-colorful-smoke-background-picture-image_1394763.jpg" alt="{{ $cateogry->name }}">
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <div class="service-slider aos" data-aos="fade-left">
-                    <div class="service-widget">
-                        <div class="service-img service-show-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-26.jpg">
-                            </a>
-                            <div class="item-info item-infos">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="service-content service-content-three">
-                            <h3 class="title">
-                                <a href="service-details.html">The Macho Lever</a>
-                            </h3>
-                            <ul>
-                                <li>Hair Cut</li>
-                                <li>Hair Styling</li>
-                                <li>Clean Shaving</li>
-                                <li>Face Cleaning</li>
-                            </ul>
-                            <div class="main-saloons-profile">
-                                <div class="saloon-profile-left">
-                                    <div class="saloon-img">
-                                        <img src="assets/img/profiles/avatar-18.jpg">
-                                    </div>
-                                    <div class="saloon-content">
-                                        <div class="saloon-content-top">
-                                            <i class="feather-clock"></i>
-                                            <span>07:00 AM - 11:00 PM </span>
-                                        </div>
-                                        <div class="saloon-content-btn">
-                                            <i class="feather-map-pin"></i>
-                                            <span>Main Boulevard, Lahore,</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="saloon-right">
-                                    <span>$70</span>
-                                </div>
-                            </div>
-                            <div class="saloon-bottom">
-                                <a href="service-details.html"><i class="feather-calendar me-2"></i>MAKE AN APPOINTMENT</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            @empty
+            <div class="col-12">
+                <a class="feature-box aos" data-aos="fade-up">
+                    <h5>Coming Soon</h5>
+                </a>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <div class="service-slider  aos" data-aos="fade-right">
-                    <div class="service-widget">
-                        <div class="service-img service-show-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-27.jpg">
-                            </a>
-                            <div class="item-info item-infos">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="service-content service-content-three">
-                            <h3 class="title">
-                                <a href="service-details.html">Master Barber</a>
-                            </h3>
-                            <ul>
-                                <li>Hair Cut</li>
-                                <li>Hair Styling</li>
-                                <li>Clean Shaving</li>
-                                <li>Face Cleaning</li>
-                            </ul>
-                            <div class="main-saloons-profile">
-                                <div class="saloon-profile-left">
-                                    <div class="saloon-img">
-                                        <img src="assets/img/profiles/avatar-17.jpg">
-                                    </div>
-                                    <div class="saloon-content">
-                                        <div class="saloon-content-top">
-                                            <i class="feather-clock"></i>
-                                            <span>07:00 AM - 11:00 PM </span>
-                                        </div>
-                                        <div class="saloon-content-btn">
-                                            <i class="feather-map-pin"></i>
-                                            <span>Main Boulevard, Lahore,</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="saloon-right">
-                                    <span>$70</span>
-                                </div>
-                            </div>
-                            <div class="saloon-bottom">
-                                <a href=""><i class="feather-calendar me-2"></i>MAKE AN APPOINTMENT</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                <div class="service-slider  aos" data-aos="fade-up">
-                    <div class="service-widget">
-                        <div class="service-img service-show-img">
-                            <div class="service-img-top">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-28.jpg">
-                                </a>
-                            </div>
-                            <div class="item-info item-infos">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="service-content service-content-three">
-                            <h3 class="title">
-                                <a href="service-details.html">Rearhair Stylist</a>
-                            </h3>
-                            <ul>
-                                <li>Hair Cut</li>
-                                <li>Hair Styling</li>
-                                <li>Clean Shaving</li>
-                                <li>Face Cleaning</li>
-                            </ul>
-                            <div class="main-saloons-profile">
-                                <div class="saloon-profile-left">
-                                    <div class="saloon-img">
-                                        <img src="assets/img/profiles/avatar-15.jpg">
-                                    </div>
-                                    <div class="saloon-content">
-                                        <div class="saloon-content-top">
-                                            <i class="feather-clock"></i>
-                                            <span>07:00 AM - 11:00 PM </span>
-                                        </div>
-                                        <div class="saloon-content-btn">
-                                            <i class="feather-map-pin"></i>
-                                            <span>Main Boulevard, Lahore,</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="saloon-right">
-                                    <span>$70</span>
-                                </div>
-                            </div>
-                            <div class="saloon-bottom">
-                                <a href="service-details.html"><i class="feather-calendar me-2"></i>MAKE AN APPOINTMENT</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 ">
-                <div class="service-slider aos" data-aos="fade-left">
-                    <div class="service-widget">
-                        <div class="service-img service-show-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-24.jpg">
-                            </a>
-                            <div class="item-info item-infos">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="service-content service-content-three">
-                            <h3 class="title">
-                                <a href="#">The Rockstar Barber</a>
-                            </h3>
-                            <ul>
-                                <li>Hair Cut</li>
-                                <li>Hair Styling</li>
-                                <li>Clean Shaving</li>
-                                <li>Face Cleaning</li>
-                            </ul>
-                            <div class="main-saloons-profile">
-                                <div class="saloon-profile-left">
-                                    <div class="saloon-img">
-                                        <img src="assets/img/profiles/avatar-20.jpg">
-                                    </div>
-                                    <div class="saloon-content">
-                                        <div class="saloon-content-top">
-                                            <i class="feather-clock"></i>
-                                            <span>07:00 AM - 11:00 PM </span>
-                                        </div>
-                                        <div class="saloon-content-btn">
-                                            <i class="feather-map-pin"></i>
-                                            <span>Main Boulevard, Lahore,</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="saloon-right">
-                                    <span>$70</span>
-                                </div>
-                            </div>
-                            <div class="saloon-bottom">
-                                <a href=""><i class="feather-calendar me-2"></i>MAKE AN APPOINTMENT</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-sec btn-saloons aos" data-aos="fade-up">
-                <a href="search.html" class="btn btn-primary btn-view">VIEW ALL 590 SALOONS</a>
-            </div>
+            @endforelse
         </div>
     </div>
 </section>
-<!-- /Service Section -->
+<!-- /Feature Section -->
 
 <!-- Appointment Section -->
 <section class="appointment-section aos" data-aos="fade-up">
@@ -375,419 +59,105 @@
 </section>
 <!-- /Appointment Section -->
 
-<!-- Service Section -->
-<section class="service-section populars-section">
+<!-- popular service -->
+<section class="popular-service-seven-section">
     <div class="container">
-        <div class="services-header aos" data-aos="fade-up">
+        <div class="section-heading section-heading-seven">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="section-content">
-                        <h2>Popular Locations</h2>
-                        <div class="our-img-all">
-                        <img src="assets/img/icons/scissor.svg" alt="">
-                        </div>
-                        <p>Our Barbershop & Tattoo Salon provides classic services combined with innovative techniques.</p>
-                    </div>
+                <div class="col-md-6 aos" data-aos="fade-up">
+                    <h2>Best Offers</h2>
+                    <p>Grab or gone offers. Grab it now</p>
                 </div>
-            </div>
-        </div>
-        <div class="row aos" data-aos="fade-up">
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-30.jpg">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>USA</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-31.jpg">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>UK</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-32.jpg">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>Mexico</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-33.jpg">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>UAE</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-34.png">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>France</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-35.png">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>Germany</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-36.jpg">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>Italy</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <div class="service-slider">
-                    <div class="service-widget">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-37.jpg">
-                            </a>
-                        </div>
-                        <div class="service-content popular-content">
-                            <a href="service-details.html"><h3>Argentina</h3></a>
-                            <h6>49 Saloons</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-sec btn-saloons aos" data-aos="fade-up">
-                <a href="search.html" class="btn btn-primary btn-view">VIEW ALL 590 LOCATION</a>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /Service Section -->
-
-<!-- Works Section -->
-<section class="works-section">
-    <div class="container">
-        <div class="services-header aos" data-aos="fade-up">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-content">
-                        <h2>How It Works</h2>
-                        <div class="our-img-all">
-                        <img src="assets/img/icons/scissor.svg" alt="">
-                        </div>
-                        <p>Our Barbershop & Tattoo Salon provides classic services combined with innovative techniques.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-6 col-12">
-                <div class="works-main aos" data-aos="fade-right">
-                    <div class="works-tops">
-                        <div class="works-top-img">
-                            <img src="assets/img/services/service-30.jpg" alt="">
-                            <span>1</span>
-                        </div>
-                    </div>
-                    <div class="works-bottom">
-                        <a href="javascript:void(0);"><h2>Discover</h2></a>
-                        <p>Barber is a person whose occupation is mainly to cut dress groom style and shave men.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-12">
-                <div class="works-main aos" data-aos="fade-up">
-                    <div class="works-tops">
-                        <div class="works-top-img works-load-profile">
-                            <img src="assets/img/services/service-25.jpg" alt="">
-                            <span>2</span>
-                        </div>
-                    </div>
-                    <div class="works-bottom">
-                        <a href="javascript:void(0);"><h2>Basics</h2></a>
-                        <p>Barber is a person whose occupation is mainly to cut dress groom style and shave men.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-12">
-                <div class="works-main aos" data-aos="fade-left">
-                    <div class="works-tops">
-                        <div class="works-top-img">
-                            <img src="assets/img/services/service-30.jpg" alt="">
-                            <span>3</span>
-                        </div>
-                    </div>
-                    <div class="works-bottom">
-                        <a href="javascript:void(0);"><h2>Enjoy</h2></a>
-                        <p>Barber is a person whose occupation is mainly to cut dress groom style and shave men.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /Works Section -->
-
-<!-- client section -->
-<section class="client-sections review-four">
-    <div class="container">
-        <div class="services-header aos" data-aos="fade-up">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-content section-client">
-                        <h2>What Our Client Says</h2>
-                        <div class="our-img-all">
-                        <img src="assets/img/icons/scissor-white.svg" alt="">
-                        </div>
-                        <p>Our Barbershop & Tattoo Salon provides classic services combined with innovative techniques.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class=" slider say-about slider-for aos" data-aos="fade-up">
-            <div>
-                <div class="review-love-group">
-                    <div class="quote-love-img">
-                        <img class="img-fluid" src="assets/img/icons/quote.svg" alt="">
-                    </div>
-                    <p class="review-passage">“ Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras.Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras. Egestas erat viverra scelerisque bibendum. “</p>
-                    <div class="say-name-blk text-center">
-                        <h5>Paul Walker</h5>
-                        <p>Newyork, USA</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="review-love-group">
-                    <div class="quote-love-img">
-                        <img class="img-fluid" src="assets/img/icons/quote.svg" alt="">
-                    </div>
-                    <p class="review-passage">“ Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras.Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras. Egestas erat viverra scelerisque bibendum. “</p>
-                    <div class="say-name-blk text-center">
-                        <h5>Anthony Walker</h5>
-                        <p>Newyork, USA</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="review-love-group">
-                    <div class="quote-love-img">
-                        <img class="img-fluid" src="assets/img/icons/quote.svg" alt="">
-                    </div>
-                    <p class="review-passage">“ Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras.Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras. Egestas erat viverra scelerisque bibendum. “</p>
-                    <div class="say-name-blk text-center">
-                        <h5>Van Diesel</h5>
-                        <p>Newyork, USA</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="review-love-group">
-                    <div class="quote-love-img">
-                        <img class="img-fluid" src="assets/img/icons/quote.svg" alt="">
-                    </div>
-                    <p class="review-passage">“ Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras.Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras. Egestas erat viverra scelerisque bibendum. “</p>
-                    <div class="say-name-blk text-center">
-                        <h5>James Matthew</h5>
-                        <p>Los Vegas, USA</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="review-love-group">
-                    <div class="quote-love-img">
-                        <img class="img-fluid" src="assets/img/icons/quote.svg" alt="">
-                    </div>
-                    <p class="review-passage">“ Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras.Vitae amet cras nulla mi laoreet quis amet phasellus. Enim orci lacus quam mauris nunc ultrices duis. Ornare leo mi aenean egestas montes cras. Egestas erat viverra scelerisque bibendum. “</p>
-                    <div class="say-name-blk text-center">
-                        <h5>George Daren</h5>
-                        <p>Mexico, USA</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="slider client-img client-images slider-nav client-pro aos" data-aos="fade-up">
-            <div class="testimonial-thumb">
-                <img src="assets/img/profiles/avatar-01.jpg" alt="">
-            </div>
-            <div class="testimonial-thumb">
-                <img src="assets/img/profiles/avatar-02.jpg" alt="">
-            </div>
-            <div class="testimonial-thumb">
-                <img src="assets/img/profiles/avatar-03.jpg" alt="">
-            </div>
-            <div class="testimonial-thumb">
-                <img src="assets/img/profiles/avatar-04.jpg" alt="">
-            </div>
-            <div class="testimonial-thumb">
-                <img src="assets/img/profiles/avatar-05.jpg" alt="">
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /client section -->
-
-<!-- latest section -->
-<section class="services-section latest-section">
-    <div class="container">
-        <div class="services-header aos" data-aos="fade-up">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-content">
-                        <h2>Our Latest Blogs</h2>
-                        <div class="our-img-all">
-                        <img src="assets/img/icons/scissor.svg" alt="">
-                        </div>
-                        <p>Our Barbershop & Tattoo Salon provides classic services combined with innovative techniques.</p>
-                    </div>
+                <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                    <div class="owl-nav mynav-seven-two"></div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="owl-carousel latest-slider aos" data-aos="fade-up">
-                    <div class="service-widget">
-                        <div class="service-img service-latest-img">
-                            <a href="blog-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-20.png">
+                <div class="owl-carousel recent-projects-seven">
+                    @for ($i = 1; $i <= 5; $i++)
+                    <div class="service-widget service-two service-seven aos" data-aos="fade-up">
+                        <div class="service-img">
+                            <a href="service-details.html">
+                                <img class="img-fluid serv-img" alt="Service Image" src="https://img.freepik.com/premium-photo/plumber-repairing-washing-machine_392895-4242.jpg?w=2000">
                             </a>
-                            <div class="latest-date">
-                                <span>15</span>
-                                Nov,2022
+                            <div class="fav-item">
+                                <a><span class="item-cat">Flat ₹ {{ rand(1,9) * $i }} Off</span></a>
                             </div>
                         </div>
-                        <div class="service-content latest-content">
-                            <span>Hair Style</span>
-                            <a href="blog-details.html" class="latest-news-content">Consectetur adipisicing elit, sed do eiusmod</a>
-                            <a href="#" class="latest-news">Read More</a>
+                        <div class="service-content service-content-seven">
+                            <h3 class="title">
+                                <a>Washing Machine Repairing</a>
+                            </h3>
                         </div>
                     </div>
-                    <div class="service-widget">
-                        <div class="service-img service-latest-img">
-                            <a href="blog-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-21.png">
-                            </a>
-                            <div class="latest-date">
-                                <span>15</span>
-                                Nov,2022
-                            </div>
-                        </div>
-                        <div class="service-content latest-content">
-                            <span>Hair Style</span>
-                            <a href="blog-details.html" class="latest-news-content">Consectetur adipisicing elit, sed do eiusmod</a>
-                            <a href="#" class="latest-news">Read More</a>
-                        </div>
-                    </div>
-                    <div class="service-widget">
-                        <div class="service-img service-latest-img">
-                            <a href="blog-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-22.png">
-                            </a>
-                            <div class="latest-date">
-                                <span>15</span>
-                                Nov,2022
-                            </div>
-                        </div>
-                        <div class="service-content latest-content">
-                            <span>Hair Style</span>
-                            <a href="blog-details.html" class="latest-news-content">Consectetur adipisicing elit, sed do eiusmod</a>
-                            <a href="#" class="latest-news">Read More</a>
-                        </div>
-                    </div>
-                    <div class="service-widget">
-                        <div class="service-img service-latest-img">
-                            <a href="blog-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-23.png">
-                            </a>
-                            <div class="latest-date">
-                                <span>15</span>
-                                Nov,2022
-                            </div>
-                        </div>
-                        <div class="service-content latest-content">
-                            <span>Hair Style</span>
-                            <a href="blog-details.html" class="latest-news-content">Consectetur adipisicing elit, sed do eiusmod</a>
-                            <a href="#" class="latest-news">Read More</a>
-                        </div>
-                    </div>
-                    <div class="service-widget">
-                        <div class="service-img service-latest-img">
-                            <a href="blog-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image" src="assets/img/services/service-22.png">
-                            </a>
-                            <div class="latest-date">
-                                <span>15</span>
-                                Nov,2022
-                            </div>
-                        </div>
-                        <div class="service-content latest-content">
-                            <span>Hair Style</span>
-                            <a href="blog-details.html" class="latest-news-content">Consectetur adipisicing elit, sed do eiusmod</a>
-                            <a href="#" class="latest-news">Read More</a>
-                        </div>
-                    </div>
+                    @endfor
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- /latest section -->
+<!-- /popular service -->
+
+<section class="works-eight-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="section-heading section-heading-eight aos" data-aos="fade-up">
+                    <img src="assets/img/icons/dog.svg" alt="">
+                    <h2>How it Works</h2>
+                    <p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <div class="works-eights-main">
+                    <div class="works-eights-img">
+                        <img src="assets/img/icons/gui-calendar-planner-eight.svg" alt="">
+                        <div class="works-eights-arrow">
+                            <img src="assets/img/icons/arrow-eight-1.svg" alt="">
+                        </div>
+                    </div>
+                    <p>Connect with your Calendar</p>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <div class="works-eights-main">
+                    <div class="works-eights-img">
+                        <img src="assets/img/icons/pointer-eight.svg" alt="">
+                        <div class="works-eights-arrow works-eights-arrow-two">
+                            <img src="assets/img/icons/arrow-eight-2.svg" alt="">
+                        </div>
+                    </div>
+                    <p>Connect with your Calendar</p>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <div class="works-eights-main">
+                    <div class="works-eights-img">
+                        <img src="assets/img/icons/dog-face-eight.svg" alt="">
+                        <div class="works-eights-arrow">
+                            <img src="assets/img/icons/arrow-eight-1.svg" alt="">
+                        </div>
+                    </div>
+                    <p>Connect with your Calendar</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <div class="works-eights-main">
+                    <div class="works-eights-img">
+                        <img src="assets/img/icons/pay-per-eight.svg" alt="">
+                    </div>
+                    <p>Connect with your Calendar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- register section -->
 <section class="register-section aos" data-aos="fade-up">
