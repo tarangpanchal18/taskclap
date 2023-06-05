@@ -2,12 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function homepage()
+
+    public function __construct(private CategoryRepository $categoryRepository) {
+        //
+    }
+
+    public function homepage(): View
     {
-        return view('homepage');
+        $categories = $this->categoryRepository->getParentCategory()->where('status', 'Active');
+        $categories = $categories->reject(function ($category) {
+            return $category->children->count() == 0;
+        });
+
+        return view('homepage', [
+            'categories' => $categories,
+        ]);
+    }
+
+    public function category(): View
+    {
+        return view('category', [
+            //
+        ]);
+    }
+
+    public function categoryDetail(): View
+    {
+        return view('category_detail', [
+            //
+        ]);
     }
 }

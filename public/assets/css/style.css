@@ -2652,6 +2652,9 @@ html.menu-opened body {
 	background: rgb(0 0 0 / 50%);
     border-radius: 10px;
 }
+.fo-image{
+	width: 100%!important;
+}
 .feature-box:hover h5 {
 	color: #fff;
 }

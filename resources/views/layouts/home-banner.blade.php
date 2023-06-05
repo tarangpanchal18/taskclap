@@ -5,9 +5,7 @@
                 <div class="col-lg-6 col-md-12 mx-auto">
                     <div class="section-search section-section-three">
                         <h4>Best Saloon Template</h4>
-                        <h1>Find the Awesome Saloo's Near you</h1>
-                        <p>Hair and SPA Salons and fully integrated with theme tools that you can use for the promotion of your business.</p>
-                        <a  href="javascript:void(0);" class="make-appointment">MAKE AN APPOINTMENT</a>
+                        <h1>Just Click the service and get it</h1>
                     </div>
                 </div>
                 <div class="col-lg-6">
