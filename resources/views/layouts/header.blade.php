@@ -9,25 +9,25 @@
                         <span></span>
                     </span>
                 </a>
-                <a href="index.html" class="navbar-brand logo">
-                    <img src="assets/img/taskclap-logo.svg" class="img-fluid" alt="Logo">
+                <a href="{{ route('homepage') }}" class="navbar-brand logo">
+                    <img src="/assets/img/taskclap-logo.svg" class="img-fluid" alt="Logo">
                 </a>
-                <a href="index.html" class="navbar-brand logo-small">
-                    <img src="assets/img/taskclap-logo.svg" class="img-fluid" alt="Logo">
+                <a href="{{ route('homepage') }}" class="navbar-brand logo-small">
+                    <img src="/assets/img/taskclap-logo.svg" class="img-fluid" alt="Logo">
                 </a>
             </div>
             <div class="main-menu-wrapper">
                 <div class="menu-header">
-                    <a href="index.html" class="menu-logo">
-                        <img src="assets/img/taskclap-logo.svg" class="img-fluid" alt="Logo">
+                    <a href="{{ route('homepage') }}" class="menu-logo">
+                        <img src="/assets/img/taskclap-logo.svg" class="img-fluid" alt="Logo">
                     </a>
                     <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i></a>
                 </div>
                 <ul class="main-nav">
                     <li><a href="{{ route('homepage') }}">Home</a></li>
-                    <li><a href="{{ route('homepage') }}">Ac/Appliances Service</a></li>
-                    <li><a href="{{ route('homepage') }}">Home Painting</a></li>
-                    <li><a href="{{ route('homepage') }}">Cleaning & Pesting</a></li>
+                    <li><a href="/category/acappliance">Ac/Appliance</a></li>
+                    <li><a href="/category/home-painter">Home Painter</a></li>
+                    <li><a href="/category/salon-for-women">Salong For Women</a></li>
                     <li class="login-link">
                         <a href="choose-signup.html">Register As Provider</a>
                     </li>

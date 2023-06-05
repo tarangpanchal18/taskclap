@@ -25,10 +25,10 @@ class HomeController extends Controller
         ]);
     }
 
-    public function category(): View
+    public function category($categorySlug): View
     {
         return view('category', [
-            //
+            'category' => $this->categoryRepository->getById($categorySlug, true),
         ]);
     }
 

@@ -7,9 +7,9 @@
                 <!-- Footer Widget -->
                 <div class="footer-widget">
                 <div class="footer-logo">
-                    <a href="{{ route('homepage') }}"
-                    ><img src="assets/img/taskclap-logo.svg" alt="TaskClap"
-                    /></a>
+                    <a href="{{ route('homepage') }}">
+                        <img src="/assets/img/taskclap-logo.svg" alt="TaskClap"/>
+                    </a>
                 </div>
                 <div class="footer-content footer-content-three">
                     <p>
