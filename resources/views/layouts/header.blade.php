@@ -34,34 +34,24 @@
                     @if (Auth::guest())
                     <li class="login-link">
                         <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        <a href="{{ route('login') }}?type=register">Register</a>
                     </li>
                     @else
-                    <div class="cta-btn" style="min-width: 100%">
-                        <a class="btn" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
-                                class="feather-log-out me-2"></i> Logout</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    </div>
+                    <li class="login-link">
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                    </li>
                     @endif
                 </ul>
             </div>
             <ul class="nav header-navbar-rht">
-                @if (Auth::guest())
-                <li class="nav-item">
-                    <a class="nav-link header-login" href="choose-signup.html"><i class="feather-calendar me-2"></i>Register As Provider</a>
-                </li>
-                @endif
                 <li class="nav-item">
                     @if (Auth::guest())
                     <div class="cta-btn">
-                        <a class="btn" href="provider-signup.html"><i class="feather-users me-2"></i>REGISTER /</a>
+                        <a class="btn" href="{{ route('login') }}?type=register"><i class="feather-users me-2"></i>REGISTER /</a>
                         <a class="btn ms-1" href="{{ route('login') }}">LOGIN</a>
                     </div>
                     @else
-                    <div class="cta-btn" style="min-width: 100%">
+                    <div class="cta-btn">
                         <a class="btn" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="feather-log-out me-2"></i> Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
