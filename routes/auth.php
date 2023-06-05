@@ -17,6 +17,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'storeWithOtp']);
+    Route::post('validate-number', [AuthenticatedSessionController::class, 'validateNumber']);
     Route::get('v1/login', [AuthenticatedSessionController::class, 'create_v1'])->name('login.v1');
     Route::post('v1/login', [AuthenticatedSessionController::class, 'storeWithOtp_v1']);
 

@@ -7,8 +7,8 @@
                 <!-- Footer Widget -->
                 <div class="footer-widget">
                 <div class="footer-logo">
-                    <a href="index.html"
-                    ><img src="assets/img/logo-02.svg" alt="logo"
+                    <a href="{{ route('homepage') }}"
+                    ><img src="assets/img/taskclap-logo.svg" alt="TaskClap"
                     /></a>
                 </div>
                 <div class="footer-content footer-content-three">
@@ -109,7 +109,7 @@
                 <h2 class="footer-title footer-subtitle-three">
                     Need live support?
                 </h2>
-                <p>truelysell@example.com</p>
+                <p>{{ config('app.name', 'Laravel') }}</p>
                 </div>
                 <div class="footer-widget footer-menu footer-menu-three">
                 <h2 class="footer-title footer-subtitle-three">
@@ -133,7 +133,7 @@
                 <div class="col-md-6">
                 <div class="copyright-text copyright-color">
                     <p class="mb-0">
-                    &copy; 2023 truelysell. All Rights Reserved.
+                    &copy; 2023 {{ config('app.name', 'Laravel') }}. All Rights Reserved.
                     </p>
                 </div>
                 </div>
@@ -142,7 +142,7 @@
                 <div class="copyright-menu">
                     <ul class="footer-menu">
                     <li>
-                        <a href="index-3.html">Home</a>
+                        <a href="{{ route('homepage') }}">Home</a>
                     </li>
                     <li>
                         <a href="javascript:void(0)">Side Map</a>

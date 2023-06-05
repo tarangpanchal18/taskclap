@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function storeWithOtp(Request $request): RedirectResponse
     {
         $request->validate([
             'phone' => [

@@ -23,34 +23,55 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login_v1');
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
-    public function storeWithOtp(Request $request): RedirectResponse
+    public function validateNumber(Request $request)
     {
-        $this->validate($request, [
-            'phone' => 'required',
-        ]);
+        $response['success'] = true;
+        $response['msg'] = "Number Validate success !";
+        $requestData = $request->all();
+        if (empty($requestData['g-recaptcha-response'])) {
+            $response['success'] = false;
+            $response['msg'] = "Please fill reCAPTCHA";
+            $response['extras'] = json_encode($requestData);
+            return json_encode($response);
+        }
 
-        $phone =  trim(str_replace('+91', '', $request->get('phone')));
+        $phone = trim($request->phone);
+        $phone = str_replace('+91', '', $phone);
+        $number = preg_replace('/[^0-9]/', '', $phone);
+        if (! preg_match('/^(?:\+91|0)?[6-9]\d{9}$/', $number)) {
+            $response['success'] = false;
+            $response['msg'] = "Please Enter Valid Mobile number";
+            return json_encode($response);
+        }
 
-        $user = User::where('phone', $phone)->first();
-
-        \Auth::login($user);
-
-        return redirect()->intended('/');
+        return json_encode($response);
     }
 
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function storeWithOtp(Request $request): bool
     {
-        $request->authenticate();
+        $this->validate($request, [
+            'phone' => [
+                'required','int','digits:10',
+            ],
+        ]);
 
-        $request->session()->regenerate();
+        $phone =  trim(str_replace('+91', '', $request->get('phone')));
+        $user = User::where('phone', $phone)->first();
+        if (! $user) {
+            $user = User::create([
+                'name' => "Verified User",
+                'email' => "",
+                'phone' => $request->phone,
+                'password' => $this->generateStrongPassword()
+            ]);
+        }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        Auth::login($user);
+
+        return true;
     }
 
     /**
@@ -65,5 +86,20 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    /**
+     * Generates a random strong password
+     */
+    function generateStrongPassword($length = 10) {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=-';
+        $password = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomIndex = rand(0, strlen($characters) - 1);
+            $password .= $characters[$randomIndex];
+        }
+
+        return $password;
     }
 }
