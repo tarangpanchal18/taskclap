@@ -20,7 +20,7 @@
         <div class="row">
             @forelse($categories as $cateogry)
             <div class="col-6 col-md-4">
-                <a href="{{ route('category', $cateogry) }}" class="feature-box aos" data-aos="fade-up">
+                <a href="{{ route('category', $cateogry->slug) }}" class="feature-box aos" data-aos="fade-up">
                     <div class="feature-icon">
                         <span>
                             <img style="max-height: 80px;" src="{{ asset('storage/uploads/category/' . $cateogry->image) }}" alt="{{ $cateogry->name }}">
