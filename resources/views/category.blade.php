@@ -47,7 +47,7 @@
                         <div class="col-xl-4 col-md-6">
                             <div class="service-widget servicecontent">
                                 <div class="service-img">
-                                    <a href="{{ route('categoryDetail', $category->slug) }}">
+                                    <a href="{{ route('cart', $category->slug) }}">
                                         <img class="img-fluid serv-img" alt="{{ $category->name }}" src="/storage/uploads/category/{{ $category->image }}">
                                     </a>
                                     <div class="fav-item">
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">
-                                        <a href="{{ route('categoryDetail', $category->slug) }}">{{ $category->name }}</a>
+                                        <a href="{{ route('cart', $category->slug) }}">{{ $category->name }}</a>
                                     </h3>
                                     <p>Starts From ₹400<span class="rate"><i class="fas fa-star filled"></i>4.9</span></p>
                                 </div>

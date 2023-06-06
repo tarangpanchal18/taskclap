@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'homepage'])->name('homepage');
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
-Route::get('category/detail/{category}', [HomeController::class, 'categoryDetail'])->name('categoryDetail');
+Route::get('/{subcategory}', [CartController::class, 'index'])->name('cart');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
