@@ -2698,6 +2698,7 @@ html.menu-opened body {
     border-radius: 10px 10px 0 0;
 }
 .service-img .serv-img {
+    max-height: 275px;
     border-radius: 10px 10px 0 0;
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);

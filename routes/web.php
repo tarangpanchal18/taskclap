@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+require __DIR__ . '/admin_web.php';
+require __DIR__ . '/auth.php';
+
 Route::get('/', [HomeController::class, 'homepage'])->name('homepage');
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
 Route::get('/{subcategory}', [CartController::class, 'index'])->name('cart');
@@ -29,5 +32,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
-require __DIR__ . '/admin_web.php';
+
