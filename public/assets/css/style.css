@@ -3571,6 +3571,7 @@ html.menu-opened body {
 }
 .service-images img {
 	width: 100%;
+    max-height: 390px;
 	border-radius: 10px;
 }
 .small-gallery .circle-icon {
