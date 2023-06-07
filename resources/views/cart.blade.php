@@ -100,7 +100,16 @@
                                                         <p style="color:black;font-size: 14px;"><small><strong>₹ {{ $product->price }}</strong>&nbsp;&nbsp;&nbsp;<strike>₹ {{ $product->strike_price }}</strike></small></p>
                                                     </div>
                                                     <div class="col-3">
-                                                        <img style="border-radius: 5px;" class="img-thumbnail" src="/storage/uploads/products/{{ $product->image }}" alt="">
+                                                        <img style="padding:0px;height:80px;" class="img-thumbnail" src="/storage/uploads/products/{{ $product->image }}" alt="{{ $product->title }}">
+                                                        <div style="position: relative; margin-top: -5px;z-index: 20;" align="center">
+                                                            <div class="quantity-cart input-group w-auto justify-content-center align-items-center">
+                                                                <input style="width: 26px; padding: 0px; margin: 0px!important; border-radius: 0px!important;border:none!important;" type="button" value="-" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                                                                <input style="width: 26px; padding: 0px; margin: 0px!important; border-radius: 0px!important;border:none!important;background:#F0F0F0" readonly type="text" step="1" max="10" value="0" name="quantity"
+                                                                    class="quantity-field border-0 text-center w-25">
+                                                                <input style="width: 26px; padding: 0px; margin: 0px!important; border-radius: 0px!important;border:none!important;" type="button" value="+" class="button-plus border rounded-circle  icon-shape icon-sm mx-1"
+                                                                    data-field="quantity">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="product-description">
@@ -182,6 +191,40 @@
                 },'slow');
             });
         @endforeach
+
+        function incrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal)) {
+            parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+            } else {
+            parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        function decrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal) && currentVal > 0) {
+            parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
+            } else {
+            parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        $('.input-group').on('click', '.button-plus', function(e) {
+            incrementValue(e);
+        });
+
+        $('.input-group').on('click', '.button-minus', function(e) {
+            decrementValue(e);
+        });
     });
     </script>
 </body>
