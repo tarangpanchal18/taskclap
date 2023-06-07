@@ -1,5 +1,14 @@
 <?php
 
+function createSlug($string) {
+    $string = strtolower($string);
+    $string = str_replace(' ', '', $string);
+    $string = str_replace('-', '', $string);
+    $string = str_replace('/', '', $string);
+
+    return $string;
+}
+
 function formatNumber ($value, $decimal = 2) {
     return number_format($value, $decimal);
 }

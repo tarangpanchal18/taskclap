@@ -28,7 +28,7 @@
                                             <div class="serv-profile">
                                                 <h2>{{ $category->name }}</h2>
                                                 <ul>
-                                                    <li class="service-map"><i class="fa fa-star"></i> 3.5 Rating (100 Bookings Made)</li>
+                                                    <li class="service-map"><i style="color: #f29107;" class="fa fa-star"></i> 3.5 Rating (100 Bookings Made)</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -38,13 +38,13 @@
                                         <div class="col-md-12">
                                             <div class="service-gal">
                                                 <div class="row gx-2">
-                                                    <div class="col-md-9">
+                                                    <div class="col-md-12">
                                                         <div class="service-images big-gallery">
-                                                            <img src="assets/img/services/service-ban-01.jpg" class="img-fluid" alt="img">
-                                                            <a href="assets/img/services/service-ban-01.jpg" data-fancybox="gallery" class="btn btn-show"><i class="feather-image me-2"></i>Show all photos</a>
+                                                            <img src="/storage/uploads/category/{{ $category->image }}" class="img-fluid" alt="img">
+                                                            {{-- <a href="assets/img/services/service-ban-01.jpg" data-fancybox="gallery" class="btn btn-show"><i class="feather-image me-2"></i>Show all photos</a> --}}
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    {{-- <div class="col-md-3">
                                                         <div class="service-images small-gallery">
                                                             <a  href="assets/img/services/service-ban-02.jpg" data-fancybox="gallery">
                                                                 <img src="assets/img/services/service-ban-02.jpg" class="img-fluid" alt="img">
@@ -57,7 +57,7 @@
                                                                 <span class="circle-icon"><i class="feather-plus"></i></span>
                                                             </a>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +75,7 @@
                                             <div class="service-wrap provide-service" style="margin-bottom: 0;">
                                                 <div class="row">
                                                     @forelse($service_type as $serviceType)
-                                                    <div class="col-md-4" style="cursor: pointer;">
+                                                    <div class="col-md-4" style="cursor: pointer;" id="{{ createSlug($serviceType) }}">
                                                         <img class="img-fluid mb-2 img-thumbnail" alt="{{ $serviceType }}" src="https://www.vijayhomeservices.com/assets/img/ac-repair-large.jpg">
                                                         <div style="text-align: center;" class="provide-info">
                                                             <h6>{{ $serviceType }}</h6>
@@ -86,53 +86,33 @@
                                                 </div>
                                             </div>
                                             <hr>
-
-                                            <div class="product-section">
-                                                <h2 class="my-5">Service</h2>
-                                                @for($i=0; $i<= 2; $i++)
-                                                <div class="product-inner-section row pb-5">
+                                            @foreach ($service_type as $serviceType)
+                                            <div class="product-section" id="service_{{ createSlug($serviceType) }}">
+                                                <h3 class="mb-5">{{ $serviceType }}</h3>
+                                                @foreach ($pageData[$serviceType] as $product)
+                                                <div class="product-inner-section row">
                                                     <div class="col-9">
-                                                        <small class="dash-value">30 Days Warranty</small>
-                                                        <p style="margin-bottom:0px;color:black;"><b>Deep Clean Ac Service</b></p>
-                                                        <small class="text-body"><i class="fa fa-star"></i> 4.83 (1.54M reviews)</small>
-                                                        <p style="color:black;"><small><strong>₹ 599</strong>&nbsp;&nbsp;&nbsp;<strike>₹ 699</strike></small></p>
+                                                        @if($product->warranty)
+                                                        <small class="dash-value">{{ $product->warranty }} Days Warranty</small>
+                                                        @endif
+                                                        <p style="margin-bottom:0px;color:black;"><b>{{ $product->title }}</b></p>
+                                                        <small class="text-body"><i style="color: #f29107;" class="fa fa-solid fa-star"></i> 4.83 (1.54M reviews)</small>
+                                                        <p style="color:black;font-size: 14px;"><small><strong>₹ {{ $product->price }}</strong>&nbsp;&nbsp;&nbsp;<strike>₹ {{ $product->strike_price }}</strike></small></p>
                                                     </div>
                                                     <div class="col-3">
-                                                        <img style="border-radius: 5px;" src="https://dummyimage.com/110x110/000/fff" alt="">
+                                                        <img style="border-radius: 5px;" class="img-thumbnail" src="/storage/uploads/products/{{ $product->image }}" alt="">
                                                     </div>
                                                     <div class="col-12">
-                                                        <ul>
-                                                            <li>asdasdakjsfd askdfkjsd fkjsdghf jashdkflhaskdhdhsf dfkjsd fkjsdghf jashdkflhaskdhdhsf</li>
-                                                            <li>asdasdakjsfd askdfkjsd fkjsdghf jashdkflhaskdhdhsf dfkjsd fkjsdghf jashdkflhaskdhdhsf</li>
-                                                        </ul>
+                                                        <div class="product-description">
+                                                            {{ $product->description }}
+                                                        </div>
+                                                        <p style="cursor: pointer;font-size: 14px;color: #4c40ed">View More</p>
                                                     </div>
                                                 </div>
                                                 <hr>
-                                                @endfor
+                                                @endforeach
                                             </div>
-                                            <div class="product-section">
-                                                <h2 class="my-5">Installation / Uninstallation</h2>
-                                                @for($i=0; $i< 1; $i++)
-                                                <div class="product-inner-section row pb-5">
-                                                    <div class="col-9">
-                                                        <small class="dash-value">30 Days Warranty</small>
-                                                        <p style="margin-bottom:0px;color:black;"><b>Deep Clean Ac Service</b></p>
-                                                        <small class="text-body"><i class="fa fa-star"></i> 4.83 (1.54M reviews)</small>
-                                                        <p style="color:black;"><small><strong>₹ 599</strong>&nbsp;&nbsp;&nbsp;<strike>₹ 699</strike></small></p>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <img style="border-radius: 5px;" src="https://dummyimage.com/110x110/000/fff" alt="">
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <ul>
-                                                            <li>asdasdakjsfd askdfkjsd fkjsdghf jashdkflhaskdhdhsf dfkjsd fkjsdghf jashdkflhaskdhdhsf</li>
-                                                            <li>asdasdakjsfd askdfkjsd fkjsdghf jashdkflhaskdhdhsf dfkjsd fkjsdghf jashdkflhaskdhdhsf</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                @endfor
-                                            </div>
+                                            @endforeach
                                             <!-- <div class="service-wrap">
                                                 <h5>Reviews</h5>
                                                 <ul>
@@ -162,7 +142,7 @@
                                             <div class="card card-provide mb-0">
                                                 <div class="card-body">
                                                     <div class="package-widget">
-                                                        <h5>Available Service Packages</h5>
+                                                        <h5>What You'll Get</h5>
                                                         <ul>
                                                             <li>Full car wash and clean</li>
                                                             <li>Auto Electrical</li>
@@ -192,5 +172,17 @@
 	</div>
 
 	@include('layouts.scripts')
+    <script>
+    $(document).ready(function() {
+
+        @foreach($service_type as $serviceType)
+            $("#{{ createSlug($serviceType)}}").click(function() {
+                $('html,body').animate({
+                    scrollTop: $("#service_{{ createSlug($serviceType)}}").offset().top
+                },'slow');
+            });
+        @endforeach
+    });
+    </script>
 </body>
 </html>
