@@ -28,7 +28,7 @@
                                             <div class="serv-profile">
                                                 <h2>{{ $category->name }}</h2>
                                                 <ul>
-                                                    <li class="service-map"><i style="color: #f29107;" class="fa fa-star"></i> 3.5 Rating (100 Bookings Made)</li>
+                                                    <li class="service-map"><i class="fa fa-star rating-star"></i> 3.5 Rating (100 Bookings Made)</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -72,12 +72,12 @@
                                                 <div>{!! $category->description  !!}</div>
                                             </div>
                                             <hr>
-                                            <div class="service-wrap provide-service" style="margin-bottom: 0;">
+                                            <div class="service-wrap provide-service">
                                                 <div class="row">
                                                     @forelse($service_type as $serviceType)
-                                                    <div class="col-md-4" style="cursor: pointer;" id="{{ createSlug($serviceType) }}">
-                                                        <img class="img-fluid mb-2 img-thumbnail" alt="{{ $serviceType }}" src="https://www.vijayhomeservices.com/assets/img/ac-repair-large.jpg">
-                                                        <div style="text-align: center;" class="provide-info">
+                                                    <div class="col-md-4" role="button" id="{{ createSlug($serviceType) }}">
+                                                        <img class="img-fluid mb-2 cart-service-icon" alt="{{ $serviceType }}" src="https://www.vijayhomeservices.com/assets/img/ac-repair-large.jpg">
+                                                        <div class="provide-info text-center">
                                                             <h6>{{ $serviceType }}</h6>
                                                         </div>
                                                     </div>
@@ -95,18 +95,17 @@
                                                         @if($product->warranty)
                                                         <small class="dash-value">{{ $product->warranty }} Days Warranty</small>
                                                         @endif
-                                                        <p style="margin-bottom:0px;color:black;"><b>{{ $product->title }}</b></p>
-                                                        <small class="text-body"><i style="color: #f29107;" class="fa fa-solid fa-star"></i> 4.83 (1.54M reviews)</small>
-                                                        <p style="color:black;font-size: 14px;"><small><strong>₹ {{ $product->price }}</strong>&nbsp;&nbsp;&nbsp;<strike>₹ {{ $product->strike_price }}</strike></small></p>
+                                                        <p class="mb-0 text-dark"><b>{{ $product->title }}</b></p>
+                                                        <small class="text-body"><i class="fa fa-solid fa-star rating-star"></i> 4.83 (1.54M reviews)</small>
+                                                        <p class="text-dark"><small><strong>₹ {{ $product->price }}</strong>&nbsp;&nbsp;&nbsp;<strike>₹ {{ $product->strike_price }}</strike></small></p>
                                                     </div>
                                                     <div class="col-3">
-                                                        <img style="padding:0px;height:80px;" class="img-thumbnail" src="/storage/uploads/products/{{ $product->image }}" alt="{{ $product->title }}">
-                                                        <div style="position: relative; margin-top: -5px;z-index: 20;" align="center">
+                                                        <img class="img-thumbnail p-0" src="/storage/uploads/products/{{ $product->image }}" alt="{{ $product->title }}">
+                                                        <div>
                                                             <div class="quantity-cart input-group w-auto justify-content-center align-items-center">
-                                                                <input style="width: 26px; padding: 0px; margin: 0px!important; border-radius: 0px!important;border:none!important;" type="button" value="-" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
-                                                                <input style="width: 26px; padding: 0px; margin: 0px!important; border-radius: 0px!important;border:none!important;background:#F0F0F0" readonly type="text" step="1" max="10" value="0" name="quantity"
-                                                                    class="quantity-field border-0 text-center w-25">
-                                                                <input style="width: 26px; padding: 0px; margin: 0px!important; border-radius: 0px!important;border:none!important;" type="button" value="+" class="button-plus border rounded-circle  icon-shape icon-sm mx-1"
+                                                                <input type="button" value="-" class="cart-btn button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                                                                <input type="text" step="1" max="10" value="0" name="quantity" class="cart-btn quantity-field text-center" readonly>
+                                                                <input type="button" value="+" class="cart-btn button-plus border rounded-circle icon-shape icon-sm mx-1"
                                                                     data-field="quantity">
                                                             </div>
                                                         </div>
@@ -159,6 +158,14 @@
                                                             <li>Pre Purchase Inspection</li>
                                                         </ul>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="cart-widget package-widget row">
+                                                <div class="col-8 col-md-8 col-sm-6">
+                                                    <h6>₹ 599 &nbsp;<small><strike>₹ 900</strike></small></h6>
+                                                </div>
+                                                <div class="col-4 col-md-4 col-sm-6">
+                                                    <button class="btn btn-sm btn-success">View Cart</button>
                                                 </div>
                                             </div>
                                         </div>
