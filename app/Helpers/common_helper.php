@@ -45,8 +45,6 @@ function generate_badge($label) {
 /**
  * Returns the order commission based on order object
  * @param Object $order
- * @return float
- *
  */
 function getOrderCommission($order): float
 {
@@ -64,4 +62,22 @@ function getOrderCommission($order): float
     }
 
     return number_format((float)$commissionAmt, 2);
+}
+
+/**
+ * Retrive cart Items From cookies
+ */
+function getCartItems(): array
+{
+    $cartItems = $_COOKIE['cartDetail'];
+    if (empty($cartItems)) {
+        return [];
+    }
+
+    $cartItems = json_decode($cartItems, true);
+    foreach($cartItems as $cart) {
+        $returnArr[$cart['productId']] = $cart['qty'];
+    }
+
+    return $returnArr;
 }
