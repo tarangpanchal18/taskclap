@@ -97,7 +97,11 @@
                                                             @endif
                                                             <p class="mb-0 text-dark"><b>{{ $product->title }}</b></p>
                                                             <small class="text-body"><i class="fa fa-solid fa-star rating-star"></i> 4.83 (1.54M reviews)</small>
+                                                            @if($product->children->count())
+                                                            <p class="text-dark"><small><strong>{{ $product->children->count() }} Service</strong></small></p>
+                                                            @else
                                                             <p class="text-dark"><small><strong>₹ {{ $product->price }}</strong>&nbsp;&nbsp;&nbsp;<strike>₹ {{ $product->strike_price }}</strike></small></p>
+                                                            @endif
                                                         </div>
                                                         <div class="col-3">
                                                             @if ($product->image)
@@ -105,6 +109,8 @@
                                                             @else
                                                             <img class="img-thumbnail p-0" src="https://dummyimage.com/200x200/000/fff" alt="{{ $product->title }}">
                                                             @endif
+
+                                                            @if(! $product->children->count())
                                                             <div>
                                                                 <div class="quantity-cart input-group w-auto justify-content-center align-items-center">
                                                                     <input type="button" value="-" class="cart-btn button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
@@ -113,6 +119,7 @@
                                                                         data-field="quantity">
                                                                 </div>
                                                             </div>
+                                                            @endif
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="product-description">
