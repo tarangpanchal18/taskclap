@@ -1,4 +1,4 @@
-const cartItems = [];
+const cartItems = getCookie('cartDetail') ? JSON.parse(getCookie('cartDetail')) : [];
 
 function renderLoginScreen() {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
