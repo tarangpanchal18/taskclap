@@ -16,9 +16,12 @@ class CartController extends Controller
     {
         $data = [];
         $category = $this->categoryRepository->getById($subcategory, true);
+        if(! $category) abort(500, "Something went Wrong !");
+
         foreach($category->product as $product) {
-            if (! empty($product->serviceCategory->name))
+            if (! empty($product->serviceCategory->name)) {
                 $data[$product->serviceCategory->name][] = $product;
+            }
         }
 
         return view('cart', [
