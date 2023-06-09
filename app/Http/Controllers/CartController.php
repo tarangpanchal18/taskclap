@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Http\Request;
+use App\Repositories\Admin\CategoryRepository;
 use Illuminate\View\View;
 
 class CartController extends Controller
@@ -21,11 +20,12 @@ class CartController extends Controller
             if (! empty($product->serviceCategory->name))
                 $data[$product->serviceCategory->name][] = $product;
         }
-        // dd($data);
+
         return view('cart', [
             'category' => $category,
             'pageData' => $data,
             'service_type' => array_keys($data),
+            'cartArray' => getCartItems(),
         ]);
     }
 }

@@ -1,3 +1,5 @@
+const cartItems = [];
+
 function renderLoginScreen() {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     recaptchaVerifier.render();
@@ -66,7 +68,6 @@ function resendSmsForVerify() {
     });
 }
 
-
 function VerfySmsForAuth() {
     var code1 = $("#digit-1").val().trim();
     var code2 = $("#digit-2").val().trim();
@@ -128,3 +129,116 @@ function setLoginOtpTimeExpiry() {
 
     $(".login-time-expiry").show();
 }
+
+function setCookie(key, value, expiry) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
+
+function getCookie(key) {
+    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return keyValue ? keyValue[2] : null;
+}
+
+function eraseCookie(key) {
+    var keyValue = getCookie(key);
+    setCookie(key, keyValue, '-1');
+}
+
+function incrementCartBtnValue(e) {
+    e.preventDefault();
+    var fieldName = $(e.target).data('field');
+    var parent = $(e.target).closest('div');
+    var parentElement = parent.find('input[name=' + fieldName + ']');
+    var currentVal = parseInt(parentElement.val(), 10);
+
+    if (currentVal >= 10) {
+        alert("You cannot add more than 10 items !");
+        return;
+    }
+
+    if (! isNaN(currentVal)) {
+        parentElement.val(currentVal + 1);
+        updateCartItem('plus', parentElement.attr("data-price"), parentElement.attr("data-strikeprice"), parentElement.attr("data-productId"), parentElement.val());
+    } else {
+        parent.find('input[name=' + fieldName + ']').val(0);
+    }
+}
+function decrementCartBtnValue(e) {
+    e.preventDefault();
+    var fieldName = $(e.target).data('field');
+    var parent = $(e.target).closest('div');
+    var parentElement = parent.find('input[name=' + fieldName + ']');
+    var currentVal = parseInt(parentElement.val(), 10);
+
+    if (! isNaN(currentVal) && currentVal > 0) {
+        parentElement.val(currentVal - 1);
+        updateCartItem('minus', parentElement.attr("data-price"), parentElement.attr("data-strikeprice"), parentElement.attr("data-productId"), parentElement.val());
+    } else {
+        parentElement.val(0);
+    }
+}
+
+function updateCartItem(type, sellingPrice, currentPrice, productId, qty) {
+    cartItems[productId] = {
+            "productId" : productId,
+            "qty" : qty
+    };
+
+    var cartItem = $.grep(cartItems, function(n, i){
+        return (n !== "" && n != null);
+    });
+
+    if (getCookie('cartSellingTotal') && getCookie('cartCurrentTotal')) {
+        if (type == "plus") {
+            sellingPrice = parseInt(getCookie('cartSellingTotal')) + parseInt(sellingPrice);
+            currentPrice = parseInt(getCookie('cartCurrentTotal')) + parseInt(currentPrice);
+        } else {
+            sellingPrice = parseInt(getCookie('cartSellingTotal')) - parseInt(sellingPrice);
+            currentPrice = parseInt(getCookie('cartCurrentTotal')) - parseInt(currentPrice);
+        }
+    }
+
+    setCookie('cartDetail', JSON.stringify(cartItem), 1);
+    setCookie('cartSellingTotal', sellingPrice, 1);
+    setCookie('cartCurrentTotal', currentPrice, 1);
+
+    if (sellingPrice != 0 && currentPrice != 0) {
+        $(".cart-total").html("₹ " + sellingPrice + " &nbsp;<small><strike>₹ " + currentPrice + "</strike></small>");
+        $(".cart-widget").slideDown();
+        return;
+    }
+
+    $(".cart-widget").slideUp();
+}
+
+function loadCartItems() {
+    var sellingPrice = getCookie('cartSellingTotal');
+    var currentPrice = getCookie('cartCurrentTotal');
+    if (sellingPrice != 0 && sellingPrice !== null) {
+        $(".cart-total").html("₹ " + sellingPrice + " &nbsp;<small><strike>₹ " + currentPrice + "</strike></small>");
+        $(".cart-widget").slideDown();
+        return;
+    }
+
+    $(".cart-widget").slideUp();
+}
+
+function finishTcLoading() {
+    $(".main-wrapper").removeAttr('style');
+    jQuery('.tc-loading-screen').fadeOut(500, function () {
+        // document.getElementById("tc-loader").style.display = "none";
+    });
+}
+
+$(document).ready(function () {
+
+    $('.input-group').on('click', '.button-plus', function(e) {
+        incrementCartBtnValue(e);
+    });
+
+    $('.input-group').on('click', '.button-minus', function(e) {
+        decrementCartBtnValue(e);
+    });
+});

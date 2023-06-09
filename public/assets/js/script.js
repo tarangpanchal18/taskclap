@@ -2052,12 +2052,12 @@ Version      : 1.0
 		}
 	}
 
-	if ($(window).width() > 767) {
-		if ($('.theiaStickySidebar').length > 0) {
-			$('.theiaStickySidebar').theiaStickySidebar({
-				// Settings
-				additionalMarginTop: 125
-			});
-		}
-	}
+	// if ($(window).width() > 767) {
+	// 	if ($('.theiaStickySidebar').length > 0) {
+	// 		$('.theiaStickySidebar').theiaStickySidebar({
+	// 			// Settings
+	// 			additionalMarginTop: 125
+	// 		});
+	// 	}
+	// }
 })(jQuery);
