@@ -114,7 +114,19 @@
                                                             <div>
                                                                 <div class="quantity-cart input-group w-auto justify-content-center align-items-center">
                                                                     <input type="button" value="-" class="cart-btn button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
-                                                                    <input data-productId="{{ $product->id }}" data-price="{{ $product->price }}" data-strikeprice="{{ $product->strike_price }}" type="text" step="1" max="10" value="{{ $cartArray[$product->id] ? $cartArray[$product->id] : 0 }}" name="quantity" class="cart-btn quantity-field text-center" readonly>
+                                                                    <input
+                                                                        data-subCategoryId="{{ $product->sub_category_id }}"
+                                                                        data-productId="{{ $product->id }}"
+                                                                        data-price="{{ $product->price }}"
+                                                                        data-strikeprice="{{ $product->strike_price }}"
+                                                                        type="text"
+                                                                        step="1"
+                                                                        max="10"
+                                                                        value="{{ $cartArray[$product->id] ? $cartArray[$product->id] : 0 }}"
+                                                                        name="quantity"
+                                                                        class="cart-btn quantity-field text-center"
+                                                                        readonly
+                                                                    >
                                                                     <input type="button" value="+" class="cart-btn button-plus border rounded-circle icon-shape icon-sm mx-1"
                                                                         data-field="quantity">
                                                                 </div>
@@ -200,7 +212,7 @@
 	@include('layouts.scripts')
     <script>
     $(document).ready(function() {
-        loadCartItems();
+        loadCartItems({{ $product->sub_category_id }});
         @foreach($service_type as $serviceType)
             $("#{{ createSlug($serviceType)}}").click(function() {
                 $('html,body').animate({
