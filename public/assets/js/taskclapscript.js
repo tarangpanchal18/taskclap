@@ -1,4 +1,5 @@
 const cartItems = getCookie('cartDetail') ? JSON.parse(getCookie('cartDetail')) : [];
+const cartTotals = getCookie('cartTotal') ? JSON.parse(getCookie('cartTotal')) : [];
 
 function renderLoginScreen() {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
@@ -160,7 +161,14 @@ function incrementCartBtnValue(e) {
 
     if (! isNaN(currentVal)) {
         parentElement.val(currentVal + 1);
-        updateCartItem('plus', parentElement.attr("data-price"), parentElement.attr("data-strikeprice"), parentElement.attr("data-productId"), parentElement.val());
+        updateCartItem(
+            'plus',
+            parentElement.attr("data-price"),
+            parentElement.attr("data-strikeprice"),
+            parentElement.attr("data-subCategoryId"),
+            parentElement.attr("data-productId"),
+            parentElement.val()
+        );
     } else {
         parent.find('input[name=' + fieldName + ']').val(0);
     }
@@ -174,35 +182,41 @@ function decrementCartBtnValue(e) {
 
     if (! isNaN(currentVal) && currentVal > 0) {
         parentElement.val(currentVal - 1);
-        updateCartItem('minus', parentElement.attr("data-price"), parentElement.attr("data-strikeprice"), parentElement.attr("data-productId"), parentElement.val());
+        updateCartItem(
+            'minus',
+            parentElement.attr("data-price"),
+            parentElement.attr("data-strikeprice"),
+            parentElement.attr("data-subCategoryId"),
+            parentElement.attr("data-productId"),
+            parentElement.val()
+        );
     } else {
         parentElement.val(0);
     }
 }
 
-function updateCartItem(type, sellingPrice, currentPrice, productId, qty) {
-    cartItems[productId] = {
-            "productId" : productId,
-            "qty" : qty
-    };
-
-    var cartItem = $.grep(cartItems, function(n, i){
-        return (n !== "" && n != null);
-    });
-
-    if (getCookie('cartSellingTotal') && getCookie('cartCurrentTotal')) {
+function updateCartItem(type, sellingPrice, currentPrice, subCategoryId, productId, qty) {
+    if (cartTotals[subCategoryId] !== undefined) {
         if (type == "plus") {
-            sellingPrice = parseInt(getCookie('cartSellingTotal')) + parseInt(sellingPrice);
-            currentPrice = parseInt(getCookie('cartCurrentTotal')) + parseInt(currentPrice);
+            sellingPrice = parseInt(cartTotals[subCategoryId]['cartSellingTotal']) + parseInt(sellingPrice);
+            currentPrice = parseInt(cartTotals[subCategoryId]['cartCurrentTotal']) + parseInt(currentPrice);
         } else {
-            sellingPrice = parseInt(getCookie('cartSellingTotal')) - parseInt(sellingPrice);
-            currentPrice = parseInt(getCookie('cartCurrentTotal')) - parseInt(currentPrice);
+            sellingPrice = parseInt(cartTotals[subCategoryId]['cartSellingTotal']) - parseInt(sellingPrice);
+            currentPrice = parseInt(cartTotals[subCategoryId]['cartCurrentTotal']) - parseInt(currentPrice);
         }
     }
 
-    setCookie('cartDetail', JSON.stringify(cartItem), 1);
-    setCookie('cartSellingTotal', sellingPrice, 1);
-    setCookie('cartCurrentTotal', currentPrice, 1);
+    cartItems[productId] = {
+        "productId" : productId,
+        "qty" : qty
+    };
+    cartTotals[subCategoryId] = {
+        "cartSellingTotal" : sellingPrice,
+        "cartCurrentTotal" : currentPrice
+    };
+
+    setCookie('cartDetail', JSON.stringify(cartItems), 1);
+    setCookie('cartTotal', JSON.stringify(cartTotals), 1);
 
     if (sellingPrice != 0 && currentPrice != 0) {
         $(".cart-total").html("₹ " + sellingPrice + " &nbsp;<small><strike>₹ " + currentPrice + "</strike></small>");
@@ -213,10 +227,13 @@ function updateCartItem(type, sellingPrice, currentPrice, productId, qty) {
     $(".cart-widget").slideUp();
 }
 
-function loadCartItems() {
-    var sellingPrice = getCookie('cartSellingTotal');
-    var currentPrice = getCookie('cartCurrentTotal');
-    if (sellingPrice != 0 && sellingPrice !== null) {
+function loadCartItems(subCategoryId) {
+    if (cartTotals.length > 0 && cartTotals[subCategoryId]) {
+        var sellingPrice = cartTotals[subCategoryId]['cartSellingTotal'];
+        var currentPrice = cartTotals[subCategoryId]['cartCurrentTotal'];
+    }
+
+    if (sellingPrice !== undefined && sellingPrice !== undefined) {
         $(".cart-total").html("₹ " + sellingPrice + " &nbsp;<small><strike>₹ " + currentPrice + "</strike></small>");
         $(".cart-widget").slideDown();
         return;
