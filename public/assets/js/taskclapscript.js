@@ -258,4 +258,8 @@ $(document).ready(function () {
     $('.input-group').on('click', '.button-minus', function(e) {
         decrementCartBtnValue(e);
     });
+
+    if(! navigator.cookieEnabled) {
+        $(".mt-0").html("<h1 align='center'>Please Enable Cookies !</h1>");
+    }
 });
