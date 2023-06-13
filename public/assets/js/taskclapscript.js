@@ -233,7 +233,7 @@ function loadCartItems(subCategoryId) {
         var currentPrice = cartTotals[subCategoryId]['cartCurrentTotal'];
     }
 
-    if (sellingPrice !== undefined && sellingPrice !== undefined) {
+    if (sellingPrice !== undefined && sellingPrice !== undefined && sellingPrice != 0) {
         $(".cart-total").html("₹ " + sellingPrice + " &nbsp;<small><strike>₹ " + currentPrice + "</strike></small>");
         $(".cart-widget").slideDown();
         return;
