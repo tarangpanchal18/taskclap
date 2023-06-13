@@ -198,11 +198,21 @@ function decrementCartBtnValue(e) {
 function updateCartItem(type, sellingPrice, currentPrice, subCategoryId, productId, qty) {
     if (cartTotals[subCategoryId] !== undefined) {
         if (type == "plus") {
-            sellingPrice = parseInt(cartTotals[subCategoryId]['cartSellingTotal']) + parseInt(sellingPrice);
-            currentPrice = parseInt(cartTotals[subCategoryId]['cartCurrentTotal']) + parseInt(currentPrice);
+            if (cartTotals[subCategoryId]) {
+                sellingPrice = parseInt(cartTotals[subCategoryId]['cartSellingTotal']) + parseInt(sellingPrice);
+                currentPrice = parseInt(cartTotals[subCategoryId]['cartCurrentTotal']) + parseInt(currentPrice);
+            } else {
+                sellingPrice = parseInt(sellingPrice);
+                currentPrice = parseInt(currentPrice);
+            }
         } else {
-            sellingPrice = parseInt(cartTotals[subCategoryId]['cartSellingTotal']) - parseInt(sellingPrice);
-            currentPrice = parseInt(cartTotals[subCategoryId]['cartCurrentTotal']) - parseInt(currentPrice);
+            if (cartTotals[subCategoryId]) {
+                sellingPrice = parseInt(cartTotals[subCategoryId]['cartSellingTotal']) - parseInt(sellingPrice);
+                currentPrice = parseInt(cartTotals[subCategoryId]['cartCurrentTotal']) - parseInt(currentPrice);
+            } else {
+                sellingPrice = parseInt(sellingPrice);
+                currentPrice = parseInt(currentPrice);
+            }
         }
     }
 
