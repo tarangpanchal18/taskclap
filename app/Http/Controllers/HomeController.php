@@ -27,8 +27,9 @@ class HomeController extends Controller
 
     public function category($categorySlug): View
     {
+        $catData = $this->categoryRepository->getById($categorySlug, true);
         return view('category', [
-            'category' => $this->categoryRepository->getById($categorySlug, true),
+            'category' => $catData,
         ]);
     }
 
