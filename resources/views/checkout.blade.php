@@ -19,11 +19,11 @@
 
 					<!-- Booking -->
 					<div class="col-md-12">
-
 						<div class="login-back">
 							<a href="{{ url()->previous() }}"><i class="text-dark feather-arrow-left"></i>&nbsp;&nbsp;<span class="ms-3 text-dark h4">Summary</span></a>
 						</div>
 
+                        @if($cartArray->count())
 						<div class="booking-service">
 							<div class="row align-items-center">
 								<div class="col-lg-8">
@@ -68,9 +68,7 @@
 								</div>
 							</div>
 						</div>
-
                         <hr>
-
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="text-center">
@@ -78,8 +76,35 @@
 								</div>
 							</div>
 						</div>
+                        @else
+                        <div class="booking-service">
+                            <div class="row align-items-center">
+                                <div class="col-lg-12">
+                                    <div class="container">
+
+                                        <div class="row">
+                                            <div class="col-lg-6 mx-auto">
+                                                <div class="error-wrap text-center">
+                                                    <div class="error-img">
+                                                        <img class="img-fluid" src="https://cdni.iconscout.com/illustration/premium/thumb/confusing-woman-due-to-empty-cart-4558760-3780056.png" alt="img">
+                                                    </div>
+                                                    <h2>Whoops ! <br> Your Cart is empty</h2>
+                                                    <p>Sorry, the page you're looking is empty because you haven't added an item in cart.</p>
+                                                    <div class="text-center">
+                                                        <a href="{{ route('homepage') }}" class="btn btn-primary"><i class="feather-arrow-left-circle me-2"></i>Back to
+                                                        Home</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
 
 					</div>
+
 				</div>
 			</div>
 		</div>
