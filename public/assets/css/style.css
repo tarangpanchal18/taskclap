@@ -4259,19 +4259,20 @@ html.menu-opened body {
 	display: inline-flex;
     display: -webkit-inline-flex;
 }
-.service-book .serv-profile {
-    margin: 0 0 25px;
-}
 .service-book-img {
 	margin: 0 20px 25px 0;
 }
 .service-book-img img {
-	width: 175px;
+	width: 145px;
+    box-shadow: 0 0 10px #0000003d;
 	border-radius: 10px;
 }
 .service-book .serv-profile h2 {
-    font-size: 24px;
-	margin-bottom: 10px;
+    font-size: 18px;
+}
+.service-book .serv-profile p {
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 .provide-info h5 {
 	font-size: 20px;
@@ -21408,9 +21409,26 @@ fieldset {
 	.app-sec {
 		padding: 30px;
 	}
+    .service-book .serv-profile {
+        margin-left: 14px;
+    }
+    .service-book .serv-profile h2 {
+        margin-bottom: 5px;
+    }
+    .service-book .serv-profile p {
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
 	.serv-profile h2, .notification-details h4 {
 		font-size: 20px;
 	}
+    .serv-profile p {
+		text-align: left;
+	}
+    .service-book-img img {
+        width: 130px;
+        box-shadow: 0 0 10px #0000003d;
+    }
 	.serv-profile span.badge, .btn-back, .book-submit .btn,
 	.step-register li .multi-step-info p {
 		font-size: 14px;
@@ -21493,7 +21511,7 @@ fieldset {
 		text-align: left;
 	}
 	.service-book {
-		display: block;
+		/* display: block; */
 		text-align: center;
 	}
 	.booking-info .service-book-img {

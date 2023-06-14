@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Traits\GeneralFunctions;
 use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\ProductRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -13,7 +14,10 @@ class CartController extends Controller
 
     use GeneralFunctions;
 
-    public function __construct(private CategoryRepository $categoryRepository) {
+    public function __construct(
+        private CategoryRepository $categoryRepository,
+        private ProductRepository $productRepository
+    ) {
         //
     }
 
@@ -39,6 +43,7 @@ class CartController extends Controller
 
     function checkout(Request $request): View|RedirectResponse
     {
+        $total = $totalSaving = 0;
         if (empty($request->category) || empty($request->subcategory)) {
             return redirect(route('homepage'));
         }
@@ -49,10 +54,19 @@ class CartController extends Controller
         if ((! $cat)|| (! $subCat)) {
             return redirect(route('homepage'));
         }
-        $cartItems = $this->filterCartItemsBasedOnCat($cartItems, $cat, $subCat);
+        $cartItemsArr = $this->filterCartItemsBasedOnCat($cartItems, $cat, $subCat);
+        $cartItems = $this->productRepository->getAll()->whereIn('id', array_keys($cartItemsArr))->get();
+        foreach ($cartItems as $cartItem) {
+            $total = ($total + ($cartItem->price * $cartItemsArr[$cartItem->id]));
+            $totalSaving = ($totalSaving + ($cartItem->strike_price * $cartItemsArr[$cartItem->id]));
+        }
 
         return view('checkout', [
             'cartArray' => $cartItems,
+            'cartItemsArr' => $cartItemsArr,
+            'total' => $total,
+            'totalSaving' => $totalSaving,
         ]);
+
     }
 }
