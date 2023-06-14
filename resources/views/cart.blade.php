@@ -188,7 +188,10 @@
                                                         <h6 class="cart-total">₹ 0</h6>
                                                     </div>
                                                     <div class="col-4 col-md-4 col-sm-6">
-                                                        <button class="btn btn-sm btn-success">View Cart</button>
+                                                        <a href="{{ route('checkout', [
+                                                            'category' => $product->category->slug,
+                                                            'subcategory' => $product->subcategory->slug,
+                                                            ]) }}" class="btn btn-sm btn-success">View Cart</a>
                                                     </div>
                                                 </div>
                                             </div>
