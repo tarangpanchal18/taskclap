@@ -83,6 +83,7 @@ function VerfySmsForAuth() {
         if (user) {
             $.ajax({
                 type : "POST",
+                dataType: "json",
                 url : "/login",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -91,8 +92,8 @@ function VerfySmsForAuth() {
                     'phone' : $("#phone").val()
                 },
                 success : function(response) {
-                    if (response) {
-                        window.location.href = '/';
+                    if (response && response.success) {
+                        window.location.href = response.loginLink;
                     } else {
                         $(".login-screen-otp").hide();
                         $("#dialogue-box").html("<div class='alert alert-danger'>We're really Sorry !<br>But an unexpected error occurred. Please try after sometime.</div>");
@@ -108,7 +109,7 @@ function VerfySmsForAuth() {
 }
 
 function setLoginOtpTimeExpiry() {
-    var timer2 = "0:05";
+    var timer2 = "01:00";
     var otpResent = setInterval(function() {
         var timer = timer2.split(':');
         //by parsing integer, I avoid all extra string processing
@@ -272,4 +273,12 @@ $(document).ready(function () {
     if(! navigator.cookieEnabled) {
         $(".mt-0").html("<h1 align='center'>Please Enable Cookies !</h1>");
     }
+
+    $("#book-tc-service").click(function() {
+        alert("Booking");
+    });
+
+    $("#login-from-cart").click(function() {
+        window.location.href = "/login";
+    })
 });

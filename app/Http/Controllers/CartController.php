@@ -11,7 +11,6 @@ use Illuminate\View\View;
 
 class CartController extends Controller
 {
-
     use GeneralFunctions;
 
     public function __construct(
@@ -43,6 +42,8 @@ class CartController extends Controller
 
     function checkout(Request $request): View|RedirectResponse
     {
+        $this->setCartCheckpoint($request);
+
         $total = $totalSaving = 0;
         if (empty($request->category) || empty($request->subcategory)) {
             return redirect(route('homepage'));

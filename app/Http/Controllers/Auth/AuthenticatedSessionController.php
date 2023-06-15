@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Http\Controllers\Controller;
+use App\Http\Traits\GeneralFunctions;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
+    use GeneralFunctions;
+
     public function create(): View
     {
         return view('auth.login');
@@ -50,7 +52,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function storeWithOtp(Request $request): bool
+    public function storeWithOtp(Request $request): string
     {
         $this->validate($request, [
             'phone' => [
@@ -71,7 +73,13 @@ class AuthenticatedSessionController extends Controller
 
         Auth::login($user);
 
-        return true;
+        $returnArr['success'] = true;
+        $returnArr['loginLink'] = route('homepage');
+        if (Session::get('cartProcced')) {
+            $returnArr['loginLink'] = route('homepage') . Session::get('cartLink');
+        }
+
+        return json_encode($returnArr);
     }
 
     /**
@@ -86,20 +94,5 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
-    }
-
-    /**
-     * Generates a random strong password
-     */
-    function generateStrongPassword($length = 10) {
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=-';
-        $password = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $randomIndex = rand(0, strlen($characters) - 1);
-            $password .= $characters[$randomIndex];
-        }
-
-        return $password;
     }
 }
