@@ -72,7 +72,11 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="text-center">
-									<a href="booking-payment.html" class="btn btn-primary"><i class="fa-solid fa-business-time"></i> Book Service Now</a>
+                                    @auth
+                                    <button id="book-tc-service" class="btn btn-primary"><i class="fa-solid fa-business-time"></i> Book Service Now</button>
+                                    @else
+									<button id="login-from-cart" class="btn btn-primary"><i class="fa-solid fa-business-time"></i> Login/Sign up to proceed</button>
+                                    @endauth
 								</div>
 							</div>
 						</div>

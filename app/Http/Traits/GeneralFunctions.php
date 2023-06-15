@@ -2,9 +2,17 @@
 namespace App\Http\Traits;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 trait GeneralFunctions {
-
+    /**
+     * Filter the cart items stored in session and returns only value for perticulur category, subcategory
+     * @param array $cartItems
+     * @param Category $category
+     * @param Category $subcategory
+     * @return array
+     */
     public function filterCartItemsBasedOnCat(array $cartItems, $category, $subCategory): array
     {
         $cartItems = array_filter($cartItems);
@@ -25,4 +33,34 @@ trait GeneralFunctions {
         return $returnArr;
     }
 
+    /**
+     * Set cart data in session for login back to cart purpose
+     * @param Object $request
+     * @return void
+     */
+    public function setCartCheckpoint(Request $request)
+    {
+        if (! auth()->user()) {
+            Session::put('cartProcced', true);
+            Session::put('cartLink', $request->getRequestUri());
+        }
+    }
+
+    /**
+     * Generates a random strong password
+     * @param int $length
+     * @return string
+     */
+    function generateStrongPassword($length = 10)
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=-';
+        $password = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomIndex = rand(0, strlen($characters) - 1);
+            $password .= $characters[$randomIndex];
+        }
+
+        return $password;
+    }
 }

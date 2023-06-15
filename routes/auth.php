@@ -12,20 +12,21 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    // Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'storeWithOtp']);
     Route::post('validate-number', [AuthenticatedSessionController::class, 'validateNumber']);
-    Route::get('v1/login', [AuthenticatedSessionController::class, 'create_v1'])->name('login.v1');
-    Route::post('v1/login', [AuthenticatedSessionController::class, 'storeWithOtp_v1']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+    // Route::get('v1/login', [AuthenticatedSessionController::class, 'create_v1'])->name('login.v1');
+    // Route::post('v1/login', [AuthenticatedSessionController::class, 'storeWithOtp_v1']);
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+    // Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    // Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+
+    // Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    // Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 });
 
 Route::middleware('auth')->group(function () {
