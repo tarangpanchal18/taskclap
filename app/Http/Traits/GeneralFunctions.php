@@ -12,15 +12,17 @@ trait GeneralFunctions {
             'category_id' => $category->id,
             'sub_category_id' => $subCategory->id,
             'status' => 'Active',
-        ])->get();
+        ])
+        ->whereIn('id', array_keys($cartItems))
+        ->get();
 
         foreach($products as $product) {
-            if (! in_array($product->id, array_keys($cartItems))) {
-                unset($cartItems[$product->id]);
+            if (in_array($product->id, array_keys($cartItems))) {
+                $returnArr[$product->id] = $cartItems[$product->id];
             }
         }
 
-        return $cartItems;
+        return $returnArr;
     }
 
 }
