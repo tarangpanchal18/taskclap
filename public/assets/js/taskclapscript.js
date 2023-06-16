@@ -275,10 +275,70 @@ $(document).ready(function () {
     }
 
     $("#book-tc-service").click(function() {
-        alert("Booking");
+        $.ajax({
+            type : "POST",
+            dataType: "json",
+            url : "/cart/fetchAddress",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data : $("#submit-tc-address").serialize(),
+            success : function(response) {
+                if (response.success) {
+                    $("#tc-select-address").show();
+                    $("#tc-existing-address-text").html(response.address);
+                    $("#tc-existing-address").val(response.address);
+                    $("#tc-existing-house_no").val(response.house_no);
+                    $("#tc-existing-landmark").val(response.landmark);
+                }
+
+                $("#tc-address-modal").modal("show");
+            },
+        });
+
     });
 
     $("#login-from-cart").click(function() {
         window.location.href = "/login";
+    });
+
+    $("#submit-address").click(function() {
+        $("form#submit-tc-address :input").each(function(){
+            var input = $(this);
+            var inputId = input.attr("id")
+            input.removeClass("is-invalid");
+            $("#" + inputId + "-error").html("");
+        });
+
+        $.ajax({
+            type : "POST",
+            dataType: "json",
+            url : "/cart/addAddress",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data : $("#submit-tc-address").serialize(),
+            success : function(response) {
+                if (response.errors) {
+                    alert(response.errors.address);
+                }
+            },
+            error: function (data) {
+                var errors = $.parseJSON(data.responseText);
+                $.each(errors.errors, function (key, value) {
+                    var errorInputId = "tc-" + key;
+                    var errorInpuErrtId = "tc-" + key + "-error";
+                    $("#" + errorInputId).addClass("is-invalid");
+                    $("#" + errorInpuErrtId).html(value);
+                });
+            }
+        });
+    });
+
+    $(".contact-data").click(function() {
+        $("#tc-house_no").val($("#tc-existing-house_no").val());
+        $("#tc-landmark").val($("#tc-existing-landmark").val());
+        $("#tc-address").val($("#tc-existing-address").val());
+        $("#tc-select-address").slideUp();
     })
 });

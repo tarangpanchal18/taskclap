@@ -21,6 +21,8 @@ require __DIR__ . '/auth.php';
 Route::get('/', [HomeController::class, 'homepage'])->name('homepage');
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
 Route::get('cart/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('cart/addAddress', [CartController::class, 'addAddress']);
+Route::post('cart/fetchAddress', [CartController::class, 'fetchAddress']);
 Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');
 
 Route::get('/dashboard', function () {
