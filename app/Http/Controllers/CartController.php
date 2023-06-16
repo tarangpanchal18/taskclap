@@ -6,6 +6,7 @@ use App\Http\Traits\GeneralFunctions;
 use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ProductRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -69,5 +70,40 @@ class CartController extends Controller
             'totalSaving' => $totalSaving,
         ]);
 
+    }
+
+    public function addAddress (Request $request): JsonResponse
+    {
+        $request->validate([
+            'house_no' => 'required|min:1|max:25',
+            'landmark' => 'required|min:3|max:50',
+            'address' => 'required|min:10|max:100',
+        ]);
+
+        $user = auth()->user();
+        $update = $user->update([
+            'house_no' => trim($request->house_no),
+            'landmark' => trim($request->landmark),
+            'address' => trim($request->address)
+        ]);
+
+        if ($update) {
+            return response()->json([
+                'success' => $update,
+            ]);
+        }
+    }
+
+    public function fetchAddress() {
+        $address = auth()->user()->address;
+        $house_no = auth()->user()->house_no;
+        $landmark = auth()->user()->landmark;
+
+        return response()->json([
+            'success' => ($address) ? true : false,
+            'house_no' => $house_no,
+            'landmark' => $landmark,
+            'address' => $address,
+        ]);
     }
 }

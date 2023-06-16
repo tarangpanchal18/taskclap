@@ -1038,7 +1038,7 @@ table.dataTable thead .sorting_desc_disabled:after {
 	border: 0;
 }
 .custom-modal .close-btn {
-    background: #F82424;
+    background: #2D4059;
 	border: 0;
     border-radius: 50%;
     color: #fff;
@@ -19218,7 +19218,16 @@ fieldset {
 /*-----------------
 	54. Taskclap Css
 -----------------------*/
-
+.btn-tc {
+    border: 1px solid #2D4059;
+    background: white;
+    color: #2D4059;
+}
+.btn-tc:hover {
+    border: 1px solid #2D4059!important;
+    background: #2D4059;
+    color: white;
+}
 .rating-star {
     color: #f29107;
 }

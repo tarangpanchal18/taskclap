@@ -73,7 +73,7 @@
 							<div class="col-lg-12">
 								<div class="text-center">
                                     @auth
-                                    <button id="book-tc-service" class="btn btn-primary"><i class="fa-solid fa-business-time"></i> Book Service Now</button>
+                                    <button id="book-tc-service" class="btn btn-primary"><i class="fa-solid fa-business-time"></i> Book Service</button>
                                     @else
 									<button id="login-from-cart" class="btn btn-primary"><i class="fa-solid fa-business-time"></i> Login/Sign up to proceed</button>
                                     @endauth
@@ -120,6 +120,7 @@
 
 	</div>
 
+    @include('layouts.front_model')
 	@include('layouts.scripts')
 
 </body>
