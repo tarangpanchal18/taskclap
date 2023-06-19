@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\GeneralFunctions;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ProductRepository;
@@ -114,19 +115,17 @@ class CartController extends Controller
             return redirect(route('homepage'));
         }
 
-        $total = $categoryId = $subCategoryId = 0;
+        $total = 0;
+        $orderNumber = $this->generateOrderNumber();
+        $categoryId = $request->category;
+        $subCategoryId = $request->subCategory;
         $cartItems = json_decode(base64_decode($request->cartArray), true);
-        foreach ($cartItems as $item) {
-            $total = $total + $item->price;
-            $categoryId = $item->category->id;
-            $subCategory = $item->sub_category->id;
-        }
 
         $orderData = [
-            'order_id' => $this->generateOrderNumber(),
+            'order_id' => $orderNumber,
             'user_id' => auth()->user()->id,
             'category_id' => $categoryId,
-            'sub_category_id' => $subCategory,
+            'sub_category_id' => $subCategoryId,
             'name' => auth()->user()->name,
             'phone' => auth()->user()->phone,
             'email' => auth()->user()->email,
@@ -150,9 +149,65 @@ class CartController extends Controller
             'is_warranty_order' => 'No',
             'payment_type' => 'Cash',
             'payment_status' => 'Pending',
-            'order_status' => 'Placed',
+            'order_status' => 'Pending',
         ];
 
-        Order::create($orderData);
+        try {
+            $orderId = Order::create($orderData);
+            foreach ($cartItems as $cart) {
+                $total = $total + $cart['price'];
+                $cart = [
+                    'order' => $orderNumber,
+                    'order_id' => $orderId->id,
+                    'product_id' => $cart['id'],
+                    'category_id' => $cart['category_id'],
+                    'sub_category_id' => $cart['sub_category_id'],
+                    'service_category_id' => $cart['service_category_id'],
+                    'product_title' => $cart['title'],
+                    'product_description' => $cart['description'],
+                    'product_strike_price' => $cart['strike_price'],
+                    'product_price' => $cart['price'],
+                    'product_commission' => $cart['commission'],
+                    'warranty' => $cart['warranty'],
+                    'product_approx_duration' => $cart['approx_duration'],
+                    'order_status' => "Pending",
+                    'order_note' => '',
+                ];
+
+                OrderDetail::create($cart);
+            }
+
+            Order::where(['id' => $orderId->id, 'order_id' => $orderNumber])->update([
+                'subtotal' => $total,
+                'total' => $total,
+            ]);
+
+            $past = time() - 3600;
+            foreach ($_COOKIE as $key => $value) {
+                if ($key == "cartTotal" || $key == "cartDetail") {
+                    setcookie($key, $value, $past, '/');
+                }
+            }
+
+            return redirect(route('orderPlaced', [
+                'success' => 'Order Placed',
+            ]));
+
+        } catch (\Throwable $th) {
+            return redirect(route('orderFailed', [
+                'error' => 'Something went wrong',
+                'message' => $th->getMessage()
+            ]));
+        }
+    }
+
+    public function orderPlaced()
+    {
+        return view('order_placed');
+    }
+
+    public function orderFailed()
+    {
+        return view('order_failed');
     }
 }

@@ -24,6 +24,8 @@ Route::get('cart/checkout', [CartController::class, 'checkout'])->name('checkout
 Route::post('cart/addAddress', [CartController::class, 'addAddress']);
 Route::post('cart/fetchAddress', [CartController::class, 'fetchAddress']);
 Route::post('cart/placeOrder', [CartController::class, 'placeOrder'])->name('placeOrder');
+Route::get('order/success', [CartController::class, 'orderPlaced'])->name('orderPlaced');
+Route::get('order/failed', [CartController::class, 'orderFailed'])->name('orderFailed');
 Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');
 
 Route::get('/dashboard', function () {
