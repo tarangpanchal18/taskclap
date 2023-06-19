@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\GeneralFunctions;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ProductRepository;
@@ -105,5 +106,53 @@ class CartController extends Controller
             'landmark' => $landmark,
             'address' => $address,
         ]);
+    }
+
+    public function placeOrder(Request $request) {
+
+        if (empty($request->payment_method) || empty($request->category) || empty($request->subCategory) || empty($request->cartArray)) {
+            return redirect(route('homepage'));
+        }
+
+        $total = $categoryId = $subCategoryId = 0;
+        $cartItems = json_decode(base64_decode($request->cartArray), true);
+        foreach ($cartItems as $item) {
+            $total = $total + $item->price;
+            $categoryId = $item->category->id;
+            $subCategory = $item->sub_category->id;
+        }
+
+        $orderData = [
+            'order_id' => $this->generateOrderNumber(),
+            'user_id' => auth()->user()->id,
+            'category_id' => $categoryId,
+            'sub_category_id' => $subCategory,
+            'name' => auth()->user()->name,
+            'phone' => auth()->user()->phone,
+            'email' => auth()->user()->email,
+            'address' => auth()->user()->address,
+            'house_no' => auth()->user()->house_no,
+            'landmark' => auth()->user()->landmark,
+            'address_local' => auth()->user()->address,
+            'pincode' => '000000',
+            'country_id' => auth()->user()->country_id,
+            'state_id' => auth()->user()->state_id,
+            'city_id' => auth()->user()->city_id,
+            'area_id' => auth()->user()->area_id,
+            'address_lat' => auth()->user()->address_lat,
+            'address_long' => auth()->user()->address_long,
+            'product_count' => count($cartItems),
+            'isPromoApplied' => 'No',
+            'discount' => 0,
+            'tax' => 0,
+            'subtotal' => $total,
+            'total' => $total,
+            'is_warranty_order' => 'No',
+            'payment_type' => 'Cash',
+            'payment_status' => 'Pending',
+            'order_status' => 'Placed',
+        ];
+
+        Order::create($orderData);
     }
 }

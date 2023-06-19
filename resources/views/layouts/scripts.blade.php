@@ -16,6 +16,8 @@
 <script src="/assets/js/owl.carousel.min.js"></script>
 <!-- select JS -->
 <script src="/assets/plugins/select2/js/select2.min.js"></script>
+<!-- sweetalert JS -->
+<script src="/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
 <!-- Datepicker Core JS -->
 <script src="/assets/js/moment.min.js"></script>
 <script src="/assets/js/bootstrap-datetimepicker.min.js"></script>

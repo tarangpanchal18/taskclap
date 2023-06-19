@@ -23,6 +23,7 @@ Route::get('category/{category}', [HomeController::class, 'category'])->name('ca
 Route::get('cart/checkout', [CartController::class, 'checkout'])->name('checkout');
 Route::post('cart/addAddress', [CartController::class, 'addAddress']);
 Route::post('cart/fetchAddress', [CartController::class, 'fetchAddress']);
+Route::post('cart/placeOrder', [CartController::class, 'placeOrder'])->name('placeOrder');
 Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');
 
 Route::get('/dashboard', function () {

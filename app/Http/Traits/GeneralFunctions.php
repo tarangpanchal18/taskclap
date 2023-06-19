@@ -63,4 +63,19 @@ trait GeneralFunctions {
 
         return $password;
     }
+
+    /**
+     * Generates a random number according to time
+     * @return string
+     */
+    function generateOrderNumber() {
+        // Get the current date and time
+        $currentDateTime = date('YmdHis');
+        // Generate a unique identifier (e.g., random number or unique ID from database)
+        $uniqueIdentifier = time();
+        // Concatenate the date/time and unique identifier to form the order number
+        $orderNumber = $currentDateTime . $uniqueIdentifier;
+
+        return $orderNumber;
+    }
 }

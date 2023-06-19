@@ -260,6 +260,10 @@ function finishTcLoading() {
     });
 }
 
+function confirmOrder() {
+    $("#submit-tc-payment").submit();
+}
+
 $(document).ready(function () {
 
     $('.input-group').on('click', '.button-plus', function(e) {
@@ -295,7 +299,6 @@ $(document).ready(function () {
                 $("#tc-address-modal").modal("show");
             },
         });
-
     });
 
     $("#login-from-cart").click(function() {
@@ -319,8 +322,9 @@ $(document).ready(function () {
             },
             data : $("#submit-tc-address").serialize(),
             success : function(response) {
-                if (response.errors) {
-                    alert(response.errors.address);
+                if (response.success) {
+                    $("#tc-address-modal").modal("hide");
+                    $("#tc-payment-modal").modal("show");
                 }
             },
             error: function (data) {
@@ -340,5 +344,37 @@ $(document).ready(function () {
         $("#tc-landmark").val($("#tc-existing-landmark").val());
         $("#tc-address").val($("#tc-existing-address").val());
         $("#tc-select-address").slideUp();
-    })
+    });
+
+    $("#tc-cash-payment").click(function() {
+        $("#payment_method").val("cash");
+        $(this).removeClass("btn-secondary").addClass("btn-success").html("Selected");
+        $('.paymentBtn').not('#tc-cash-payment').hide();
+        $(".payment-error").hide();
+    });
+
+    $("#tc-upi-payment").click(function() {
+        alert("Coming Soon");
+    });
+
+    $("#submit-payment").click(function() {
+        var payment_method = $("#payment_method").val();
+        $(".payment-error").hide();
+        if (payment_method == "cash") {
+            Swal.fire({
+                icon: 'info',
+                title: 'Confirm to Place Order ?',
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+                denyButtonText: 'Cancel',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  confirmOrder();
+                }
+              })
+        } else {
+            $(".payment-error").show();
+        }
+    });
 });
