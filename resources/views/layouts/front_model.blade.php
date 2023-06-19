@@ -82,8 +82,8 @@
                     <form id="submit-tc-payment" method="POST" action="{{ route('placeOrder') }}">
                         @csrf
                         <input type="hidden" name="payment_method" id="payment_method" value="">
-                        <input type="hidden" name="category" value="{{ $cartArray[0]->category->name }}">
-                        <input type="hidden" name="subCategory" value="{{ $cartArray[0]->subCategory->name }}">
+                        <input type="hidden" name="category" value="{{ $cartArray[0]->category->id }}">
+                        <input type="hidden" name="subCategory" value="{{ $cartArray[0]->subCategory->id }}">
                         <input type="hidden" name="cartArray" value="{{ base64_encode(json_encode($cartArray)) }}">
                         <div class="form-group row mb-0">
                             <div class="alert alert-danger payment-error" style="display: none;">
