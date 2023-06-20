@@ -115,11 +115,12 @@ class CartController extends Controller
             return redirect(route('homepage'));
         }
 
-        $total = 0;
+        $total = $productCount = 0;
         $orderNumber = $this->generateOrderNumber();
         $categoryId = $request->category;
         $subCategoryId = $request->subCategory;
         $cartItems = json_decode(base64_decode($request->cartArray), true);
+        $cartDetail = array_filter(getCartItems());
 
         $orderData = [
             'order_id' => $orderNumber,
@@ -140,7 +141,7 @@ class CartController extends Controller
             'area_id' => auth()->user()->area_id,
             'address_lat' => auth()->user()->address_lat,
             'address_long' => auth()->user()->address_long,
-            'product_count' => count($cartItems),
+            'product_count' => $productCount,
             'isPromoApplied' => 'No',
             'discount' => 0,
             'tax' => 0,
@@ -154,30 +155,38 @@ class CartController extends Controller
 
         try {
             $orderId = Order::create($orderData);
-            foreach ($cartItems as $cart) {
-                $total = $total + $cart['price'];
-                $cart = [
-                    'order' => $orderNumber,
-                    'order_id' => $orderId->id,
-                    'product_id' => $cart['id'],
-                    'category_id' => $cart['category_id'],
-                    'sub_category_id' => $cart['sub_category_id'],
-                    'service_category_id' => $cart['service_category_id'],
-                    'product_title' => $cart['title'],
-                    'product_description' => $cart['description'],
-                    'product_strike_price' => $cart['strike_price'],
-                    'product_price' => $cart['price'],
-                    'product_commission' => $cart['commission'],
-                    'warranty' => $cart['warranty'],
-                    'product_approx_duration' => $cart['approx_duration'],
-                    'order_status' => "Pending",
-                    'order_note' => '',
-                ];
 
-                OrderDetail::create($cart);
+            foreach ($cartItems as $cart) {
+
+                $quantity = (int)$cartDetail[$cart['id']];
+                for ($i = 0; $i < $quantity; $i++) {
+                    $cartDetailData = [
+                        'order' => $orderNumber,
+                        'order_id' => $orderId->id,
+                        'product_id' => $cart['id'],
+                        'category_id' => $cart['category_id'],
+                        'sub_category_id' => $cart['sub_category_id'],
+                        'service_category_id' => $cart['service_category_id'],
+                        'product_title' => $cart['title'],
+                        'product_description' => $cart['description'],
+                        'product_strike_price' => $cart['strike_price'],
+                        'product_price' => $cart['price'],
+                        'product_commission' => $cart['commission'],
+                        'warranty' => $cart['warranty'],
+                        'product_approx_duration' => $cart['approx_duration'],
+                        'order_status' => "Pending",
+                        'order_note' => '',
+                    ];
+
+                    $productCount++;
+                    $total = $total + $cart['price'];
+                    OrderDetail::create($cartDetailData);
+                }
+
             }
 
             Order::where(['id' => $orderId->id, 'order_id' => $orderNumber])->update([
+                'product_count' => $productCount,
                 'subtotal' => $total,
                 'total' => $total,
             ]);
