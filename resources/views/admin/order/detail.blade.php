@@ -224,17 +224,17 @@
                                                 @if((empty($orderDetail->material_charge) || empty($orderDetail->additional_charge)))
                                                 <td>
                                                     @if($orderDetail->material_charge === null)
-                                                    <button class="btn btn-sm btn-default addMaterialCharge">Add Material Charges</button><br>
+                                                    <button data-id="{{ $orderDetail->id }}" class="btn btn-sm btn-default addMaterialCharge">Add Material Charges</button><br>
                                                     @endif
                                                     @if($orderDetail->additional_charge === null)
-                                                    <button class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charges</button>
+                                                    <button data-id="{{ $orderDetail->id }}" class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charges</button>
                                                     @endif
                                                 </td>
                                                 @endif
                                             </tr>
                                             @if($orderDetail->material_description)
                                             <tr>
-                                                <td>1</td>
+                                                <td><i class="fa fa-sm fa-arrow-right"></i></td>
                                                 <td>Material Charges</td>
                                                 <td>{{ $orderDetail->material_description }}</td>
                                                 <td>{{ $orderDetail->warranty }} Days</td>
@@ -243,7 +243,7 @@
                                             @endif
                                             @if($orderDetail->additional_charge_description)
                                             <tr>
-                                                <td>1</td>
+                                                <td><i class="fa fa-sm fa-arrow-right"></i></td>
                                                 <td>Additional Charges</td>
                                                 <td>{{ $orderDetail->additional_charge_description }}</td>
                                                 <td>{{ $orderDetail->warranty }} Days</td>
@@ -348,22 +348,23 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ route('admin.orders.detail', $order) }}" method="POST">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Charges Detail</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @csrf
-                <input type="hidden" id="chargeType" name="type" value="">
-                <div class="chargeModalInput"></div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary chargeTypeBtn"></button>
-            </div>
-        </form>
+                <input type="hidden" name="orderDetailId" id="orderDetailId">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Charges Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" id="chargeType" name="type" value="">
+                    <div class="chargeModalInput"></div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary chargeTypeBtn"></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

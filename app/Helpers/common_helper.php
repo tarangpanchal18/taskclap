@@ -81,3 +81,21 @@ function getCartItems(): array
 
     return $returnArr;
 }
+
+/**
+     * Generates a secure encrypted data
+     * @return mixed
+     */
+    function encryptData(mixed $data)
+    {
+        return base64_encode($data);
+    }
+
+    /**
+     * Decrypt the encrypted data
+     * @return mixed
+     */
+    function decryptData(mixed $data)
+    {
+        return base64_decode($data);
+    }
