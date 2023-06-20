@@ -200,41 +200,41 @@
                     <div class="card-body">
                         <div class="row" style="margin-bottom: 6em;">
                             <div class="col-12 table-responsive">
-                                <table class="table table-striped">
+                                <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Qty</th>
+                                            <th>#</th>
                                             <th style="width: 20%;">Product</th>
                                             <th style="width: 60%">Description</th>
                                             <th style="width: 10%;">Warranty</th>
                                             <th style="width: 10%;">Price</th>
-                                            @if((empty($orderDetail->material_charge) || empty($orderDetail->additional_charge)))
+                                            @if($order->order_status == "Pending" && (empty($orderDetail->material_charge) || empty($orderDetail->additional_charge)))
                                             <th>Action</th>
                                             @endif
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($order->orderDetail as $orderDetail)
-                                            <tr>
-                                                <td>1</td>
+                                            <tr style="background:#b0b0b0">
+                                                <td><input type="checkbox"></td>
                                                 <td>{{ $orderDetail->product_title }}</td>
                                                 <td>-</td>
                                                 <td>{{ $orderDetail->warranty }} Days</td>
                                                 <td>₹ {{ $orderDetail->product_price }}</td>
-                                                @if((empty($orderDetail->material_charge) || empty($orderDetail->additional_charge)))
+                                                @if($order->order_status == "Pending")
                                                 <td>
                                                     @if($orderDetail->material_charge === null)
-                                                    <button data-id="{{ $orderDetail->id }}" class="btn btn-sm btn-default addMaterialCharge">Add Material Charges</button><br>
+                                                    <button data-id="{{ $orderDetail->id }}" class="btn btn-sm btn-default addMaterialCharge"><i class="fa fa-plus fa-sm"></i> Material Charges</button><br>
                                                     @endif
                                                     @if($orderDetail->additional_charge === null)
-                                                    <button data-id="{{ $orderDetail->id }}" class="btn btn-sm btn-default addAdditionalCharge">Add Additional Charges</button>
+                                                    <button data-id="{{ $orderDetail->id }}" class="btn btn-sm btn-default addAdditionalCharge"><i class="fa fa-plus fa-sm"></i> Additional Charges</button>
                                                     @endif
                                                 </td>
                                                 @endif
                                             </tr>
                                             @if($orderDetail->material_description)
                                             <tr>
-                                                <td><i class="fa fa-sm fa-arrow-right"></i></td>
+                                                <td></td>
                                                 <td>Material Charges</td>
                                                 <td>{{ $orderDetail->material_description }}</td>
                                                 <td>{{ $orderDetail->warranty }} Days</td>
@@ -243,7 +243,7 @@
                                             @endif
                                             @if($orderDetail->additional_charge_description)
                                             <tr>
-                                                <td><i class="fa fa-sm fa-arrow-right"></i></td>
+                                                <td></td>
                                                 <td>Additional Charges</td>
                                                 <td>{{ $orderDetail->additional_charge_description }}</td>
                                                 <td>{{ $orderDetail->warranty }} Days</td>

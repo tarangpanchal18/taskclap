@@ -33,7 +33,7 @@ class OrderDetail extends Model
         'order_note',
     ];
 
-    public function order(): BelongsTo
+    public function orderData(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
