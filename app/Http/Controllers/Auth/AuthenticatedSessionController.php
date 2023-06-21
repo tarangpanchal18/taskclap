@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
@@ -67,7 +68,12 @@ class AuthenticatedSessionController extends Controller
                 'name' => "Verified User",
                 'email' => "",
                 'phone' => $request->phone,
-                'password' => $this->generateStrongPassword()
+                'password' => Hash::make($this->generateStrongPassword()),
+                'country_id' => 1,
+                'state_id' => 1,
+                'city_id' => 1,
+                'area_id' => 1,
+                'address' => 'Dev Aurum Commercial Complex Prahlad Nagar, Ahmedabad, Gujarat 380015',
             ]);
         }
 
