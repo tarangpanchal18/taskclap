@@ -16,7 +16,7 @@
                         <div id="dialogue-box" style="display: none;"></div>
                         <!-- Login Screen -->
                         <div class="login-screen">
-                            <form method="POST" id="login-form">
+                            <form method="POST" id="login-form" onkeydown="return event.key != 'Enter';">
                                 <div class="log-form">
                                     <div class="row">
                                         <div class="col-md-12">

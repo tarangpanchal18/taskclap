@@ -103,7 +103,7 @@ function VerfySmsForAuth() {
             });
         }
     }).catch(function (error) {
-        $("#dialogue-box").html("<div class='alert alert-danger'>" + error.message + "</div>");
+        $("#dialogue-box").html("<div class='alert alert-danger'>Please Enter OTP.</div>");
         $("#dialogue-box").show();
     });
 }
