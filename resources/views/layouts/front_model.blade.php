@@ -96,8 +96,8 @@
                                             <img style="width: 100%;" src="https://cdn.pixabay.com/photo/2021/01/25/12/21/money-5948190_1280.png" alt="cash">
                                         </span>
                                         <div class="linked-info">
-                                            <h6>Cash Payment</h6>
-                                            <p>Cash Payment after service is completed</p>
+                                            <h6>Cash/UPI Payment</h6>
+                                            <p>Cash/UPI Payment after service is completed</p>
                                         </div>
                                     </div>
                                     <div class="linked-action">

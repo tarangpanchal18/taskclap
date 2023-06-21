@@ -236,7 +236,9 @@
                                             <tr>
                                                 <td></td>
                                                 <td>Material Charges</td>
-                                                <td>{{ $orderDetail->material_description }}</td>
+                                                <td>
+                                                    <textarea style="width: 100%;border:none;resize: none;pointer-events: none;" readonly>{{$orderDetail->material_description}}</textarea>
+                                                </td>
                                                 <td>{{ $orderDetail->warranty }} Days</td>
                                                 <td>₹ {{ $orderDetail->material_charge }}</td>
                                             </tr>
@@ -245,7 +247,9 @@
                                             <tr>
                                                 <td></td>
                                                 <td>Additional Charges</td>
-                                                <td>{{ $orderDetail->additional_charge_description }}</td>
+                                                <td>
+                                                    <textarea style="width: 100%;border:none;resize: none;pointer-events: none;" readonly>{{ $orderDetail->additional_charge_description }}</textarea>
+                                                </td>
                                                 <td>{{ $orderDetail->warranty }} Days</td>
                                                 <td>₹ {{ $orderDetail->additional_charge }}</td>
                                             </tr>

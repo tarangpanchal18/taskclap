@@ -47,7 +47,7 @@
 										<div class="serv-profile">
 											<h2>{{ $item->title }}</h2>
                                             <p class="text-dark">Quantity x {{ $cartItemsArr[$item->id] }}</p>
-											<p class="text-dark"><strong>₹ {{ $item->price }}</strong></p>
+											<p class="text-dark"><strong>₹ {{ $item->price }} <small><strike>{{ $item->strike_price }}</strike></small></strong></p>
 										</div>
 									</div>
                                     @endforeach
@@ -57,7 +57,7 @@
 									<div class="row align-items-center">
                                         <h4 class="my-4">Payment Summary</h4>
                                         <p class="text-dark">Item Total<strong style="float: right;">₹ {{ $total }}</strong></p>
-                                        <p class="text-dark">Item Discount<strong style="float: right;">₹ 0</strong></p>
+                                        <p class="text-dark">Item Discount<strong style="float: right;">- ₹ {{$totalSaving - $total}}</strong></p>
                                         <p class="text-dark">Taxes & Fee<strong style="float: right;">₹ 0</strong></p>
                                         <hr>
                                         <p class="text-dark">Total<strong style="float: right;">₹ {{ $total }}</strong></p>
