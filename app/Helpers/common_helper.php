@@ -99,3 +99,12 @@ function getCartItems(): array
     {
         return base64_decode($data);
     }
+
+    /**
+     * Format date as per the given format
+     * @return string
+     */
+    function formatDt(string $date, $format = "d-M-Y")
+    {
+        return date($format, strtotime($date));
+    }
