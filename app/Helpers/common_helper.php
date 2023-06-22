@@ -61,7 +61,7 @@ function getOrderCommission($order): float
         $commissionAmt += ($baseAmount * $orderDetail->product_commission) / 100;
     }
 
-    return number_format((float)$commissionAmt, 2);
+    return (float)number_format($commissionAmt, 2);
 }
 
 /**
