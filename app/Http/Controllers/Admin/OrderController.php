@@ -24,7 +24,7 @@ class OrderController extends Controller
     public function index(): View
     {
         return view('admin.order.index', [
-            'orderData' => Order::paginate(10),
+            'orderData' => Order::orderby('id', 'desc')->paginate(10),
         ]);
     }
 
