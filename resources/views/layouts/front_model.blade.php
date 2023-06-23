@@ -20,13 +20,23 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content animate-bottom">
             <div class="modal-header border-bottom-0 justify-content-between">
-                <h5 class="modal-title">Enter Your Address</h5>
+                <h5 class="modal-title">Enter Your Details</h5>
                 {{-- <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="feather-x"></i></button> --}}
             </div>
             <div class="modal-body pt-0">
                 <div class="write-review">
                     <form id="submit-tc-address">
                         <div class="form-group row mb-0">
+                            <div class="pass-group col-md-6">
+                                <label style="font-size:14px;" class="col-form-label">Your Name</label>
+                                <input type="text" id="tc-name" name="name" class="form-control" placeholder="Your Name" value="{{ (auth()->user()->name == "Verified User") ? "" : auth()->user()->name }}">
+                                <p id="tc-name-error" class="text-danger"></p>
+                            </div>
+                            <div class="pass-group col-md-6">
+                                <label style="font-size:14px;" class="col-form-label">Your Email</label>
+                                <input type="text" id="tc-email" name="email" class="form-control" placeholder="Email Address (Optional)" value="{{ auth()->user()->email }}">
+                                <p id="tc-email-error" class="text-danger"></p>
+                            </div>
                             <div class="pass-group col-md-4">
                                 <label style="font-size:14px;" class="col-form-label">House/Flat Number</label>
                                 <input type="text" id="tc-house_no" name="house_no" class="form-control" placeholder="House/Flat Number">

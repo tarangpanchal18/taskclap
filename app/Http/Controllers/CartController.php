@@ -59,6 +59,9 @@ class CartController extends Controller
             return redirect(route('homepage'));
         }
         $cartItemsArr = $this->filterCartItemsBasedOnCat($cartItems, $cat, $subCat);
+        if (empty($cartItemsArr)) {
+            return redirect(route('homepage'));
+        }
         $cartItems = $this->productRepository->getAll()->whereIn('id', array_keys($cartItemsArr))->get();
         foreach ($cartItems as $cartItem) {
             $total = ($total + ($cartItem->price * $cartItemsArr[$cartItem->id]));
@@ -77,17 +80,25 @@ class CartController extends Controller
     public function addAddress (Request $request): JsonResponse
     {
         $request->validate([
+            'name' => 'required|min:2|max:25',
+            'email' => 'nullable|email:rfc,dns|unique:users,email,' . auth()->user()->id .',id',
             'house_no' => 'required|min:1|max:25',
             'landmark' => 'required|min:3|max:50',
             'address' => 'required|min:10|max:100',
         ]);
 
-        $user = auth()->user();
-        $update = $user->update([
+        $updateData = [
+            'name' => trim($request->name),
             'house_no' => trim($request->house_no),
             'landmark' => trim($request->landmark),
             'address' => trim($request->address)
-        ]);
+        ];
+
+        if ($request->email) {
+            $updateData['email'] = trim($request->email);
+        }
+
+        $update = auth()->user()->update($updateData);
 
         if ($update) {
             return response()->json([
@@ -112,7 +123,7 @@ class CartController extends Controller
     public function placeOrder(Request $request) {
 
         if (empty($request->payment_method) || empty($request->category) || empty($request->subCategory) || empty($request->cartArray)) {
-            return redirect(route('homepage'));
+            return redirect(route('orderFailed', ['msg' => 'invalid order placed']));
         }
 
         $total = $productCount = 0;
@@ -121,6 +132,9 @@ class CartController extends Controller
         $subCategoryId = $request->subCategory;
         $cartItems = json_decode(base64_decode($request->cartArray), true);
         $cartDetail = array_filter(getCartItems());
+        if (empty($cartDetail)) {
+            return redirect(route('orderFailed', ['msg' => 'cart items are empty']));
+        }
 
         $orderData = [
             'order_id' => $orderNumber,
