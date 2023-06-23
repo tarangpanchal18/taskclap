@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Traits;
 
+use DB;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,6 +17,10 @@ trait GeneralFunctions {
     public function filterCartItemsBasedOnCat(array $cartItems, $category, $subCategory): array
     {
         $cartItems = array_filter($cartItems);
+        if (empty ($cartItems)) {
+            return $cartItems;
+        }
+
         $products = Product::select('id', 'title', 'category_id', 'sub_category_id', 'service_category_id','description', 'image', 'strike_price', 'price', 'warranty', 'approx_duration')->where([
             'category_id' => $category->id,
             'sub_category_id' => $subCategory->id,
@@ -69,13 +74,11 @@ trait GeneralFunctions {
      * @return string
      */
     function generateOrderNumber() {
-        // Get the current date and time
-        $currentDateTime = date('YmdHis');
-        // Generate a unique identifier (e.g., random number or unique ID from database)
-        $uniqueIdentifier = time();
-        // Concatenate the date/time and unique identifier to form the order number
-        $orderNumber = $currentDateTime . $uniqueIdentifier;
+        $prefix = "TC";
+        $rowCount = DB::table('orders')->select('id')->where('id', DB::raw("(SELECT MAX(`id`) FROM orders)"))->first();
+        $numericPortion = str_pad($rowCount->id + 1, 6, "0", STR_PAD_LEFT);
+        $orderID = $prefix . $numericPortion;
 
-        return $orderNumber;
+        return $orderID;
     }
 }
