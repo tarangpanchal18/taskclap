@@ -50,7 +50,7 @@ class Order extends Model
         'payment_status',
         'order_status',
         'order_notes',
-        'is_paid_to_provide',
+        'is_paid_to_provider',
     ];
 
     const PAYMENT_STATUS = [
