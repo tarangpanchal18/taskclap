@@ -38,7 +38,7 @@
                     <th>Order Total</th>
                     <th>Order Commission</th>
                     <th>Order Tax</th>
-                    <th>SP Pay Amount</th>
+                    <th>SP Pay/Take Amount</th>
                     <th>Site Earning</th>
                     <th>Order Status</th>
                     <th>Payment Method</th>
@@ -54,7 +54,11 @@
                     <td>₹ {{ $order->total }}</td>
                     <td>₹ {{ getOrderCommission($order) }}</td>
                     <td>₹ {{ ($order->tax) ? $order->tax : '0.00' }}</td>
-                    <td>₹ {{ (($order->total - getOrderCommission($order)) - $order->material_charge_actual) }}</td>
+                    @if(strtolower($order->payment_type) == "cash")
+                    <td class="text-danger">₹ - {{ (($order->total - getOrderCommission($order)) - $order->material_charge_actual) }}</td>
+                    @else
+                    <td class="text-success">₹ {{ (($order->total - getOrderCommission($order)) - $order->material_charge_actual) }}</td>
+                    @endif
                     <td>₹ {{ (getOrderCommission($order) - $order->tax) }}</td>
                     <td>{{ generate_badge($order->order_status) }}</td>
                     <td><span class='badge badge-info'>{{ $order->payment_type }}<span></td>
@@ -62,10 +66,10 @@
                         @if($order->is_paid_to_provider == "Yes")
                         {{ generate_badge($order->is_paid_to_provider) }}
                         @else
-                        <form action="{{ route('admin.orders.detail', $order) }}" method="POST">
+                        <form action="{{ route('admin.orders.detail', $order) }}" method="POST" id="{{ $order->order_id }}">
                             @csrf
                             <input type="hidden" value="mark_as_paid_for_provider" name="type">
-                            <button class="btn btn-sm btn-default">Mark As Paid</button>
+                            <button type="button" data-id="{{ $order->order_id }}" class="markOrderAsPaid btn btn-sm btn-default">Mark As Paid</button>
                         </form>
 
                         @endif
@@ -83,7 +87,7 @@
                     <th>Order Total</th>
                     <th>Order Commission</th>
                     <th>Order Tax</th>
-                    <th>SP Pay Amount</th>
+                    <th>SP Pay/Take Amount</th>
                     <th>Site Earning</th>
                     <th>Order Status</th>
                     <th>Payment Method</th>
@@ -103,6 +107,21 @@
 <script>
 $(document).ready(function() {
     $(".fa-bars").click();
+
+    $(".markOrderAsPaid").click(function() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mark as Paid To Provider ?',
+            text: "Are you sure you have paid/taken the provider's settlement amount? Basically, confirmation means settlement with the provider is completed.",
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Mark as Settled',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var formId =$(this).attr("data-id");
+                $("#" + formId).submit();
+            }
+        })
+    })
 });
 </script>
 @stop
