@@ -19333,13 +19333,6 @@ fieldset {
         width:870px;
     }
 }
-@media only screen and (min-height: 667px) {
-    /* Lower than Iphone 11 Compatible Device */
-    .cart-widget {
-        margin: 0 20px;
-        width:330px;
-    }
-}
 @media only screen and (min-height: 844px) {
     /* Iphone 11 Compatible Device */
     .cart-widget {
@@ -22024,6 +22017,10 @@ fieldset {
 	.safety-ryt-main {
 		display: none;
 	}
+    .cart-widget {
+        margin: 0px;
+        width: 330px;
+    }
 }
 @media only screen and (max-width: 575.98px) {
     /* below 575 device - taskclap */
@@ -22438,5 +22435,8 @@ fieldset {
         border-radius: 0.375rem;
         max-width: 90px;
         height: 70px;
+    }
+    .cart-btn {
+        width: 20px!important;
     }
 }
