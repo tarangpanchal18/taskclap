@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class OrderRepository
 {
+    public function get($userId)
+    {
+        return Order::where(['user_id' => $userId])->orderBy('id', 'desc')->paginate(15);
+    }
+
     public function getById($id)
     {
         return Order::findOrFail($id);

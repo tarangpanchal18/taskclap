@@ -19326,20 +19326,6 @@ fieldset {
 /*-----------------
 	52. Responsive
 -----------------------*/
-
-@media only screen and (min-height: 300px) {
-    /* Iphone 11 Compatible Device */
-    .cart-widget {
-        width:870px;
-    }
-}
-@media only screen and (min-height: 844px) {
-    /* Iphone 11 Compatible Device */
-    .cart-widget {
-        margin: 0 20px;
-        width:310px;
-    }
-}
 @media only screen and (min-width: 992px) {
 	.main-nav > li {
 		margin-right: 25px;
