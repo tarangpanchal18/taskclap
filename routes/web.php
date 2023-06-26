@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,7 @@ Route::post('cart/fetchAddress', [CartController::class, 'fetchAddress']);
 Route::post('cart/placeOrder', [CartController::class, 'placeOrder'])->name('placeOrder');
 Route::get('order/success', [CartController::class, 'orderPlaced'])->name('orderPlaced');
 Route::get('order/failed', [CartController::class, 'orderFailed'])->name('orderFailed');
+Route::get('my-bookings', [BookingController::class, 'index'])->name('myBookings');
 Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');
 
 Route::get('/dashboard', function () {
