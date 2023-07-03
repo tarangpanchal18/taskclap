@@ -131,6 +131,12 @@
                                                                         data-field="quantity">
                                                                 </div>
                                                             </div>
+                                                            @else
+                                                            <div>
+                                                                <div class="quantity-cart input-group w-auto justify-content-center align-items-center">
+                                                                    <button onclick="loadServiceModal({{$product->id}})" class="btn btn-sm btn-default">View More</button>
+                                                                </div>
+                                                            </div>
                                                             @endif
                                                         </div>
                                                         <div class="col-12">
@@ -212,6 +218,7 @@
 
 	</div>
 
+    @include('layouts.front_model')
 	@include('layouts.scripts')
     <script>
     $(document).ready(function() {

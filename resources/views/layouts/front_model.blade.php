@@ -141,3 +141,76 @@
         </div>
     </div>
 </div>
+
+<div id="tc-service-modal" class="modal fade" data-keyboard="false" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content animate-bottom" style="max-height:768px;overflow-y: auto;">
+            <button type="button" class="close-btn btn-sm btn-default" data-bs-dismiss="modal" aria-label="Close">Close</button>
+            <div class="modal-header border-bottom-0 justify-content-between" style="padding: 0;">
+                <img src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template,q_auto:low,f_auto/w_520,dpr_2,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1679671398045-1a079e.jpeg" alt="TaskClap Image" style="width: 100%;">
+            </div>
+            <div class="modal-body pt-0">
+                <div class="write-review">
+                    <div class="mt-4">
+                        <h4>AC Service (Split/Window)</h4>
+                        <span><i class="fa fa-star"></i> 4.77 (255)</span>
+                    </div>
+
+                    @for($i=0; $i < 3; $i++)
+                    <hr>
+                    <div class="product-inner-section row">
+                        <div class="col-9">
+                            <small class="dash-value">30 Days Warranty</small>
+                            <p class="mb-0 text-dark"><b>AC Repair (Split/Window)</b></p>
+                            <small class="text-body"><i class="fa fa-solid fa-star rating-star"></i> 4.83 (1.54M reviews)</small>
+                            <p class="text-dark"><small><strong>2 Service</strong></small></p>
+                        </div>
+                        <div class="col-3">
+                            <img class="img-thumbnail p-0" src="https://dummyimage.com/200x200/000/fff" alt="AC Repair (Split/Window)">
+                            <div>
+                                <div class="quantity-cart input-group w-auto justify-content-center align-items-center">
+                                    <input type="button" value="-" class="cart-btn button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                                    <input
+                                        data-subCategoryId="{{ $product->sub_category_id }}"
+                                        data-productId="{{ $product->id }}"
+                                        data-price="{{ $product->price }}"
+                                        data-strikeprice="{{ $product->strike_price }}"
+                                        type="text"
+                                        step="1"
+                                        max="10"
+                                        value="{{ $cartArray[$product->id] ? $cartArray[$product->id] : 0 }}"
+                                        name="quantity"
+                                        class="cart-btn quantity-field text-center"
+                                        readonly
+                                    >
+                                    <input type="button" value="+" class="cart-btn button-plus border rounded-circle icon-shape icon-sm mx-1"
+                                        data-field="quantity">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="product-description">
+                                AC Repair (Split/Window)AC Repair (Split/Window)AC Repair (Split/Window)AC Repair (Split/Window)
+                            </div>
+                            <p style="cursor: pointer;font-size: 14px;color: #4c40ed">View More</p>
+                        </div>
+                    </div>
+                    @endfor
+
+                    <hr style="border: 4px solid darkslategrey;">
+
+                    <div class="description">
+                        <h4>Whats Included</h4>
+                        <ul>
+                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
+                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
+                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
+                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -264,6 +264,10 @@ function confirmOrder() {
     $("#submit-tc-payment").submit();
 }
 
+function loadServiceModal(productId) {
+    $("#tc-service-modal").modal("show");
+}
+
 $(document).ready(function () {
 
     $('.input-group').on('click', '.button-plus', function(e) {
