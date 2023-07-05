@@ -265,7 +265,69 @@ function confirmOrder() {
 }
 
 function loadServiceModal(productId) {
-    $("#tc-service-modal").modal("show");
+    $.ajax({
+        type : "POST",
+        dataType: "json",
+        url : "/cart/fetchService",
+        data: {productId: productId},
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success : function(response) {
+            if (response.success) {
+                var modalBody = loadServiceModalBody(response);
+                $(".tc-service-title").html(response.product.title);
+                $(".tc-service-description").html(response.product.long_description);
+                $(".tc-service-body").html(modalBody);
+            }
+            $("#tc-service-modal").modal("show");
+        },
+    });
+}
+
+function loadServiceModalBody(response) {
+    var html = "";
+    response.services.forEach(function(service){
+        html +=
+        `<hr>
+        <div class="product-inner-section row">
+            <div class="col-9">
+                <small class="dash-value">${service.warranty} Days Warranty</small>
+                <p class="mb-0 text-dark"><b>${service.title}</b></p>
+                <small class="text-body"><i class="fa fa-solid fa-star rating-star"></i> 4.83 (1.54M reviews)</small>
+            </div>
+            <div class="col-3">
+                <img class="img-thumbnail p-0" src="https://dummyimage.com/200x200/000/fff" alt="AC Repair (Split/Window)">
+                <div>
+                    <div class="quantity-cart input-group w-auto justify-content-center align-items-center">
+                        <input type="button" value="-" class="cart-btn button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="quantity">
+                        <input
+                            data-subCategoryId="${service.sub_category_id}"
+                            data-productId="${service.id}"
+                            data-price="${service.price}"
+                            data-strikeprice="${service.strike_price}"
+                            type="text"
+                            step="1"
+                            max="10"
+                            value="0"
+                            name="quantity"
+                            class="cart-btn quantity-field text-center"
+                            readonly
+                        >
+                        <input type="button" value="+" class="cart-btn button-plus border rounded-circle icon-shape icon-sm mx-1"
+                            data-field="quantity">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="product-description">
+                    ${service.description}
+                </div>
+            </div>
+        </div>`;
+    });
+
+    return html;
 }
 
 $(document).ready(function () {
