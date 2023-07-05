@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Traits\GeneralFunctions;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\ProductRepository;
@@ -43,7 +44,23 @@ class CartController extends Controller
         ]);
     }
 
-    function checkout(Request $request): View|RedirectResponse
+    public function fetchService(Request $request)
+    {
+        $productId = $request->post('productId');
+        $product = $this->productRepository->getById($productId);
+        $services = Product::where([
+            'parent_id' => $productId,
+            'status' => 'Active',
+        ])->get();
+
+        return response()->json([
+            'success' => true,
+            'product' => $product,
+            'services' => $services,
+        ]);
+    }
+
+    public function checkout(Request $request): View|RedirectResponse
     {
         $this->setCartCheckpoint($request);
 

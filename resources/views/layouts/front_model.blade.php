@@ -152,12 +152,12 @@
             <div class="modal-body pt-0">
                 <div class="write-review">
                     <div class="mt-4">
-                        <h4>AC Service (Split/Window)</h4>
+                        <h4 class="tc-service-title"></h4>
                         <span><i class="fa fa-star"></i> 4.77 (255)</span>
                     </div>
 
-                    @for($i=0; $i < 3; $i++)
-                    <hr>
+                    <div class="tc-service-body"></div>
+                    {{-- <hr>
                     <div class="product-inner-section row">
                         <div class="col-9">
                             <small class="dash-value">30 Days Warranty</small>
@@ -194,20 +194,11 @@
                             </div>
                             <p style="cursor: pointer;font-size: 14px;color: #4c40ed">View More</p>
                         </div>
-                    </div>
-                    @endfor
+                    </div> --}}
 
                     <hr style="border: 4px solid darkslategrey;">
 
-                    <div class="description">
-                        <h4>Whats Included</h4>
-                        <ul>
-                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
-                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
-                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
-                            <li>asdkjflhd afdkhfl alkhjaskdj akdhjkdhjsakdhjsf</li>
-                        </ul>
-                    </div>
+                    <div class="description tc-service-description"></div>
 
                 </div>
             </div>
