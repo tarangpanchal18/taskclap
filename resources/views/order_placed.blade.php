@@ -11,7 +11,7 @@
                     <div class="book-submit">
                         <a href="{{ route('homepage') }}" class="btn btn-primary"><i class="feather-home"></i> Go to
                             Home</a>
-                        <a href="{{ route('homepage') }}" class="btn btn-secondary">Booking History</a>
+                        <a href="{{ route('myBookings') }}" class="btn btn-secondary">Booking History</a>
                     </div>
                 </div>
             </div>
