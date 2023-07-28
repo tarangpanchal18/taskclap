@@ -6730,7 +6730,7 @@ table.table td h2.table-user span {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
-    flex: 0 0 235px;
+    flex: 0 0 200px;
 	justify-content: flex-end;
 	flex-wrap: wrap;
 }

@@ -43,7 +43,7 @@
                                                         <div class="booking-widget">
                                                             <div class="booking-img">
                                                                 <a>
-                                                                    <img src="{{ asset('/uploads/category/'. $order->subCategory->image .'') }}" alt="{{ $order->subCategory->name }}">
+                                                                    <img src="{{ asset('/storage/uploads/category/'. $order->subCategory->image .'') }}" alt="{{ $order->subCategory->name }}">
                                                                 </a>
                                                                 <div class="fav-item">
                                                                     <a href="javascript:void(0)" class="fav-icon">
@@ -70,7 +70,6 @@
                                                             </div>
                                                         </div>
                                                         <div class="booking-action">
-                                                            <a href="booking.html" class="btn btn-primary">Rebook</a>
                                                             <a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="modal"
                                                                 data-bs-target="#add-review"><i class="feather-plus-circle"></i> Add Review</a>
                                                             <div class="view-action">
