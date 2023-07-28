@@ -22,23 +22,18 @@ require __DIR__ . '/auth.php';
 Route::get('/', [HomeController::class, 'homepage'])->name('homepage');
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
 Route::get('cart/checkout', [CartController::class, 'checkout'])->name('checkout');
-Route::post('cart/addAddress', [CartController::class, 'addAddress']);
-Route::post('cart/fetchAddress', [CartController::class, 'fetchAddress']);
 Route::post('cart/fetchService', [CartController::class, 'fetchService']);
-Route::post('cart/placeOrder', [CartController::class, 'placeOrder'])->name('placeOrder');
-Route::get('order/success', [CartController::class, 'orderPlaced'])->name('orderPlaced');
-Route::get('order/failed', [CartController::class, 'orderFailed'])->name('orderFailed');
-Route::get('my-bookings', [BookingController::class, 'index'])->name('myBookings');
-Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::post('cart/fetchAddress', [CartController::class, 'fetchAddress']);
+    Route::post('cart/addAddress', [CartController::class, 'addAddress']);
+    Route::post('cart/placeOrder', [CartController::class, 'placeOrder'])->name('placeOrder');
+    Route::get('order/success', [CartController::class, 'orderPlaced'])->name('orderPlaced');
+    Route::get('order/failed', [CartController::class, 'orderFailed'])->name('orderFailed');
+    Route::get('my-bookings', [BookingController::class, 'index'])->name('myBookings');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');
