@@ -69,17 +69,19 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <div class="booking-action">
-                                                            <a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="modal"
-                                                                data-bs-target="#add-review"><i class="feather-plus-circle"></i> Add Review</a>
+                                                        <div class="booking-action" style="align-items: center;flex: none;display: block;">
+                                                            @if($booking->order_status == "Completed")
+                                                            {{dd($booking->ratings)}}
+                                                            <a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add-review"><i class="feather-plus-circle"></i> Add Review</a>
+                                                            @endif
                                                             <div class="view-action">
+                                                                @if ($booking->ratings->rating > 0)
                                                                 <div class="rating">
+                                                                    @for($i=0; $i < ($booking->ratings->rating); $i++)
                                                                     <i class="fas fa-star filled"></i>
-                                                                    <i class="fas fa-star filled"></i>
-                                                                    <i class="fas fa-star filled"></i>
-                                                                    <i class="fas fa-star filled"></i>
-                                                                    <i class="fas fa-star filled"></i>
+                                                                    @endfor
                                                                 </div>
+                                                                @endif
                                                                 <a href="service-details.html" class="view-btn">View Details</a>
                                                             </div>
                                                         </div>
@@ -122,19 +124,10 @@
         @include('layouts.scripts')
         <script>
             $(document).ready(function() {
-        loadCartItems({{ $product->sub_category_id }});
-        @foreach($service_type as $serviceType)
-            $("#{{ createSlug($serviceType)}}").click(function() {
-                $('html,body').animate({
-                    scrollTop: $("#service_{{ createSlug($serviceType)}}").offset().top
-                },'slow');
+                setInterval(function () {
+                    finishTcLoading();
+                }, 1000);
             });
-        @endforeach
-
-        setInterval(function () {
-            finishTcLoading();
-        }, 1000);
-    });
         </script>
 </body>
 
