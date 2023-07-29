@@ -26,8 +26,7 @@
                 <ul class="main-nav">
                     <li><a href="{{ route('homepage') }}">Home</a></li>
                     <li><a href="/category/acappliance">Ac/Appliance</a></li>
-                    <li><a href="/category/home-painter">Home Painter</a></li>
-                    <li><a href="/category/salon-for-women">Salong For Women</a></li>
+                    <li><a href="/category/salon-for-women">Salon For Women</a></li>
                     <li class="login-link">
                         <a href="choose-signup.html">Register As Provider</a>
                     </li>
@@ -51,6 +50,10 @@
                         <a class="btn ms-1" href="{{ route('login') }}">LOGIN</a>
                     </div>
                     @else
+                    <div class="">
+                        <a href="{{ route('myBookings') }}">My Bookings</a>
+                    </div>
+                    &nbsp;&nbsp;
                     <div class="cta-btn">
                         <a class="btn" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="feather-log-out me-2"></i> Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
