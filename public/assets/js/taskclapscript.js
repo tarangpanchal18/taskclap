@@ -330,32 +330,35 @@ function loadServiceModalBody(response) {
     return html;
 }
 
-function rateOrder(orderId, productId) {
-    let wrap = document.createElement('div');
-    wrap.setAttribute('class', 'text-muted');
-    wrap.innerHTML = '<button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-sad-cry"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-frown"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-meh"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="neutral" class="btn feel"><i class="far fa-smile"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="happy" class="btn feel"><i class="far fa-laugh-squint"></i></button><hr>';
+function rateOrderDetails(id, order, rating) {
+    if (id === undefined || order === undefined || rating === undefined) {
+        swal.fire('Whoops !', 'Something went wrong !', 'danger')
+    }
 
-    swal.fire({
-        title: "",
-        text: "How do you like the new features?",
-        icon: "info",
-        className: '',
-        closeOnClickOutside: false,
-        html: wrap,
-        buttons: {
-            confirm: {
-                text: "Close",
-                value: '',
-                visible: true,
-                className: "btn btn-default",
-                closeModal: true,
-            }
+    $.ajax({
+        type : "POST",
+        dataType: "json",
+        url : "/cart/rating",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-    })
-}
-
-function rateOrderDetails(){
-
+        data : {
+            id: id,
+            order: order,
+            rating: rating,
+        },
+        success : function(response) {
+            Swal.fire({
+                title: 'Thank you ! Your rating are valuable to us',
+                showCancelButton: false,
+                confirmButtonText: 'Okay Got it',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                })
+        },
+    });
 }
 
 $(document).ready(function () {
@@ -473,20 +476,20 @@ $(document).ready(function () {
     });
 
     $(".tc-rating").click(function() {
-        var productId = $(this).attr("data-productId");
-        var orderId = $(this).attr("data-orderId");
+        var id = $(this).attr("data-id");
+        var order = $(this).attr("data-order");
         let wrap = document.createElement('div');
 
         wrap.setAttribute('class', 'text-muted');
-        wrap.innerHTML = '<button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-sad-cry"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-frown"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-meh"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="neutral" class="btn feel"><i class="far fa-smile"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="happy" class="btn feel"><i class="far fa-laugh-squint"></i></button><hr>';
+        wrap.innerHTML = '<button onclick="rateOrderDetails(' + id +', ' + order + ', 1)" type="button" value="sad" class="btn feel"><i class="far fa-sad-cry"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 2)" type="button" value="sad" class="btn feel"><i class="far fa-frown"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 3)" type="button" value="sad" class="btn feel"><i class="far fa-meh"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 4)" type="button" value="neutral" class="btn feel"><i class="far fa-smile"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 5)" type="button" value="happy" class="btn feel"><i class="far fa-laugh-squint"></i></button><hr>';
 
         swal.fire({
-            title: "",
-            text: "How do you like the new features?",
-            icon: "info",
+            title: "How do you like the new features?",
             className: '',
             closeOnClickOutside: false,
             html: wrap,
+            showCancelButton: false,
+            showConfirmButton: false,
             buttons: {
                 confirm: {
                     text: "Close",

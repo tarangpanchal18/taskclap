@@ -70,7 +70,7 @@
                                                         </div>
                                                         <div class="booking-action" style="align-items: center;flex: none;display: block;">
                                                             @if($booking->order_status == "Completed" && $booking->ratings->count() <= 0)
-                                                            <button class="btn btn-secondary tc-rating" data-productId="{{ $order->product_id }}" data-orderId="{{ $booking->id }}"><i class="feather-plus-circle"></i> Add Review</button>
+                                                            <button class="btn btn-secondary tc-rating" data-id="{{ $order->id }}" data-order="{{ $booking->id }}"><i class="feather-plus-circle"></i> Add Review</button>
                                                             @endif
                                                             <div class="view-action">
                                                                 <div class="rating">

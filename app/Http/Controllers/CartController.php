@@ -8,7 +8,9 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\OrderRepository;
 use App\Repositories\Admin\ProductRepository;
+use App\Repositories\Admin\RatingRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -19,7 +21,9 @@ class CartController extends Controller
 
     public function __construct(
         private CategoryRepository $categoryRepository,
-        private ProductRepository $productRepository
+        private ProductRepository $productRepository,
+        private RatingRepository $ratingRepository,
+        private OrderRepository $orderRepository
     ) {
         //
     }
@@ -241,13 +245,34 @@ class CartController extends Controller
         }
     }
 
-    public function orderPlaced()
+    public function orderPlaced(): View
     {
         return view('order_placed');
     }
 
-    public function orderFailed()
+    public function orderFailed(): View
     {
         return view('order_failed');
+    }
+
+    public function rateOrder(Request $request): bool
+    {
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'order' => 'required|integer',
+            'rating' => 'required|integer',
+            'comment' => 'nullable',
+        ]);
+
+        $rating = [
+            'user_id' => auth()->user()->id,
+            'order_id' => $validated['order'],
+            'order_detail_id' => $validated['id'],
+            'product_id' => $this->orderRepository->getById($validated['order'])->orderDetail[0]->product_id,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+        ];
+
+        return ($this->ratingRepository->create($rating)) ? true : false;
     }
 }

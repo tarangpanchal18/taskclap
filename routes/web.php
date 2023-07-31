@@ -26,6 +26,7 @@ Route::post('cart/fetchService', [CartController::class, 'fetchService']);
 
 Route::middleware('auth')->group(function () {
     Route::post('cart/fetchAddress', [CartController::class, 'fetchAddress']);
+    Route::post('cart/rating', [CartController::class, 'rateOrder']);
     Route::post('cart/addAddress', [CartController::class, 'addAddress']);
     Route::post('cart/placeOrder', [CartController::class, 'placeOrder'])->name('placeOrder');
     Route::get('order/success', [CartController::class, 'orderPlaced'])->name('orderPlaced');
