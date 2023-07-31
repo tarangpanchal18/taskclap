@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +11,9 @@ class Rating extends Model
 
     protected $fillable = [
         'user_id',
+        'order_id',
         'product_id',
+        'order_detail_id',
         'rating',
         'comment',
         'status',
