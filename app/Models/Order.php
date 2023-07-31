@@ -103,4 +103,9 @@ class Order extends Model
     {
         return $this->belongsTo(Area::class);
     }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'order_id', 'id');
+    }
 }

@@ -52,9 +52,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="booking-det-info">
-                                                                <h3>
-                                                                    <a>{{ $order->subCategory->name }} {{ $order->product_title }}</a>
-                                                                    {{ generate_badge($booking->order_status) }}
+                                                                <h3 style="white-space: inherit;">
+                                                                    <a>{{ $order->subCategory->name }} {{ $order->product_title }}</a>{{ generate_badge($booking->order_status) }}
                                                                 </h3>
                                                                 <ul class="booking-details">
                                                                     <li>
@@ -70,19 +69,18 @@
                                                             </div>
                                                         </div>
                                                         <div class="booking-action" style="align-items: center;flex: none;display: block;">
-                                                            @if($booking->order_status == "Completed")
-                                                            {{dd($booking->ratings)}}
-                                                            <a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add-review"><i class="feather-plus-circle"></i> Add Review</a>
+                                                            @if($booking->order_status == "Completed" && $booking->ratings->count() <= 0)
+                                                            <button class="btn btn-secondary tc-rating" data-productId="{{ $order->product_id }}" data-orderId="{{ $booking->id }}"><i class="feather-plus-circle"></i> Add Review</button>
                                                             @endif
                                                             <div class="view-action">
-                                                                @if ($booking->ratings->rating > 0)
                                                                 <div class="rating">
-                                                                    @for($i=0; $i < ($booking->ratings->rating); $i++)
+                                                                    @if($booking->order_status == "Completed" && $booking->ratings->count() > 0)
+                                                                    @for($i=0; $i < ($booking->ratings[array_search($order->product_id, array_column($booking->ratings->toArray(), 'product_id'))]->rating); $i++)
                                                                     <i class="fas fa-star filled"></i>
                                                                     @endfor
+                                                                    @endif
                                                                 </div>
-                                                                @endif
-                                                                <a href="service-details.html" class="view-btn">View Details</a>
+                                                                <a href="booking-details/{{$booking->id}}" class="view-btn">View Details</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -120,15 +118,15 @@
             <!-- /Cursor -->
 
         </div>
-
-        @include('layouts.scripts')
-        <script>
-            $(document).ready(function() {
-                setInterval(function () {
-                    finishTcLoading();
-                }, 1000);
-            });
-        </script>
+    </div>
+    @include('layouts.scripts')
+    <script>
+        $(document).ready(function() {
+            setInterval(function () {
+                finishTcLoading();
+            }, 1000);
+        });
+    </script>
 </body>
 
 </html>

@@ -53,9 +53,4 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-    public function ratings(): HasOne
-    {
-        return $this->hasOne(Rating::class, 'order_detail_id');
-    }
 }
