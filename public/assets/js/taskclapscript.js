@@ -330,6 +330,34 @@ function loadServiceModalBody(response) {
     return html;
 }
 
+function rateOrder(orderId, productId) {
+    let wrap = document.createElement('div');
+    wrap.setAttribute('class', 'text-muted');
+    wrap.innerHTML = '<button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-sad-cry"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-frown"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-meh"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="neutral" class="btn feel"><i class="far fa-smile"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="happy" class="btn feel"><i class="far fa-laugh-squint"></i></button><hr>';
+
+    swal.fire({
+        title: "",
+        text: "How do you like the new features?",
+        icon: "info",
+        className: '',
+        closeOnClickOutside: false,
+        html: wrap,
+        buttons: {
+            confirm: {
+                text: "Close",
+                value: '',
+                visible: true,
+                className: "btn btn-default",
+                closeModal: true,
+            }
+        },
+    })
+}
+
+function rateOrderDetails(){
+
+}
+
 $(document).ready(function () {
 
     $('.input-group').on('click', '.button-plus', function(e) {
@@ -442,5 +470,32 @@ $(document).ready(function () {
         } else {
             $(".payment-error").show();
         }
+    });
+
+    $(".tc-rating").click(function() {
+        var productId = $(this).attr("data-productId");
+        var orderId = $(this).attr("data-orderId");
+        let wrap = document.createElement('div');
+
+        wrap.setAttribute('class', 'text-muted');
+        wrap.innerHTML = '<button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-sad-cry"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-frown"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="sad" class="btn feel"><i class="far fa-meh"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="neutral" class="btn feel"><i class="far fa-smile"></i></button><button onclick="rateOrderDetails(' + orderId +', ' + productId + ')" type="button" value="happy" class="btn feel"><i class="far fa-laugh-squint"></i></button><hr>';
+
+        swal.fire({
+            title: "",
+            text: "How do you like the new features?",
+            icon: "info",
+            className: '',
+            closeOnClickOutside: false,
+            html: wrap,
+            buttons: {
+                confirm: {
+                    text: "Close",
+                    value: '',
+                    visible: true,
+                    className: "btn btn-default",
+                    closeModal: true,
+                }
+            },
+        });
     });
 });
