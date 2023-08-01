@@ -481,10 +481,10 @@ $(document).ready(function () {
         let wrap = document.createElement('div');
 
         wrap.setAttribute('class', 'text-muted');
-        wrap.innerHTML = '<button onclick="rateOrderDetails(' + id +', ' + order + ', 1)" type="button" value="sad" class="btn feel"><i class="far fa-sad-cry"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 2)" type="button" value="sad" class="btn feel"><i class="far fa-frown"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 3)" type="button" value="sad" class="btn feel"><i class="far fa-meh"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 4)" type="button" value="neutral" class="btn feel"><i class="far fa-smile"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 5)" type="button" value="happy" class="btn feel"><i class="far fa-laugh-squint"></i></button><hr>';
+        wrap.innerHTML = '<button onclick="rateOrderDetails(' + id +', ' + order + ', 1)" type="button" value="sad" class="btn feel"><i style="font-size: 24px;color:#FC252E;" class="far fa-frown-open"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 2)" type="button" value="sad" class="btn feel"><i style="font-size: 24px;color:#FE7C34;" class="far fa-frown"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 3)" type="button" value="sad" class="btn feel"><i style="font-size: 24px;color:#FCDD3D;" class="far fa-meh"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 4)" type="button" value="neutral" class="btn feel"><i style="font-size: 24px;color:#D3E736;" class="far fa-smile"></i></button><button onclick="rateOrderDetails(' + id +', ' + order + ', 5)" type="button" value="happy" class="btn feel"><i style="font-size: 24px;color:#5AD829;" class="far fa-laugh-squint"></i></button><hr>';
 
         swal.fire({
-            title: "How do you like the new features?",
+            title: "How was your our service experience ?",
             className: '',
             closeOnClickOutside: false,
             html: wrap,

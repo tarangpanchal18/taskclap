@@ -46,14 +46,11 @@
                                                                     <img src="{{ asset('/storage/uploads/category/'. $order->subCategory->image .'') }}" alt="{{ $order->subCategory->name }}">
                                                                 </a>
                                                                 <div class="fav-item">
-                                                                    <a href="javascript:void(0)" class="fav-icon">
-                                                                        <i class="feather-heart"></i>
-                                                                    </a>
                                                                 </div>
                                                             </div>
                                                             <div class="booking-det-info">
                                                                 <h3 style="white-space: inherit;">
-                                                                    <a>{{ $order->subCategory->name }} {{ $order->product_title }}</a>{{ generate_badge($booking->order_status) }}
+                                                                    <a>{{ $order->subCategory->name }} {{ $order->product_title }} {{$order->id}}</a>{{ generate_badge($booking->order_status) }}
                                                                 </h3>
                                                                 <ul class="booking-details">
                                                                     <li>
@@ -69,13 +66,13 @@
                                                             </div>
                                                         </div>
                                                         <div class="booking-action" style="align-items: center;flex: none;display: block;">
-                                                            @if($booking->order_status == "Completed" && $booking->ratings->count() <= 0)
+                                                            @if($booking->order_status == "Completed" && $order->isRate == false)
                                                             <button class="btn btn-secondary tc-rating" data-id="{{ $order->id }}" data-order="{{ $booking->id }}"><i class="feather-plus-circle"></i> Add Review</button>
                                                             @endif
                                                             <div class="view-action">
                                                                 <div class="rating">
-                                                                    @if($booking->order_status == "Completed" && $booking->ratings->count() > 0)
-                                                                    @for($i=0; $i < ($booking->ratings[array_search($order->product_id, array_column($booking->ratings->toArray(), 'product_id'))]->rating); $i++)
+                                                                    @if($booking->order_status == "Completed" && $order->isRate)
+                                                                    @for($i=0; $i < $order->rating; $i++)
                                                                     <i class="fas fa-star filled"></i>
                                                                     @endfor
                                                                     @endif
