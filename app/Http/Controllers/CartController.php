@@ -61,6 +61,7 @@ class CartController extends Controller
             'success' => true,
             'product' => $product,
             'services' => $services,
+            'cartArray' => getCartItems(),
         ]);
     }
 
@@ -83,12 +84,12 @@ class CartController extends Controller
         if (empty($cartItemsArr)) {
             return redirect(route('homepage'));
         }
-        $cartItems = $this->productRepository->getAll()->whereIn('id', array_keys($cartItemsArr))->get();
+
+        $cartItems = $this->productRepository->getAll(false)->whereIn('id', array_keys($cartItemsArr))->get();
         foreach ($cartItems as $cartItem) {
             $total = ($total + ($cartItem->price * $cartItemsArr[$cartItem->id]));
             $totalSaving = ($totalSaving + ($cartItem->strike_price * $cartItemsArr[$cartItem->id]));
         }
-
         return view('checkout', [
             'cartArray' => $cartItems,
             'cartItemsArr' => $cartItemsArr,

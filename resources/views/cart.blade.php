@@ -127,8 +127,7 @@
                                                                         class="cart-btn quantity-field text-center"
                                                                         readonly
                                                                     >
-                                                                    <input type="button" value="+" class="cart-btn button-plus border rounded-circle icon-shape icon-sm mx-1"
-                                                                        data-field="quantity">
+                                                                    <input type="button" value="+" class="cart-btn button-plus border rounded-circle icon-shape icon-sm mx-1" data-field="quantity">
                                                                 </div>
                                                             </div>
                                                             @else
