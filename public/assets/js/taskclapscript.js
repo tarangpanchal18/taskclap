@@ -292,9 +292,9 @@ function loadServiceModalBody(response) {
         `<hr>
         <div class="product-inner-section row">
             <div class="col-9">
-                <small class="dash-value">${service.warranty} Days Warranty</small>
                 <p class="mb-0 text-dark"><b>${service.title}</b></p>
                 <small class="text-body"><i class="fa fa-solid fa-star rating-star"></i> 4.83 (1.54M reviews)</small>
+                <p class="text-dark"><small><strong>₹ ${service.price}</strong>&nbsp;&nbsp;&nbsp;<strike>₹ ${service.strike_price}</strike></small></p>
             </div>
             <div class="col-3">
                 <img class="img-thumbnail p-0" src="https://dummyimage.com/200x200/000/fff" alt="AC Repair (Split/Window)">
@@ -309,7 +309,7 @@ function loadServiceModalBody(response) {
                             type="text"
                             step="1"
                             max="10"
-                            value="0"
+                            value="${response.cartArray[service.id] ? response.cartArray[service.id] : 0}"
                             name="quantity"
                             class="cart-btn quantity-field text-center"
                             readonly
@@ -325,7 +325,7 @@ function loadServiceModalBody(response) {
                 </div>
             </div>
         </div>`;
-    });
+    },undefined, response.cartArray);
 
     return html;
 }
@@ -363,11 +363,11 @@ function rateOrderDetails(id, order, rating) {
 
 $(document).ready(function () {
 
-    $('.input-group').on('click', '.button-plus', function(e) {
+    $(document).on('click', '.button-plus', function(e) {
         incrementCartBtnValue(e);
     });
 
-    $('.input-group').on('click', '.button-minus', function(e) {
+    $(document).on('click', '.button-minus', function(e) {
         decrementCartBtnValue(e);
     });
 

@@ -19218,6 +19218,22 @@ fieldset {
 /*-----------------
 	54. Taskclap Css
 -----------------------*/
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border-radius: 5px;
+}
+
 .btn-tc {
     border: 1px solid #2D4059;
     background: white;
@@ -19251,6 +19267,7 @@ fieldset {
     position: fixed;
     bottom:0;
     width:355px;
+    z-index: 99999;
     background-color: #2d4059!important;
     border-radius: 5px 5px 0 0!important;
     margin-bottom: 0px!important;

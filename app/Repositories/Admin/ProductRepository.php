@@ -7,9 +7,13 @@ use App\Models\Product;
 
 class ProductRepository implements MasterInterface
 {
-    public function getAll()
+    public function getAll($parentId = true)
     {
-        return Product::whereNull('parent_id');
+        if ($parentId) {
+            return Product::whereNull('parent_id');
+        } else {
+            return Product::query();
+        }
     }
 
     public function getRaw($filterData = "")

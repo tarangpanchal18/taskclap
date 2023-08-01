@@ -145,7 +145,7 @@
 <div id="tc-service-modal" class="modal fade" data-keyboard="false" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content animate-bottom" style="max-height:768px;overflow-y: auto;">
-            <button type="button" class="close-btn btn-sm btn-default" data-bs-dismiss="modal" aria-label="Close">Close</button>
+            <button type="button" class="close-btn btn btn-sm btn-default" data-bs-dismiss="modal" aria-label="Close">Close</button>
             <div class="modal-header border-bottom-0 justify-content-between" style="padding: 0;">
                 <img src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template,q_auto:low,f_auto/w_520,dpr_2,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1679671398045-1a079e.jpeg" alt="TaskClap Image" style="width: 100%;">
             </div>
@@ -196,7 +196,7 @@
                         </div>
                     </div> --}}
 
-                    <hr style="border: 4px solid darkslategrey;">
+                    <hr style="border: 1px solid #2f4f4f2e;margin:1.5em 0;">
 
                     <div class="description tc-service-description"></div>
 
