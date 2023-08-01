@@ -264,11 +264,12 @@ class CartController extends Controller
             'comment' => 'nullable',
         ]);
 
+        $orderDetail = OrderDetail::findOrFail($validated['id']);
         $rating = [
             'user_id' => auth()->user()->id,
             'order_id' => $validated['order'],
             'order_detail_id' => $validated['id'],
-            'product_id' => $this->orderRepository->getById($validated['order'])->orderDetail[0]->product_id,
+            'product_id' => $orderDetail->product_id,
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],
         ];
