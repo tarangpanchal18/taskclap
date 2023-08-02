@@ -61,9 +61,20 @@
                                         <p class="text-dark">Taxes & Fee<strong style="float: right;">₹ 0</strong></p>
                                         <hr>
                                         <p class="text-dark">Total<strong style="float: right;">₹ {{ $total }}</strong></p>
-                                        <div class="alert alert-success">
-                                            <strong>You saved ₹{{ $totalSaving - $total }} on final bill</strong>
-                                        </div>
+                                        <div class="booking-coupon">
+											<div class="form-group w-100">
+												<div class="coupon-icon">
+													<input type="text" class="form-control" placeholder="Coupon Code">
+													<span><img src="assets/img/icons/coupon-icon.svg" alt=""></span>
+												</div>
+											</div>
+											<div class="form-group">
+												<button class="btn btn-primary apply-btn">Apply</button>
+											</div>
+										</div>
+                                        <div class="save-offer">
+											<p><i class="fa-solid fa-circle-check"></i> <strong>You saved ₹{{ $totalSaving - $total }} on final bill</strong></p>
+										</div>
 									</div>
 								</div>
 							</div>
