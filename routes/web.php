@@ -32,9 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('order/success', [CartController::class, 'orderPlaced'])->name('orderPlaced');
     Route::get('order/failed', [CartController::class, 'orderFailed'])->name('orderFailed');
     Route::get('my-bookings', [BookingController::class, 'index'])->name('myBookings');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('my-bookings/{orderId}', [BookingController::class, 'detail'])->name('myBookingDetail');
 });
 
 Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');

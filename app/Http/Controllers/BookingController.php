@@ -47,4 +47,12 @@ class BookingController extends Controller
             'pageData' => $orderData,
         ]);
     }
+
+    public function detail($orderId): View
+    {
+        $orderData = $this->orderRepository->getById($orderId);
+        return view('my_bookings_detail', [
+            'pageData' => $orderData,
+        ]);
+    }
 }
