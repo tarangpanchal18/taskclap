@@ -77,7 +77,7 @@
                                                                     @endfor
                                                                     @endif
                                                                 </div>
-                                                                <a href="{{ route('myBookingDetail', $booking->order_id) }}" class="view-btn">View Details</a>
+                                                                <a href="booking-details/{{$booking->id}}" class="view-btn">View Details</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -92,9 +92,6 @@
                                                         <div class="col-sm-6">
                                                         </div>
                                                         <div class="col-sm-6">
-                                                            <div class="review-pagination">
-                                                                {{ $pageData->links() }}
-                                                            </div>
                                                         </div>
                                                     </div>
 

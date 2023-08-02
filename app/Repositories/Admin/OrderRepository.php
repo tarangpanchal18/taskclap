@@ -13,9 +13,18 @@ class OrderRepository
         return Order::where(['user_id' => $userId])->orderBy('id', 'desc')->paginate(15);
     }
 
+    /**
+     * Returns the order data based on id or bookingid
+     * @param int $id (should be id or booking id)
+     */
     public function getById($id)
     {
-        return Order::findOrFail($id);
+        $order = Order::find($id);
+        if (! $order) {
+            $order = Order::where('order_id', $id)->first();
+        }
+
+        return $order;
     }
 
     public function create(array $data)
