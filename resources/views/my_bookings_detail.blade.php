@@ -39,7 +39,8 @@
                                           </div>
 
                                           <div class="row">
-                                            <p>Order Status</p>
+                                            <p>Order Status @if($pageData->order_status == "Pending")<span class="float-right">: {{ generate_badge($pageData->order_status) }}</span>@endif</p>
+                                            @if($pageData->order_status != "Pending")
                                             <ul id="progressbar">
                                                 <li {{ ($pageData->order_status == "Completed") ? "Placed" : "" }}>
                                                     <div class="multi-step-info">
@@ -60,7 +61,7 @@
                                                 @if($pageData->order_status == "Failed" || $pageData->order_status == "Rejected")
                                                 <li class="active">
                                                     <div class="multi-step-info">
-                                                        <h6>{{ $pageData->order_status }}</h6>
+                                                        <h6>Order {{ $pageData->order_status }}</h6>
                                                     </div>
                                                     <div class="multi-step-icon">
                                                         <span><i class="far fa-window-close"></i></span>
@@ -85,6 +86,7 @@
                                                 </li>
                                                 @endif
                                             </ul>
+                                            @endif
                                           </div>
 
                                           <!-- Order Detail -->
@@ -252,18 +254,24 @@
                                                     <div class="card-body">
                                                         <div class="available-widget">
                                                             <div class="available-info">
-                                                               <h5>Billing Detail</h5>
-                                                               <div class="summary-box">
+                                                                <h5>Billing Detail
+                                                                    @if($pageData->order_status == "Completed")
+                                                                    <a href="{{ route('downloadInvoice') }}" style="float: right;padding: 7px;" class="btn btn-sm btn-primary"><i class="fas fa-cloud-download-alt"></i> Invoice</a>
+                                                                    @endif
+                                                                </h5>
+                                                               <div class="summary-box" style="background: #f4f5f7">
                                                                   <div class="booking-summary">
                                                                      <ul class="booking-date">
-                                                                        <li>BookingId <span>{{ $pageData->order_id }}</span></li>
+                                                                        <li>Booking Id <span>#{{ $pageData->order_id }}</span></li>
                                                                         <li>Date <span> {{ formatDate($pageData->created_at, 'd-m-Y (H:i)') }}</span></li>
                                                                         <li>Provider <span>{{ $pageData->provider->name }}</span></li>
                                                                      </ul>
                                                                      <ul class="booking-date">
                                                                         <li>Subtotal <span>₹ {{ $pageData->subtotal }}</span></li>
+                                                                        @if($order->order_status == "Completed")
                                                                         <li>Material Charge <span>₹ {{ $pageData->material_charge_amount_total }}</span></li>
                                                                         <li>Additional Charge <span>₹ {{ $pageData->additional_charge_amount_total }}</span></li>
+                                                                        @endif
                                                                         <li>Coupoun Discount <span>₹ {{ $pageData->discount }}</span></li>
                                                                         <li>Tax <span>₹ {{ $pageData->tax }}</span></li>
                                                                      </ul>

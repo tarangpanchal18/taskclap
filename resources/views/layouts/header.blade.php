@@ -51,7 +51,7 @@
                         <a class="btn ms-1" href="{{ route('login') }}">LOGIN</a>
                     </div>
                     @else
-                    <div style="">
+                    <div style="margin-right:1em;">
                         <a href="{{ route('myBookings') }}">My Bookings</a>
                     </div>
                     <div class="cta-btn">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Traits\GeneralFunctions;
 use App\Repositories\Admin\OrderRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\View\View;
 
 class BookingController extends Controller
@@ -54,5 +54,14 @@ class BookingController extends Controller
         return view('my_bookings_detail', [
             'pageData' => $orderData,
         ]);
+    }
+
+    public function downloadInvoice()
+    {
+        return view('pdf.invoice.booking');
+        $pdf = Pdf::loadView('pdf.invoice.booking', [
+            'name' => 'invoice',
+        ]);
+        return $pdf->download('invoice.pdf');
     }
 }
