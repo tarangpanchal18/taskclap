@@ -18,7 +18,7 @@
                             <div class="col-md-12 col-lg-10 mx-auto">
 
                                 <div class="login-back">
-                                    <a href="{{ url()->previous() }}"><i class="feather-arrow-left"></i> Back</a>
+                                    <a href="{{ route('homepage') }}"><i class="feather-arrow-left"></i> Back</a>
                                 </div>
 
                                 <div class="row">
