@@ -7,6 +7,7 @@ use App\Repositories\Admin\OrderRepository;
 use Illuminate\Http\RedirectResponse;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\View\View;
+use Illuminate\Http\Response;
 
 class BookingController extends Controller
 {
@@ -56,12 +57,13 @@ class BookingController extends Controller
         ]);
     }
 
-    public function downloadInvoice()
+    public function downloadInvoice($orderId): Response
     {
-        return view('pdf.invoice.booking');
+        $orderData = $this->orderRepository->getById($orderId);
         $pdf = Pdf::loadView('pdf.invoice.booking', [
-            'name' => 'invoice',
+            'order' => $orderData,
         ]);
+
         return $pdf->download('invoice.pdf');
     }
 }
