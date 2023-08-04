@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('order/failed', [CartController::class, 'orderFailed'])->name('orderFailed');
     Route::get('my-bookings', [BookingController::class, 'index'])->name('myBookings');
     Route::get('my-bookings/{orderId}', [BookingController::class, 'detail'])->name('myBookingDetail');
-    Route::get('download/invoice', [BookingController::class, 'downloadInvoice'])->name('downloadInvoice');
+    Route::get('download/invoice/{orderId}', [BookingController::class, 'downloadInvoice'])->name('downloadInvoice');
 });
 
 Route::get('{subcategory}', [CartController::class, 'index'])->name('cart');
