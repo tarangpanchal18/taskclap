@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PromocodeController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WalletController;
@@ -29,6 +30,7 @@ Route::prefix(config('app.admin_path_name'))->name('admin.')->group(function () 
         Route::resource('providers', ProviderController::class);
         Route::resource('products', ProductController::class);
         Route::resource('products.services', ServiceController::class);
+        Route::resource('promocode', PromocodeController::class);
         Route::get('orders', [OrderController::class, 'index'])->name('orders');
         Route::get('orders/{order}', [OrderController::class, 'orderDetail'])->name('orders.detail');
         Route::post('orders/{order}', [OrderController::class, 'updateOrderDetail']);

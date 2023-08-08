@@ -24,6 +24,7 @@
         {{ $required ? 'required' : '' }}
         {{ $disabled ? 'disabled' : '' }}
         {{ $readonly ? 'readonly' : '' }}
+        autocomplete="off"
     />
     @error($name)<p style="color: #dc3545;font-style: italic" classs="text-danger">{{ $message  }}</p>@enderror
 </div>

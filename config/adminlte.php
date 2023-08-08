@@ -357,6 +357,11 @@ return [
             ],
         ],
         [
+            'text' => 'Promocode',
+            'url'  => env('ADMIN_PATH') . '/promocode',
+            'icon' => 'fas fa-tag',
+        ],
+        [
             'text' => 'Website Banner',
             'url'  => env('ADMIN_PATH') . '/banners',
             'icon' => 'fas fa-pager',
@@ -558,6 +563,26 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '/js/pace/pace.min.js',
+                ],
+            ],
+        ],
+        'daterangepicker' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '/vendor/daterangepicker/daterangepicker.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '/vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '/vendor/daterangepicker/daterangepicker.js',
                 ],
             ],
         ],
