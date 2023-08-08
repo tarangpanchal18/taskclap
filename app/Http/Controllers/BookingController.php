@@ -60,10 +60,11 @@ class BookingController extends Controller
     public function downloadInvoice($orderId): Response
     {
         $orderData = $this->orderRepository->getById($orderId);
+        $fileName = 'invoice_' . $orderId . '.pdf';
         $pdf = Pdf::loadView('pdf.invoice.booking', [
             'order' => $orderData,
         ]);
 
-        return $pdf->download('invoice.pdf');
+        return $pdf->download($fileName);
     }
 }
