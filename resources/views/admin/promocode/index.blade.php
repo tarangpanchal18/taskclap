@@ -53,10 +53,10 @@
                 @forelse($pageData as $data)
                 <tr>
                     <td>{{ $data->promocode }}</td>
-                    <td>{{ $data->value }}</td>
+                    <td>{{ $data->value }}{{ ($data->discount_type == "Percentage") ? "%" : " Flat" }} </td>
                     <td>{{ $data->validity }}</td>
-                    <td>{{ $data->start_date ? formatDate($data->start_date) : 'N/A' }}</td>
-                    <td>{{ $data->end_date ? formatDate($data->end_date) : 'N/A' }}</td>
+                    <td>{{ ($data->start_date && $data->validity == "Dynamic") ? formatDate($data->start_date) : 'N/A' }}</td>
+                    <td>{{ ($data->end_date && $data->validity == "Dynamic") ? formatDate($data->end_date) : 'N/A' }}</td>
                     <td>{{ generate_badge($data->status) }}</td>
                     <td>
                         <a href="{{ route('admin.promocode.edit', $data->id) }}" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>

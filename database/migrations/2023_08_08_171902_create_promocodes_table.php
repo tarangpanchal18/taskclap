@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('promocode');
             $table->text('description');
-            $table->enum('disount_type', ['Flat', 'Percentage'])->default('Flat');
+            $table->enum('discount_type', ['Flat', 'Percentage'])->default('Flat');
             $table->enum('validity', ['Permanent', 'Dynamic'])->default('Permanent');
             $table->datetime('start_date')->nullable();
             $table->datetime('end_date')->nullable();

@@ -11,6 +11,7 @@
 
 @section('content')
 <div class="card">
+    @include('layouts.alert-msg')
     <form action="{{ $actionUrl }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if ($action != 'Add') @method('PUT') @endif
@@ -29,18 +30,20 @@
                 <x-form-input name="description" type="text" label="Promocode Description" value="{{ $promocode->description }}" />
 
                 <x-form-select
-                    name="disount_type"
-                    label="Disount type"
+                    name="discount_type"
+                    label="Discount type"
                     data="{{ json_encode([
                         'Flat' => 'Flat',
-                        'Percentage' => 'Percentage (%)',
+                        'Percentage' => 'Percentage',
                     ]) }}"
-                    value="{{ $category->disount_type }}"
+                    value="{{ $promocode->discount_type }}"
+                    select2="false"
                 />
 
                 <x-form-input name="value" type="text" label="Promocode value" value="{{ $promocode->value }}" />
 
                 <x-form-select
+                    id="validity"
                     size="12"
                     name="validity"
                     label="Promocode Validity"
@@ -48,12 +51,13 @@
                         'Permanent' => 'Permanent',
                         'Dynamic' => 'Dynamic',
                     ]) }}"
-                    value="{{ $category->validity }}"
+                    value="{{ $promocode->validity }}"
                 />
 
-                <x-form-input name="start_date" readonly="true" type="text" class="form-control dtpicker" label="Start Date" value="{{ $promocode->start_date }}" />
-
-                <x-form-input name="end_date" readonly="true" type="text" class="form-control dtpicker" label="End Date" value="{{ $promocode->end_date }}" />
+                <div class="date-picker-box form-group col-md-12 row" style="display:{{ ($promocode->validity == 'Permanent' || $action == 'Add') ? 'none;' : 'block' }}">
+                <x-form-input name="start_date" readonly="true" type="text" class="form-control dtpicker" label="Start Date" value="{{ formatDate($promocode->start_date, 'd-m-Y') }}" />
+                <x-form-input name="end_date" readonly="true" type="text" class="form-control dtpicker" label="End Date" value="{{ formatDate($promocode->end_date, 'd-m-Y') }}" />
+                </div>
 
                 <div class="form-group col-md-6">
                     <label>Status</label>
@@ -71,7 +75,7 @@
                             <label for="statusInActive" class="custom-control-label">InActive</label>
                         </div>
                     </div>
-                    @error('status')<p classs="text-danger">{{ $message }}</p>@enderror
+                    @error('status')<p class="text-danger">{{ $message }}</p>@enderror
                 </div>
 
             </div>
@@ -86,12 +90,22 @@
 
 @section('js')
 <script>
+$(document).ready(function() {
+    $("#validity").change(function() {
+        if($(this).val() == "Dynamic") {
+            $(".date-picker-box").show();
+        } else {
+            $(".date-picker-box").hide();
+        }
+    });
+
     $('.dtpicker').daterangepicker({
         "singleDatePicker": true,
         "autoApply": true,
         locale: {
-            format: 'DD/MM/YYYY',
+            format: 'DD-MM-YYYY',
         }
     });
+});
 </script>
 @stop

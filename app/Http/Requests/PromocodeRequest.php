@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PromocodeRequest extends FormRequest
@@ -23,17 +24,27 @@ class PromocodeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'promocode' => 'required|alpha_num|min:6|max:8',
+        $method = $this->method();
+        $rule = [
+            'promocode' => [
+                'required','alpha_num','min:4','max:10',Rule::unique('promocodes', 'promocode')->ignore($this->route('promocode')->id)
+            ],
             'description' => 'required|alpha_num|min:5|max:200',
-            'disount_type' => 'required',
+            'discount_type' => 'required',
             'validity' => 'required',
-            'start_date' => 'date|required_if:validity,Dynamic',
-            'end_date' => 'date|required_if:validity,Dynamic',
-            'type' => 'required',
-            'value' => 'required|digits',
+            'start_date' => 'required_if:validity,Dynamic',
+            'end_date' => 'required_if:validity,Dynamic',
+            'value' => 'required|numeric|min:1|max:9999',
             'limit' => 'nullable',
             'status' => 'required',
         ];
+
+        if ($method == 'POST') {
+            $rule += [
+                'promocode' => ['required','alpha_num','min:4','max:10',Rule::unique('promocodes', 'promocode')],
+            ];
+        }
+
+        return $rule;
     }
 }
