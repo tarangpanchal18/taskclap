@@ -79,7 +79,7 @@
 
 <script>
 function removeData(id) {
-    removeDataFromDatabase('{{route("admin.promocode.index")}}', id);
+    removeDataFromDatabase('{{route("admin.promocode.index")}}', id, false);
 }
 </script>
 @stop

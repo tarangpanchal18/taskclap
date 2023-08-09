@@ -128,7 +128,7 @@ function generateDataTable(dataUrl, coloumnsData, filterData = [], coloumnsToExp
  * @param string deleteUrl
  * @param integer id
  */
-function removeDataFromDatabase(deleteUrl, id, csrf) {
+function removeDataFromDatabase(deleteUrl, id, refreshDataTable = true) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -155,7 +155,13 @@ function removeDataFromDatabase(deleteUrl, id, csrf) {
                 success : function(response) {
                     if (response.success) {
                         Swal.fire('Deleted','Data has been removed successfully !','success')
-                        $('#data-table').DataTable().ajax.reload();
+                        if (refreshDataTable) {
+                            $('#data-table').DataTable().ajax.reload();
+                        } else {
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1200);
+                        }
                     } else {
                         Swal.fire('Whoops !','Something went wrong !')
                     }
