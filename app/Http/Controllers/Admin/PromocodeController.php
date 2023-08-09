@@ -71,6 +71,6 @@ class PromocodeController extends Controller
     public function destroy(Promocode $promocode)
     {
         $this->promocodeRepository->delete($promocode->id);
-        return redirect(route('admin.promocode.index'))->with('success', 'Data Deleted Successfully !');
+        echo json_encode(['success' => true]);
     }
 }
