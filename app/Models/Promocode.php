@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Promocode extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +28,11 @@ class Promocode extends Model
         'limit',
         'status',
     ];
+
+    protected function promocode(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtoupper($value),
+        );
+    }
 }
