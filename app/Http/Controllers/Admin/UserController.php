@@ -82,9 +82,9 @@ class UserController extends Controller
         return redirect(route('admin.users.index'))->with('success', 'Data Updated Successfully !');
     }
 
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $user): void
     {
         $this->userRepository->delete($user->id);
-        return redirect(route('admin.users.index'))->with('success', 'Data Deleted Successfully !');
+        echo json_encode(['success' => true]);
     }
 }

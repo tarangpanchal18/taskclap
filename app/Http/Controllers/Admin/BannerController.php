@@ -107,6 +107,6 @@ class BannerController extends Controller
         }
 
         $this->bannerRepository->delete($banner->id);
-        return redirect(route('admin.banners.index'))->with('success', 'Data Deleted Successfully !');
+        echo json_encode(['success' => true]);
     }
 }

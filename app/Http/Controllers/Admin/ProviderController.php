@@ -126,6 +126,6 @@ class ProviderController extends Controller
     public function destroy(Provider $provider)
     {
         $this->providerRepository->delete($provider->id);
-        return redirect(route('admin.providers.index'))->with('success', 'Data Deleted Successfully !');
+        echo json_encode(['success' => true]);
     }
 }

@@ -157,7 +157,7 @@ function removeDataFromDatabase(deleteUrl, id, csrf) {
                         Swal.fire('Deleted','Data has been removed successfully !','success')
                         $('#data-table').DataTable().ajax.reload();
                     } else {
-                        Swal.fire('Whoops !','We encoutered some error !')
+                        Swal.fire('Whoops !','Something went wrong !')
                     }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
