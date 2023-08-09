@@ -1,20 +1,24 @@
 <?php
 
 function createSlug($string) {
-    $string = strtolower($string);
-    $string = str_replace(' ', '', $string);
-    $string = str_replace('-', '', $string);
-    $string = str_replace('/', '', $string);
+    if ($string) {
+        $string = strtolower($string);
+        $string = str_replace(' ', '', $string);
+        $string = str_replace('-', '', $string);
+        $string = str_replace('/', '', $string);
 
-    return $string;
+        return $string;
+    }
 }
 
 function formatNumber ($value, $decimal = 2) {
-    return number_format($value, $decimal);
+    if ($value)
+        return number_format($value, $decimal);
 }
 
 function formatDate ($date, $format = "d-m-Y") {
-    return date($format, strtotime($date));
+    if ($date)
+        return date($format, strtotime($date));
 }
 
 function generate_badge($label) {

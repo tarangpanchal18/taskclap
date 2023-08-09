@@ -153,11 +153,16 @@ function removeDataFromDatabase(deleteUrl, id, csrf) {
                     Swal.fire('Please wait..','While we are removing your data !','info')
                 },
                 success : function(response) {
-                    Swal.fire('Deleted','Data has been removed successfully !','success')
-                    $('#data-table').DataTable().ajax.reload();
+                    if (response.success) {
+                        Swal.fire('Deleted','Data has been removed successfully !','success')
+                        $('#data-table').DataTable().ajax.reload();
+                    } else {
+                        Swal.fire('Whoops !','We encoutered some error !')
+                    }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    Swal.fire('Whoops !','We encoutered some error !<br>' + XMLHttpRequest.responseJSON.message,'error')
+                    // Swal.fire('Whoops !','We encoutered some error !<br>' + XMLHttpRequest.responseJSON.message,'error')
+                    Swal.fire('Whoops !','We encoutered some error !<br>Please contact site administrator','error')
                 }
             });
         }

@@ -1,5 +1,5 @@
 @props([
-    'name' => '',
+    'name',
     'id' => '',
     'event' => '',
     'type' => 'text',
@@ -28,5 +28,5 @@
             @endforeach
         @endif
     </select>
-    @error($name)<p style="color: #dc3545;font-style: italic">{{ $message }}</p> @enderror
+    @error($name)<p class="text-danger">{{ $message }}</p>@enderror
 </div>
