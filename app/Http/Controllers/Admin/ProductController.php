@@ -128,6 +128,6 @@ class ProductController extends Controller
         }
 
         $this->productRepository->delete($product->id);
-        return redirect(route('admin.products.index'))->with('success', 'Data Deleted Successfully !');
+        echo json_encode(['success' => true]);
     }
 }

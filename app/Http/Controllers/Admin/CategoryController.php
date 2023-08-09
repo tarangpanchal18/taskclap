@@ -108,13 +108,13 @@ class CategoryController extends Controller
         return redirect(route('admin.categorys.index'))->with('success', 'Data Updated Successfully !');
     }
 
-    public function destroy(Category $category): RedirectResponse
+    public function destroy(Category $category): void
     {
         if ($category->image) {
             $this->fileService->removeFile(Category::UPLOAD_PATH, $category->image);
         }
 
         $this->categoryRepository->delete($category->id);
-        return redirect(route('admin.categorys.index'))->with('success', 'Data Deleted Successfully !');
+        echo json_encode(['success' => true]);
     }
 }
