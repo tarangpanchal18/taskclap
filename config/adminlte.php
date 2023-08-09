@@ -362,6 +362,16 @@ return [
             'icon' => 'fas fa-tag',
         ],
         [
+            'text' => 'FAQs',
+            'url'  => env('ADMIN_PATH') . '/faq',
+            'icon' => 'far fa-question-circle',
+        ],
+        [
+            'text' => 'Pages',
+            'url'  => env('ADMIN_PATH') . '/pages',
+            'icon' => 'far fa-copy',
+        ],
+        [
             'text' => 'Website Banner',
             'url'  => env('ADMIN_PATH') . '/banners',
             'icon' => 'fas fa-pager',
