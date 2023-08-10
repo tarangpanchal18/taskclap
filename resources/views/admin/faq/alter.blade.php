@@ -26,9 +26,9 @@
 
             <div class="row">
 
-                <x-form-textarea name="question" type="text" label="Question" value="{{ $faq->question }}" size="12" />
+                <x-form-input name="question" type="text" label="FAQ Question" value="{{ $faq->question }}" size="12" />
 
-                <x-form-textarea name="answer" type="text" label="Answer" value="{!! $faq->answer !!}" size="12" />
+                <x-form-textarea name="answer" type="text" label="FAQ Answer" value="{!! $faq->answer !!}" size="12" />
 
                 <div class="form-group col-md-6">
                     <label>Status</label>
@@ -53,44 +53,4 @@
         </div>
     </form>
 </div>
-@stop
-
-@section('js')
-<script>
-    $(document).ready(function() {
-        $('.isHaveInnerService').on('change', function() {
-            var val = $('input[name=isHaveInnerService]:checked').val();
-            if (val == "Yes") {
-                $(".primaryFieldInput").val(0);
-                $(".primaryField").hide();
-            } else {
-                $(".primaryField").show();
-            }
-        });
-
-        @if($serviceCount)
-        $("#Yes").click();
-        $("#No").attr('disabled', true);
-        @else
-        $("#No").click();
-        @endif
-    });
-
-    fetchAndSetCategory({
-        {
-            $page -> category_id
-        }
-    });
-    @if($action != "Add")
-    fetchAndSetSubCategory({
-        {
-            $page -> category_id
-        }
-    }, {
-        {
-            $page -> sub_category_id
-        }
-    });
-    @endif
-</script>
 @stop

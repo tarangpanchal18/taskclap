@@ -34,7 +34,7 @@
 
                 <x-form-textarea name="seo_description" type="text" label="SEO Description" value="{!! $page->seo_description !!}" id="editor" size="12" />
 
-                @if ($page->image)
+                @if ($page->page_image)
                 <div class="form-group col-md-12">
                     <label>Preview Image</label><br>
                     <img src="{{ asset('storage/uploads/pages/' . $page->page_image) }}" alt="{{ $page->name }}" class="admin-preview img-thumbnail">

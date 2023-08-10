@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
             $table->string('title');
             $table->longText('description');
             $table->text('seo_description')->nullable();
             $table->text('seo_keywords')->nullable();
             $table->string('page_image')->nullable();
-            $table->string('slug')->nullable();
             $table->enum('status', ['Active', 'InActive']);
             $table->timestamps();
         });
