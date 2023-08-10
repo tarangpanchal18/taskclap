@@ -12,14 +12,9 @@ class PromocodeRepository implements MasterInterface
         return Promocode::all();
     }
 
-    public function getRaw($filterData = "")
+    public function getRaw()
     {
-        $query = Promocode::query();
-        if ($filterData && $filterData['status']) {
-            $query = $query->where('status', $filterData['status']);
-        }
-
-        return $query;
+        return Promocode::query();
     }
 
     public function getById($id)

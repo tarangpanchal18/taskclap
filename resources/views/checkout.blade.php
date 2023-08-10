@@ -54,26 +54,40 @@
 								</div>
 
 								<div class="col-lg-4">
-									<div class="row align-items-center">
+									<div class="row align-items-center billing summary">
                                         <h4 class="my-4">Payment Summary</h4>
-                                        <p class="text-dark">Item Total<strong style="float: right;">₹ {{ $total }}</strong></p>
-                                        <p class="text-dark">Item Discount<strong style="float: right;">- ₹ {{$totalSaving - $total}}</strong></p>
-                                        <p class="text-dark">Taxes & Fee<strong style="float: right;">₹ 0</strong></p>
+                                        <table class="table table-bordered billing-summary">
+                                            <tr>
+                                                <th><p class="text-dark">Item Total</p></th>
+                                                <td><p style="float: right;" class="text-dark">₹ {{ $total }}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <th><p class="text-dark">Item Discount</p></th>
+                                                <td><p style="float: right;" class="text-dark">₹ 0</p></td>
+                                            </tr>
+                                            <tr>
+                                                <th><p class="text-dark">Taxes & Fee</p></th>
+                                                <td><p style="float: right;" class="text-dark">₹ 0</p></td>
+                                            </tr>
+                                        </table>
+                                        <p class="text-dark">Total<strong style="float: right;">₹ <span class="billing-total">{{ formatNumber($total) }}</span></strong></p>
                                         <hr>
-                                        <p class="text-dark">Total<strong style="float: right;">₹ {{ $total }}</strong></p>
                                         <div class="booking-coupon">
 											<div class="form-group w-100">
 												<div class="coupon-icon">
-													<input type="text" class="form-control" placeholder="Coupon Code">
-													<span><img src="assets/img/icons/coupon-icon.svg" alt=""></span>
+                                                    <form id="apply-discount-form">
+                                                        <input type="hidden" name="total" value="<?= $total ?>">
+                                                        <input type="text" name="promocode" class="form-control promocode-input" placeholder="Coupon Code" style="text-transform:uppercase">
+                                                        <span><img src="assets/img/icons/coupon-icon.svg" alt=""></span>
+                                                    </form>
 												</div>
 											</div>
 											<div class="form-group">
-												<button class="btn btn-primary apply-btn">Apply</button>
+												<button class="btn btn-primary apply-btn promocode-btn">Apply</button>
 											</div>
 										</div>
                                         <div class="save-offer">
-											<p><i class="fa-solid fa-circle-check"></i> <strong>You saved ₹{{ $totalSaving - $total }} on final bill</strong></p>
+											<p><i class="fa-solid fa-circle-check"></i> <strong>Voila! You saved ₹<span class="billing-discount">{{ $totalSaving - $total }}</span> on final bill</strong></p>
 										</div>
 									</div>
 								</div>

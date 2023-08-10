@@ -501,4 +501,40 @@ $(document).ready(function () {
             },
         });
     });
+
+    $(".promocode-btn").click(function () {
+        var promocode = $(".promocode-input").val().trim();
+        if (promocode != '') {
+            $.ajax({
+                type : "POST",
+                dataType: "json",
+                url : "/apply/promocode",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data : $("#apply-discount-form").serialize(),
+                success : function(response) {
+                    if (response.success) {
+                        var table = $(".billing-summary");
+                        var billingTotal = (parseFloat($(".billing-total").html().trim()) - parseFloat(response.discount));
+                        var billingDiscount = (parseFloat($(".billing-discount").html().trim()) + parseFloat(response.discount));
+                        table.append('<tr style="background: #1b8b1b17;"><th><p class="text-dark">Promocode Discount</p></th><td><p style="float: right" class="text-dark">₹ '+ response.discount +'</p></td></tr>');
+                        $(".billing-total").html(billingTotal);
+                        $(".billing-discount").html(billingDiscount);
+                        $(".promocode-input").prop('disabled', true);
+                        $(".promocode-btn").html('Applied').attr('disabled', true);
+                        $(".submit-tc-promocode").val(response.promo);
+                        swal.fire(response.message, '', 'success');
+                    } else {
+                        swal.fire(response.message, '', 'warning');
+                    }
+                },
+                error: function (data) {
+                    Swal.fire('Something went really wrong!', '', 'error');
+                }
+            });
+        } else {
+            Swal.fire('Please Enter Promocode', '', 'warning');
+        }
+    })
 });

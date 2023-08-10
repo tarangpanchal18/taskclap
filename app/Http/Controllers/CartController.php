@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\OrderRepository;
 use App\Repositories\Admin\ProductRepository;
+use App\Repositories\Admin\PromocodeRepository;
 use App\Repositories\Admin\RatingRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -23,7 +24,8 @@ class CartController extends Controller
         private CategoryRepository $categoryRepository,
         private ProductRepository $productRepository,
         private RatingRepository $ratingRepository,
-        private OrderRepository $orderRepository
+        private OrderRepository $orderRepository,
+        private PromocodeRepository $promocodeRepository
     ) {
         //
     }
@@ -90,6 +92,7 @@ class CartController extends Controller
             $total = ($total + ($cartItem->price * $cartItemsArr[$cartItem->id]));
             $totalSaving = ($totalSaving + ($cartItem->strike_price * $cartItemsArr[$cartItem->id]));
         }
+
         return view('checkout', [
             'cartArray' => $cartItems,
             'cartItemsArr' => $cartItemsArr,
@@ -152,6 +155,7 @@ class CartController extends Controller
         $orderNumber = $this->generateOrderNumber();
         $categoryId = $request->category;
         $subCategoryId = $request->subCategory;
+        $promocode = strtoupper($request->promocode);
         $cartItems = json_decode(base64_decode($request->cartArray), true);
         $cartDetail = array_filter(getCartItems());
         if (empty($cartDetail)) {
@@ -178,7 +182,8 @@ class CartController extends Controller
             'address_lat' => auth()->user()->address_lat,
             'address_long' => auth()->user()->address_long,
             'product_count' => $productCount,
-            'isPromoApplied' => 'No',
+            'isPromoApplied' => (! empty($promocode)) ? 'Yes' : 'No',
+            'promocode' => $promocode,
             'discount' => 0,
             'tax' => 0,
             'subtotal' => $total,
@@ -218,12 +223,13 @@ class CartController extends Controller
                     $total = $total + $cart['price'];
                     OrderDetail::create($cartDetailData);
                 }
-
             }
 
+            $discountPromo = $this->getDiscountValueFromPromo($promocode, $total);
             Order::where(['id' => $orderId->id, 'order_id' => $orderNumber])->update([
                 'product_count' => $productCount,
                 'subtotal' => $total,
+                'discount' => $discountPromo,
                 'total' => $total,
             ]);
 
@@ -276,5 +282,62 @@ class CartController extends Controller
         ];
 
         return ($this->ratingRepository->create($rating)) ? true : false;
+    }
+
+    public function applyPromocode(Request $request)
+    {
+        $promocode = $request->promocode;
+        $total = (int)$request->total;
+        if (! empty($promocode)) {
+            $response = [
+                'success' => false,
+                'message' => "Please Enter Promocode",
+            ];
+        }
+
+        $getPromo = $this->promocodeRepository->getRaw()->where([
+            'promocode' => $promocode,
+            'status' => 'Active'
+        ])->get();
+
+        if ($getPromo->count() > 0) {
+            $discount_type = $getPromo[0]['discount_type'];
+            $value = $getPromo[0]['value'];
+            $discount = $this->getDiscountValueFromPromo($promocode, $total);
+
+            $response = [
+                'success' => true,
+                'promo' => $promocode,
+                'discount' => $discount,
+                'message' => "Promocode ". strtoupper($promocode) ." Applied Successfully !",
+            ];
+        } else {
+            $response = [
+                'success' => false,
+                'message' => "Entered Promocode is not valid !",
+            ];
+        }
+
+        echo json_encode($response);
+    }
+
+    public function getDiscountValueFromPromo($promocode, $totalAmount): string
+    {
+        $discount = 0;
+        $getPromo = $this->promocodeRepository->getRaw()->where([
+            'promocode' => $promocode,
+            'status' => 'Active'
+        ])->get();
+
+        if ($getPromo->count() > 0) {
+            $discount_type = $getPromo[0]['discount_type'];
+            $value = $discount = $getPromo[0]['value'];
+
+            if ($discount_type  != "Flat") {
+                $discount = (($totalAmount * $value) / 100);
+            }
+        }
+
+        return $discount;
     }
 }
