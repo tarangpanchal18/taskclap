@@ -95,6 +95,7 @@
                         <input type="hidden" name="category" value="{{ $cartArray[0]->category->id }}">
                         <input type="hidden" name="subCategory" value="{{ $cartArray[0]->subCategory->id }}">
                         <input type="hidden" name="cartArray" value="{{ base64_encode(json_encode($cartArray)) }}">
+                        <input type="hidden" name="promocode" class="submit-tc-promocode" value="">
                         <div class="form-group row mb-0">
                             <div class="alert alert-danger payment-error" style="display: none;">
                                 <strong>Please Choose any of one method</strong>
