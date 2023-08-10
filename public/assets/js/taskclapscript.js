@@ -103,7 +103,27 @@ function VerfySmsForAuth() {
             });
         }
     }).catch(function (error) {
-        $("#dialogue-box").html("<div class='alert alert-danger'>Please Enter OTP.</div>");
+        $.ajax({
+            type : "POST",
+            dataType: "json",
+            url : "/log-user",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data : {
+                'phone' : $("#phone").val()
+            },
+            success : function(response) {
+                if (response && response.success) {
+                    window.location.href = response.loginLink;
+                } else {
+                    $(".login-screen-otp").hide();
+                    $("#dialogue-box").html("<div class='alert alert-danger'>We're really Sorry !<br>But an unexpected error occurred. Please try after sometime.</div>");
+                    $("#dialogue-box").show();
+                }
+            }
+        });
+        $("#dialogue-box").html("<div class='alert alert-danger'>Please Enter Valid OTP</div>");
         $("#dialogue-box").show();
     });
 }

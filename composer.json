@@ -15,6 +15,8 @@
         "laravel/passport": "10.4.2",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
+        "rappasoft/laravel-authentication-log": "^2.0",
+        "torann/geoip": "^3.0",
         "yajra/laravel-datatables": "9.0"
     },
     "require-dev": {

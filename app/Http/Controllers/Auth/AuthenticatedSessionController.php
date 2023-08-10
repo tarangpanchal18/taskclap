@@ -9,6 +9,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Contracts\Events\Dispatcher;
+use Rappasoft\LaravelAuthenticationLog\Listeners\FailedLoginListener;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -73,7 +75,7 @@ class AuthenticatedSessionController extends Controller
                 'state_id' => 1,
                 'city_id' => 1,
                 'area_id' => 1,
-                'address' => 'Dev Aurum Commercial Complex Prahlad Nagar, Ahmedabad, Gujarat 380015',
+                'address' => 'Your Address',
             ]);
         }
 
@@ -86,6 +88,16 @@ class AuthenticatedSessionController extends Controller
         }
 
         return json_encode($returnArr);
+    }
+
+    /**
+     * Handle failed login attempt and log
+     */
+    public function logFailedAttempt()
+    {
+        $events = app()->make(Dispatcher::class);
+        dd($events->listen(\Illuminate\Auth\Events\Failed::class, FailedLoginListener::class));
+        return true;
     }
 
     /**
