@@ -39,11 +39,10 @@
         <table class="table table-bordered" id="data-table">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Question</th>
-                    <th>Answer</th>
-                    <th>Created Date</th>
-                    <th>Updated Date</th>
                     <th>Status</th>
+                    <th>Updated on</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -51,11 +50,10 @@
             </tbody>
             <tfoot>
                 <tr>
+                    <th>#</th>
                     <th>Question</th>
-                    <th>Answer</th>
-                    <th>Created Date</th>
-                    <th>Updated Date</th>
                     <th>Status</th>
+                    <th>Updated on</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -69,42 +67,22 @@
 
 <script>
     $(document).ready(function() {
-        generateDataTable('{{ route("admin.faq.index") }}', [{
-                data: 'question',
-                name: 'question'
-            },
-            {
-                data: 'answer',
-                name: 'answer'
-            },
-            {
-                data: 'created_at',
-                name: 'created_at'
-            },
-            {
-                data: 'updated_at',
-                name: 'updated_at'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'action',
-                name: 'action',
-                orderable: false,
-                searchable: false
-            },
+        generateDataTable('{{ route("admin.faq.index") }}', [
+            {data: 'DT_RowIndex', name: 'id', orderable: false, searchable: false},
+            {data: 'question',name: 'question'},
+            {data: 'updated_at',name: 'updated_at'},
+            {data: 'status',name: 'status'},
+            {data: 'action',name: 'action',orderable: false,searchable: false},
         ], {
             'status': $("#filter_status").val()
         }, [
-            0, 1, 2, 3, 4
+            0, 1, 2, 3
         ]);
 
     });
 
     function removeData(id) {
-        removeDataFromDatabase('{{route("admin.faq.index")}}', id);
+        removeDataFromDatabase('{{route("admin.faq.index")}}', id, false);
     }
 </script>
 @stop

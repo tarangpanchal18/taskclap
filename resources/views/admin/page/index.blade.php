@@ -11,22 +11,7 @@
 
 @section('content')
 <div class="card">
-    <form action="{{route('admin.pages.index')}}">
-        <div class="card-body row">
-            <div class="form-group col-md-3">
-                <label>Filter By Status</label>
-                <select name="status" id="filter_status" class="form-control select2">
-                    <option value="">Select Status</option>
-                    <option {{ request()->query('status') == "Active" ? 'selected' : '' }} value="Active">Filter By Active</option>
-                    <option {{ request()->query('status') == "InActive" ? 'selected' : '' }} value="InActive">Filter By InActive</option>
-                </select>
-            </div>
-            <div class="form-group col-md-3">
-                <button class="btn btn-default filter-search"><i class="fa fa-search"></i> Search</button>
-                <a href="{{ route('admin.pages.index') }}" class="btn btn-default filter-search"><i class="fas fa-undo"></i> Reset</a>
-            </div>
-        </div>
-    </form>
+    <!-- --->
 </div>
 
 <div class="card">
@@ -34,24 +19,15 @@
         <table class="table table-bordered" id="data-table">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Title</th>
-                    <th>Created Date</th>
-                    <th>Updated Date</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Updated On</th>
+                    <th style="width: 5%;">Action</th>
                 </tr>
             </thead>
             <tbody>
             </tbody>
-            <tfoot>
-                <tr>
-                    <th>Title</th>
-                    <th>Created Date</th>
-                    <th>Updated Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </tfoot>
         </table>
     </div>
 </div>
@@ -62,32 +38,16 @@
 
 <script>
     $(document).ready(function() {
-        generateDataTable('{{ route("admin.pages.index") }}', [{
-                data: 'title',
-                name: 'title'
-            },
-            {
-                data: 'created_at',
-                name: 'created_at'
-            },
-            {
-                data: 'updated_at',
-                name: 'updated_at'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'action',
-                name: 'action',
-                orderable: false,
-                searchable: false
-            },
+        generateDataTable('{{ route("admin.pages.index") }}', [
+            {data: 'DT_RowIndex', name: 'id', orderable: false, searchable: false},
+            {data: 'title',name: 'title'},
+            {data: 'status',name: 'status'},
+            {data: 'updated_at',name: 'updated_at'},
+            {data: 'action',name: 'action',orderable: false,searchable: false},
         ], {
             'status': $("#filter_status").val()
         },[
-            0,1,2,3,5
+            0,1,2,3
         ]);
 
     });

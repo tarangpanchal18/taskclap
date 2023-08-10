@@ -27,14 +27,10 @@ class PageRequest extends FormRequest
             'title' => 'required|min:3|max:100',
             'description' => 'required|min:5|max:500',
             'seo_keywords' => 'required|min:5|max:500',
-            'seo_description' => 'required|min:5|max:5000',
-            'page_image' => 'required|mimes:jpg,jpeg,png,gif|max:5120',
+            'seo_description' => 'required|min:5',
+            'page_image' => 'nullable|mimes:jpg,jpeg,png,gif|max:5120',
             'status' => 'required',
         ];
-
-        if ($this->method() == 'POST') {
-            $rules['image'] = 'required|mimes:jpg,jpeg,png,gif|max:5120';
-        }
 
         return $rules;
     }

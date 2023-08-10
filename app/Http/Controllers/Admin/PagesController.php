@@ -33,10 +33,12 @@ class PagesController extends Controller
                     return '<span class="badge badge-' . ($row->status == "Active" ? "success" : "danger") . '">' . $row->status . '</span>' .
                         PHP_EOL;
                 })
+                ->editColumn('updated_at', function ($row) {
+                    return formatDate($row->updated_at) . PHP_EOL;
+                })
                 ->addColumn('action', function ($row) {
                     return '<div style="width: 150px">' .
                         '<a href="' . route('admin.pages.edit', $row->id) . '" class="edit btn btn-default btn-sm"><i class="fa fa-edit"></i> Edit</a>' .
-                        '<button onclick="removeData(' . $row->id . ')" class="edit btn btn-default btn-sm"><i class="fa fa-trash"></i> Remove</button>' .
                         '<div>' .
                         PHP_EOL;
                 })
@@ -62,7 +64,7 @@ class PagesController extends Controller
     {
         $validated = $request->validated();
         if ($request->file('page_image')) {
-            $this->fileService->removeFile(Page::UPLOAD_PATH, $page->image);
+            $this->fileService->removeFile(Page::UPLOAD_PATH, $page->page_image);
             $validated['page_image'] = $this->fileService->generateFileName('page', $request->file('page_image')->getClientOriginalExtension());
             $this->fileService->uploadFile(
                 $request->file('page_image'),
@@ -70,6 +72,7 @@ class PagesController extends Controller
                 $validated['page_image']
             );
         }
+        $validated['slug'] = \Str::slug($validated['title']);
         $this->pagesRepository->update($page->id, $validated);
 
         return redirect(route('admin.pages.index'))->with('success', 'Data Updated Successfully !');

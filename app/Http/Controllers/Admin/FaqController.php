@@ -30,6 +30,9 @@ class FaqController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->editColumn('updated_at', function ($row) {
+                    return formatDate($row->updated_at) . PHP_EOL;
+                })
                 ->editColumn('status', function ($row) {
                     return '<span class="badge badge-' . ($row->status == "Active" ? "success" : "danger") . '">' . $row->status . '</span>' .
                         PHP_EOL;
@@ -86,6 +89,6 @@ class FaqController extends Controller
     public function destroy(Faq $faq)
     {
         $this->faqRepository->delete($faq->id);
-        return redirect(route('admin.faq.index'))->with('success', 'Data Deleted Successfully !');
+        echo json_encode(['success' => true]);
     }
 }
