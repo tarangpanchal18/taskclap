@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\LogUserEvent;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneralFunctions;
+use App\Models\UserAuthenticationLog;
+use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +18,13 @@ use Illuminate\Support\Facades\Session;
 class AuthenticatedSessionController extends Controller
 {
     use GeneralFunctions;
+
+    public const MAX_LOGIN_ATTEMPT = 10;
+
+    /**
+     * In Minutes
+     */
+    public const LOGIN_ATTEMPT_TIME = 30;
 
     public function create(): View
     {
@@ -47,6 +57,26 @@ class AuthenticatedSessionController extends Controller
             return json_encode($response);
         }
 
+        $date = new DateTime();
+        $date->modify('-'. self::LOGIN_ATTEMPT_TIME .' minutes');
+        $formatted_date = $date->format('Y-m-d H:i:s');
+        $getAttempts = UserAuthenticationLog::where([
+            'ip_address' => get_client_ip(),
+            'username' => $number,
+            'login_successful' => 'No',
+        ]);
+        $getAttempts->where('created_at','>=',$formatted_date)->get();
+        if ($getAttempts->count() > self::MAX_LOGIN_ATTEMPT) {
+            $response['success'] = false;
+            $response['msg'] = "You've Reached Maximum Login Attempt of ". self::MAX_LOGIN_ATTEMPT ." attempts.<br>Please try again after ". self::LOGIN_ATTEMPT_TIME ." minutes.";
+            return json_encode($response);
+        }
+
+        LogUserEvent::dispatch([
+            'user' => $phone,
+            'isLoggedIn' => false,
+        ]);
+
         return json_encode($response);
     }
 
@@ -73,9 +103,14 @@ class AuthenticatedSessionController extends Controller
                 'state_id' => 1,
                 'city_id' => 1,
                 'area_id' => 1,
-                'address' => 'Dev Aurum Commercial Complex Prahlad Nagar, Ahmedabad, Gujarat 380015',
+                'address' => '',
             ]);
         }
+
+        LogUserEvent::dispatch([
+            'user' => $phone,
+            'isLoggedIn' => true,
+        ]);
 
         Auth::login($user);
 
