@@ -66,7 +66,9 @@ class ServiceController extends Controller
 
     public function store(ServiceRequest $request, Product $product)
     {
-        $this->serviceRepository->create($request->validated());
+        $validated = $request->validated();
+        $validated['service_category_id'] = $product->service_category_id;
+        $this->serviceRepository->create($validated);
         return redirect(route('admin.products.services.index', $product))->with('success', 'Data Created Successfully !');
     }
 
@@ -82,7 +84,9 @@ class ServiceController extends Controller
 
     public function update(ServiceRequest $request, Product $product, Product $service)
     {
-        $this->serviceRepository->update($service->id, $request->validated());
+        $validated = $request->validated();
+        $validated['service_category_id'] = $product->service_category_id;
+        $this->serviceRepository->update($service->id, $validated);
         return redirect(route('admin.products.services.index', [$product, $service]))->with('success', 'Data Updated Successfully !');
     }
 

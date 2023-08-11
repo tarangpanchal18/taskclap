@@ -81,18 +81,13 @@ function VerfySmsForAuth() {
     var code = code1 + code2 + code3 + code4 + code5 + code6;
 
     coderesult.confirm(code).then(function (result) {
-        var user = result.user;
-        if (user) {
+        if (result.user) {
             $.ajax({
                 type : "POST",
                 dataType: "json",
                 url : "/login",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data : {
-                    'phone' : $("#phone").val()
-                },
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data : {'phone' : $("#phone").val()},
                 success : function(response) {
                     if (response && response.success) {
                         window.location.href = response.loginLink;
@@ -105,7 +100,12 @@ function VerfySmsForAuth() {
             });
         }
     }).catch(function (error) {
-        $("#dialogue-box").html("<div class='alert alert-danger'>Please Enter OTP.</div>");
+        if (error.code == "auth/invalid-verification-code") {
+            $("#dialogue-box").html("<div class='alert alert-danger'>Entered OTP is Invalid. Please try again by entering valid OTP.</div>");
+        } else {
+            $("#dialogue-box").html("<div class='alert alert-danger'>Please Enter Valid OTP.</div>");
+        }
+
         $("#dialogue-box").show();
     });
 }
@@ -120,12 +120,12 @@ function setLoginOtpTimeExpiry() {
         --seconds;
         minutes = (seconds < 0) ? --minutes : minutes;
         if (minutes < 0) clearInterval(interval);
-        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 0) ? 5 : seconds;
         seconds = (seconds < 10) ? '0' + seconds : seconds;
         $('span.expiry-time-block').html(minutes + ':' + seconds);
         if (minutes == "0" && seconds == "00") {
             $(".login-time-expiry").hide();
-            $(".no-otp-recieved").html('<a onclick="resendSmsForVerify()">Resend OTP</a>');
+            $(".no-otp-recieved").html('<a class="btn btn-sm btn-default" onclick="resendSmsForVerify()">Resend OTP</a>');
             clearInterval(otpResent);
         }
         timer2 = minutes + ':' + seconds;

@@ -213,7 +213,7 @@ class CartController extends Controller
                         'product_strike_price' => $cart['strike_price'],
                         'product_price' => $cart['price'],
                         'product_commission' => $cart['commission'],
-                        'warranty' => $cart['warranty'],
+                        'warranty' => ($cart['warranty']) ? $cart['warranty'] : 0,
                         'product_approx_duration' => $cart['approx_duration'],
                         'order_status' => "Pending",
                         'order_note' => '',
@@ -230,7 +230,7 @@ class CartController extends Controller
                 'product_count' => $productCount,
                 'subtotal' => $total,
                 'discount' => $discountPromo,
-                'total' => $total,
+                'total' => ($total - $discountPromo),
             ]);
 
             $past = time() - 3600;
@@ -247,7 +247,7 @@ class CartController extends Controller
         } catch (\Throwable $th) {
             return redirect(route('orderFailed', [
                 'error' => 'Something went wrong',
-                'message' => $th->getMessage()
+                'message' => encryptData($th->getMessage())
             ]));
         }
     }

@@ -50,7 +50,7 @@
                                                             </div>
                                                             <div class="booking-det-info">
                                                                 <h3 style="white-space: inherit;">
-                                                                    <a>{{ $order->subCategory->name }} {{ $order->product_title }} {{$order->id}}</a>{{ generate_badge($booking->order_status) }}
+                                                                    <a>{{ $order->subCategory->name }} {{ $order->product_title }}</a>{{ generate_badge($booking->order_status) }}
                                                                 </h3>
                                                                 <ul class="booking-details">
                                                                     <li>
