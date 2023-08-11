@@ -9,6 +9,7 @@ function renderLoginScreen() {
 function sendSmsForVerify() {
     var number = $("#phone").val();
     number = "+91" + number;
+    $("#signin-btn").attr("disabled", true).html("Logging you in");
 
     $.ajax({
         type : "POST",
@@ -36,6 +37,7 @@ function sendSmsForVerify() {
                     $("#dialogue-box").show();
                 });
             } else {
+                $("#signin-btn").attr("disabled", false).html("Login");
                 $(".login-screen-otp").hide();
                 $("#dialogue-box").html("<div class='alert alert-danger'>" + response.msg + "</div>");
                 $("#dialogue-box").show();

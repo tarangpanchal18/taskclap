@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <button type="button" onclick="sendSmsForVerify();" class="btn btn-primary w-100 login-btn">Login</button>
+                            <button id="signin-btn" type="button" onclick="sendSmsForVerify();" class="btn btn-primary w-100 login-btn">Login</button>
                         </div>
 
                         <!-- OTP Screen -->
