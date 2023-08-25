@@ -5,6 +5,7 @@ namespace App\Models;
 use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Traits\HasWallet;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -14,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Wallet
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasWallet;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasWallet, Billable;
 
     /**
      * The attributes that are mass assignable.
