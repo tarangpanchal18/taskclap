@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryApiController;
 
@@ -13,6 +14,11 @@ use App\Http\Controllers\Api\CategoryApiController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', [AuthController::class, 'signin']);
+Route::post('register', [AuthController::class, 'signup']);
+Route::middleware('auth:sanctum')->group( function () {
+    Route::get('category', [CategoryApiController::class, 'index'])->name('api.category');
+});
 
 Route::get('category', [CategoryApiController::class, 'index'])->name('api.category');
 Route::get('subcategory', [CategoryApiController::class, 'subcategory'])->name('api.subcategory');
