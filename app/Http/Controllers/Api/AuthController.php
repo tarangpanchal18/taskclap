@@ -12,20 +12,26 @@ class AuthController extends BaseController
 {
     public function signin(Request $request)
     {
-        if(Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password
-        ])){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        if($validator->fails()){
+            return $this->sendError('All Fields are required', $validator->errors(), self::HTTP_BAD_REQUEST);
+        }
+
+        if( Auth::attempt(['email' => $request->email,'password' => $request->password])){
             $authUser = Auth::user();
-            $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
+            $success['token'] =  $authUser->createToken(config('app.name'))->plainTextToken;
             $success['name'] =  $authUser->name;
 
             return $this->sendResponse($success, 'User signed in');
         }
         else{
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return $this->sendError('Invalid Username/Password.', [], self::HTTP_FORBIDDEN);
         }
     }
+
     public function signup(Request $request)
     {
         $validator = Validator::make($request->all(), [

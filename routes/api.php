@@ -16,8 +16,8 @@ use App\Http\Controllers\Api\CategoryApiController;
 */
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
-Route::middleware('auth:sanctum')->group( function () {
-    Route::get('category', [CategoryApiController::class, 'index'])->name('api.category');
+Route::middleware(['customApiAuthenticate'])->group( function () {
+    Route::get('test', [CategoryApiController::class, 'index'])->name('api.test');
 });
 
 Route::get('category', [CategoryApiController::class, 'index'])->name('api.category');
