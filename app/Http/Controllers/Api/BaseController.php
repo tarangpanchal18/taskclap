@@ -22,6 +22,8 @@ class BaseController extends Controller
 
     const HTTP_NOT_FOUND = 404;
 
+    const HTTP_UNPROCESSABLE = 422;
+
     const HTTP_METHOD_NOT_ALLOW = 405;
 
     const HTTP_SERVER_ERROR = 500;
