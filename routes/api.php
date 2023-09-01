@@ -24,6 +24,3 @@ Route::prefix(config('app.api_version'))->name('api.v1.')->group( function () {
         Route::post('signout', [AuthController::class, 'signout'])->name('signout');
     });
 });
-
-Route::get('category', [CategoryApiController::class, 'index'])->name('api.category');
-Route::get('subcategory', [CategoryApiController::class, 'subcategory'])->name('api.subcategory');

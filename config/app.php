@@ -42,10 +42,10 @@ return [
     |--------------------------------------------------------------------------
     | Admin Path
     |--------------------------------------------------------------------------
-    |
-    | This value is the name of your application admin url. This value is used when the
-    | framework needs to place the application's admin URL.
-    |
+    |           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    |           !!!!-------------ALERT-------------!!!!
+    |           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    | IF YOU DO ANY CHANGE HERE DO CHANGES IN "custom_admin.js" first line too,
     */
     'admin_path_name' => env('ADMIN_PATH', 'webadmin'),
 
