@@ -16,9 +16,10 @@ use App\Http\Controllers\API\v1\HomeApiController;
 |
 */
 Route::prefix(config('app.api_version'))->name('api.v1.')->group( function () {
-    Route::post('login', [AuthController::class, 'signin'])->name('signin');
+    Route::post('signin', [AuthController::class, 'signin'])->name('signin');
     Route::post('signup', [AuthController::class, 'signup'])->name('signup');
     Route::middleware(['customApiAuthenticate'])->group( function () {
+        Route::post('signout', [AuthController::class, 'signout'])->name('signout');
         Route::get('getHomeData', [HomeApiController::class, 'getHomeData'])->name('getHomeData');
     });
 });

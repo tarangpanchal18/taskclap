@@ -12,7 +12,7 @@ class HomeApiController extends BaseController
         //
     }
 
-    public function getHomeData(Request $request)
+    public function getHomeData()
     {
         $fieldToGet =  ['id', 'name', 'description', 'image'];
         $categories = $this->categoryRepository->getRaw([
@@ -22,8 +22,9 @@ class HomeApiController extends BaseController
         $categories = $categories->reject(function ($category) {
             return $category->children->count() == 0;
         });
-        $reindexedArray = array_values($categories->toArray());
+        $returnArr['category'] = array_values($categories->toArray());
+        $returnArr['user'] = auth('sanctum')->user();
 
-        return $this->sendSuccessResponse('Data listed successfully!', $reindexedArray);
+        return $this->sendSuccessResponse('Data listed successfully!', $returnArr);
     }
 }
