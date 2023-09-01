@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API\v1;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\API\BaseController as BaseController;
-use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\API\BaseController;
 
 class AuthController extends BaseController
 {
@@ -17,7 +17,7 @@ class AuthController extends BaseController
             'password' => 'required',
         ]);
         if($validator->fails()){
-            return $this->sendError('All Fields are required', $validator->errors(), self::HTTP_BAD_REQUEST);
+            return $this->sendFailedResponse('All Fields are required', self::HTTP_BAD_REQUEST, $validator->errors() );
         }
 
         if( Auth::attempt(['email' => $request->email,'password' => $request->password])){
@@ -25,10 +25,10 @@ class AuthController extends BaseController
             $success['token'] =  $authUser->createToken(config('app.name'))->plainTextToken;
             $success['name'] =  $authUser->name;
 
-            return $this->sendResponse($success, 'User signed in');
+            return $this->sendSuccessResponse('User signed in', $success);
         }
         else{
-            return $this->sendError('Invalid Username/Password.', [], self::HTTP_FORBIDDEN);
+            return $this->sendFailedResponse('Invalid Username/Password.', self::HTTP_FORBIDDEN);
         }
     }
 
@@ -53,5 +53,4 @@ class AuthController extends BaseController
 
         return $this->sendResponse($success, 'User created successfully.');
     }
-
 }
