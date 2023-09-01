@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\API\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\CategoryApiController;
+use App\Http\Controllers\API\v1\AuthController AS AuthControllerV1;
+use App\Http\Controllers\Api\v1\CategoryApiController AS CategoryApiControllerV1;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +14,13 @@ use App\Http\Controllers\Api\CategoryApiController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', [AuthController::class, 'signin']);
-Route::post('register', [AuthController::class, 'signup']);
-Route::middleware(['customApiAuthenticate'])->group( function () {
-    Route::get('test', [CategoryApiController::class, 'index'])->name('api.test');
+Route::prefix(config('app.api_version'))->name('api.v1.')->group( function () {
+    Route::post('login', [AuthControllerV1::class, 'signin'])->name('signin');
+    Route::post('signup', [AuthControllerV1::class, 'signup'])->name('signup');
+    Route::middleware(['customApiAuthenticate'])->group( function () {
+        Route::get('test', [CategoryApiControllerV1::class, 'index'])->name('test');
+    });
 });
 
-Route::get('category', [CategoryApiController::class, 'index'])->name('api.category');
-Route::get('subcategory', [CategoryApiController::class, 'subcategory'])->name('api.subcategory');
+Route::get('category', [CategoryApiControllerV1::class, 'index'])->name('api.category');
+Route::get('subcategory', [CategoryApiControllerV1::class, 'subcategory'])->name('api.subcategory');
