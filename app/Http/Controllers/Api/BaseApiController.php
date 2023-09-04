@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
+use App\Repositories\Admin\FaqRepository;
 use Illuminate\Http\JsonResponse;
 
-class BaseController extends Controller
+class BaseApiController extends Controller
 {
+
+    const DEFAULT_PAGINATION = 15;
 
     const HTTP_OK = 200;
 
@@ -27,6 +30,10 @@ class BaseController extends Controller
     const HTTP_METHOD_NOT_ALLOW = 405;
 
     const HTTP_SERVER_ERROR = 500;
+
+    public function __construct(private FaqRepository $faqRepository) {
+        //
+    }
 
     public function sendSuccessResponse($message, $data = []): JsonResponse
     {
@@ -49,5 +56,17 @@ class BaseController extends Controller
         }
 
         return response()->json($response, $code);
+    }
+
+    public function getFaq()
+    {
+        $faqData = $this->faqRepository->getRaw([
+            'status' => 'Active'
+        ])
+        ->select('question', 'answer')
+        ->orderBy('id', 'DESC')
+        ->paginate(self::DEFAULT_PAGINATION);
+
+        return $this->sendSuccessResponse('Faq data fetched successfully!', $faqData);
     }
 }

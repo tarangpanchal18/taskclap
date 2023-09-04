@@ -6,9 +6,9 @@ use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\API\BaseController;
+use App\Http\Controllers\API\BaseApiController;
 
-class AuthController extends BaseController
+class AuthController extends BaseApiController
 {
     public function signin(Request $request)
     {

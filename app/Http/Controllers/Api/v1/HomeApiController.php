@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API\v1;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\BaseController;
+use App\Http\Controllers\API\BaseApiController;
 use App\Models\Category;
 use App\Repositories\Admin\CategoryRepository;
 
-class HomeApiController extends BaseController
+class HomeApiController extends BaseApiController
 {
     public function __construct(private CategoryRepository $categoryRepository) {
         //

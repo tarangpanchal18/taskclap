@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\API\BaseController;
+use App\Http\Controllers\API\BaseApiController;
 use App\Repositories\Admin\CategoryRepository;
 
-class CategoryApiController extends BaseController
+class CategoryApiController extends BaseApiController
 {
     public function __construct(private CategoryRepository $categoryRepository) {
         //
