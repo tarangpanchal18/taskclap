@@ -16,6 +16,7 @@
         "laravel/passport": "10.4.2",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
+        "stripe/stripe-php": "^10.21",
         "yajra/laravel-datatables": "9.0"
     },
     "require-dev": {

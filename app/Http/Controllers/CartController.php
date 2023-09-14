@@ -25,7 +25,8 @@ class CartController extends Controller
         private ProductRepository $productRepository,
         private RatingRepository $ratingRepository,
         private OrderRepository $orderRepository,
-        private PromocodeRepository $promocodeRepository
+        private PromocodeRepository $promocodeRepository,
+        private BookingController $bookingController
     ) {
         //
     }
@@ -149,6 +150,10 @@ class CartController extends Controller
 
         if (empty($request->payment_method) || empty($request->category) || empty($request->subCategory) || empty($request->cartArray)) {
             return redirect(route('orderFailed', ['msg' => 'invalid order placed']));
+        }
+
+        if ($request->payment_method == "card") {
+            $this->bookingController->charge($request);
         }
 
         $total = $productCount = 0;
