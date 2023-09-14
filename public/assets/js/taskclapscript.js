@@ -448,7 +448,13 @@ $(document).ready(function () {
     $("#tc-cash-payment").click(function() {
         $("#payment_method").val("cash");
         $(this).removeClass("btn-secondary").addClass("btn-success").html("Selected");
-        $('.paymentBtn').not('#tc-cash-payment').hide();
+        $('.paymentBtn').not(this).hide();
+        $(".payment-error").hide();
+    });
+    $("#tc-card-payment").click(function() {
+        $("#payment_method").val("card");
+        $(this).removeClass("btn-secondary").addClass("btn-success").html("Selected");
+        $('.paymentBtn').not(this).hide();
         $(".payment-error").hide();
     });
 
@@ -459,22 +465,23 @@ $(document).ready(function () {
     $("#submit-payment").click(function() {
         var payment_method = $("#payment_method").val();
         $(".payment-error").hide();
-        if (payment_method == "cash") {
-            Swal.fire({
-                icon: 'info',
-                title: 'Confirm to Place Order ?',
-                showDenyButton: false,
-                showCancelButton: true,
-                confirmButtonText: 'Confirm',
-                denyButtonText: 'Cancel',
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  confirmOrder();
-                }
-              })
-        } else {
+        if (payment_method == "") {
             $(".payment-error").show();
+            return;
         }
+
+        Swal.fire({
+            icon: 'info',
+            title: 'Confirm to place an Order ?',
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: 'Confirm',
+            denyButtonText: 'Cancel',
+            }).then((result) => {
+            if (result.isConfirmed) {
+                confirmOrder();
+            }
+        });
     });
 
     $(".tc-rating").click(function() {

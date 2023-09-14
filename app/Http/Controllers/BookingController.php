@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\GeneralFunctions;
+use App\Http\Traits\StripeFunctions;
 use App\Repositories\Admin\OrderRepository;
 use Illuminate\Http\RedirectResponse;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 
 class BookingController extends Controller
 {
-    use GeneralFunctions;
+    use GeneralFunctions, StripeFunctions;
 
-    public function __construct(
-        private OrderRepository $orderRepository,
-    ) {
+    public function __construct(private OrderRepository $orderRepository,)
+    {
         //
     }
 
@@ -47,6 +48,24 @@ class BookingController extends Controller
         return view('my_bookings', [
             'pageData' => $orderData,
         ]);
+    }
+
+    public function charge(Request $request) {
+        // header('Content-Type: application/json');
+        // return redirect(route('orderFailed', ['msg' => 'cart items are empty']));
+        $cartItems = json_decode(base64_decode($request->cartArray), true);
+        $cartDetail = array_filter(getCartItems());
+
+        // $priceData = $this->generatePriceId(500, "Product One " . time(), [
+        //     'aaaaa' => '11111',
+        //     'bbbbb' => '22222',
+        // ], 'inr');
+
+        $checkout_session = $this->generateCheckoutSession($cartItems, $cartDetail);
+
+        // header("HTTP/1.1 303 See Other");
+        // header("Location: " . $checkout_session->url);
+        exit;
     }
 
     public function detail($orderId): View
