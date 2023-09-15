@@ -23,6 +23,8 @@
 							<a href="{{ url()->previous() }}"><i class="text-dark feather-arrow-left"></i>&nbsp;&nbsp;<span class="ms-3 text-dark h4">Summary</span></a>
 						</div>
 
+                        @include('layouts.alert-msg')
+
                         @if($cartArray->count())
 						<div class="booking-service">
 							<div class="row align-items-center">
