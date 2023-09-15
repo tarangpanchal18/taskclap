@@ -52,19 +52,20 @@ class BookingController extends Controller
 
     public function charge(Request $request) {
         // header('Content-Type: application/json');
-        // return redirect(route('orderFailed', ['msg' => 'cart items are empty']));
         $cartItems = json_decode(base64_decode($request->cartArray), true);
         $cartDetail = array_filter(getCartItems());
 
-        // $priceData = $this->generatePriceId(500, "Product One " . time(), [
-        //     'aaaaa' => '11111',
-        //     'bbbbb' => '22222',
-        // ], 'inr');
+        for ($i=0; $i< count($cartItems); $i++) {
+            $cartItems[$i]['qty'] = $cartDetail[$cartItems[$i]['id']];
+        }
 
-        $checkout_session = $this->generateCheckoutSession($cartItems, $cartDetail);
+        $checkout_session = $this->generateCheckoutSession($cartItems);
+        if (empty($checkout_session)) {
+            header("Location: " . route('orderFailed', $checkout_session));
+        }
 
-        // header("HTTP/1.1 303 See Other");
-        // header("Location: " . $checkout_session->url);
+        header("HTTP/1.1 303 See Other");
+        header("Location: " . $checkout_session->url);
         exit;
     }
 
