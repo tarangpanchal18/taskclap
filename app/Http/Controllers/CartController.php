@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\GeneralFunctions;
-use App\Models\Order;
+use App\Http\Traits\StripeFunctions;
 use App\Models\OrderDetail;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\OrderRepository;
+use App\Repositories\Admin\PaymentTransactionRepository;
 use App\Repositories\Admin\ProductRepository;
 use App\Repositories\Admin\PromocodeRepository;
 use App\Repositories\Admin\RatingRepository;
@@ -18,7 +18,7 @@ use Illuminate\View\View;
 
 class CartController extends Controller
 {
-    use GeneralFunctions;
+    use GeneralFunctions, StripeFunctions;
 
     public function __construct(
         private CategoryRepository $categoryRepository,
@@ -26,7 +26,8 @@ class CartController extends Controller
         private RatingRepository $ratingRepository,
         private OrderRepository $orderRepository,
         private PromocodeRepository $promocodeRepository,
-        private BookingController $bookingController
+        private BookingController $bookingController,
+        private PaymentTransactionRepository $paymentTransactionRepository
     ) {
         //
     }
@@ -55,7 +56,7 @@ class CartController extends Controller
     {
         $productId = $request->post('productId');
         $product = $this->productRepository->getById($productId);
-        $services = Product::where([
+        $services = $this->productRepository->getRaw([
             'parent_id' => $productId,
             'status' => 'Active',
         ])->get();
@@ -152,10 +153,6 @@ class CartController extends Controller
             return redirect(route('orderFailed', ['msg' => 'invalid order placed']));
         }
 
-        if ($request->payment_method == "card") {
-            $this->bookingController->charge($request);
-        }
-
         $total = $productCount = 0;
         $orderNumber = $this->generateOrderNumber();
         $categoryId = $request->category;
@@ -164,7 +161,9 @@ class CartController extends Controller
         $cartItems = json_decode(base64_decode($request->cartArray), true);
         $cartDetail = array_filter(getCartItems());
         if (empty($cartDetail)) {
-            return redirect(route('orderFailed', ['msg' => 'cart items are empty']));
+            return redirect(route('orderFailed', [
+                'msg' => 'Cart items are empty'
+            ]));
         }
 
         $orderData = [
@@ -194,16 +193,14 @@ class CartController extends Controller
             'subtotal' => $total,
             'total' => $total,
             'is_warranty_order' => 'No',
-            'payment_type' => 'Cash',
+            'payment_type' => ucfirst(strtolower($request->payment_method)),
             'payment_status' => 'Pending',
             'order_status' => 'Pending',
         ];
 
         try {
-            $orderId = Order::create($orderData);
-
+            $orderId = $this->orderRepository->create($orderData);
             foreach ($cartItems as $cart) {
-
                 $quantity = (int)$cartDetail[$cart['id']];
                 for ($i = 0; $i < $quantity; $i++) {
                     $cartDetailData = [
@@ -226,29 +223,31 @@ class CartController extends Controller
 
                     $productCount++;
                     $total = $total + $cart['price'];
-                    OrderDetail::create($cartDetailData);
+                    $this->orderRepository->createOrderDetail($cartDetailData);
                 }
             }
 
             $discountPromo = $this->getDiscountValueFromPromo($promocode, $total);
-            Order::where(['id' => $orderId->id, 'order_id' => $orderNumber])->update([
+            $this->orderRepository->update($orderId->id, [
                 'product_count' => $productCount,
                 'subtotal' => $total,
                 'discount' => $discountPromo,
                 'total' => ($total - $discountPromo),
             ]);
 
-            $past = time() - 3600;
-            foreach ($_COOKIE as $key => $value) {
-                if ($key == "cartTotal" || $key == "cartDetail") {
-                    setcookie($key, $value, $past, '/');
-                }
+            if ($request->payment_method == "card") {
+                $this->bookingController->charge($request, $orderId);
+                exit;
+            } else {
+                $this->clearCartCookies();
+                $this->orderRepository->update($orderId->id, [
+                    'order_status' => 'Placed'
+                ]);
+
+                return redirect(route('orderPlaced', [
+                    'success' => 'Order Placed',
+                ]));
             }
-
-            return redirect(route('orderPlaced', [
-                'success' => 'Order Placed',
-            ]));
-
         } catch (\Throwable $th) {
             return redirect(route('orderFailed', [
                 'error' => 'Something went wrong',
@@ -257,8 +256,31 @@ class CartController extends Controller
         }
     }
 
-    public function orderPlaced(): View
+    public function orderPlaced(Request $request): View
     {
+        $session_id = $request->session_id;
+
+        if ($session_id) {
+            $getTransaction = $this->paymentTransactionRepository->getRaw()->where([
+                'stripe_checkout_session_id' => $session_id,
+                'payment_status' => 'Pending',
+                'user_id' => auth()->user()->id,
+            ])
+            ->whereDate('created_at', '=', date('Y-m-d'))
+            ->first();
+
+            if ($getTransaction) {
+                $this->paymentTransactionRepository->update($getTransaction->id, [
+                    'payment_status' => 'Completed'
+                ]);
+                $this->orderRepository->update($getTransaction->order_id, [
+                    'payment_json' => json_encode($getTransaction),
+                    'payment_status' => 'Completed',
+                ]);
+            }
+        }
+        $this->clearCartCookies();
+
         return view('order_placed');
     }
 

@@ -32,6 +32,11 @@ class OrderRepository
         return Order::create($data);
     }
 
+    public function createOrderDetail(array $data)
+    {
+        return OrderDetail::create($data);
+    }
+
     public function update($id, array $newDetails)
     {
         return Order::whereId($id)->update($newDetails);

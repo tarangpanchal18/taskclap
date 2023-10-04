@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Traits;
 
+use App\Models\Order;
+
 trait StripeFunctions {
 
     /**
@@ -24,9 +26,9 @@ trait StripeFunctions {
                 'product_data' => [
                     'name' => $productName,
                     'metadata' => $productMetaData,
-                    'images' => [
-                        $productImage,
-                    ],
+                    // 'images' => [
+                    //     $productImage,
+                    // ],
                 ]
             ]);
 
@@ -36,7 +38,7 @@ trait StripeFunctions {
         }
     }
 
-    public function generateCheckoutSession($cartItems): array|object
+    public function generateCheckoutSession(array $cartItems, Order $order): array|object
     {
         $checkoutSession = $checkoutArr = [];
         $stripeSecret = config('app.stripe_secret');
@@ -65,6 +67,12 @@ trait StripeFunctions {
                 'approx_duration' => $items['approx_duration'],
             ], 'inr');
 
+            if (empty($priceStripeId)) {
+                $checkoutSession['success'] = false;
+                $checkoutSession['errorMsg'] = "Error in creating price id";
+                return $checkoutSession;
+            }
+
             $checkoutArr[] = [
                 'price' => $priceStripeId->id,
                 'quantity' => $items['qty'],
@@ -73,20 +81,57 @@ trait StripeFunctions {
 
         try {
             \Stripe\Stripe::setApiKey($stripeSecret);
-            $checkoutSession = \Stripe\Checkout\Session::create([
+            $checkoutSessionUrl = \Stripe\Checkout\Session::create([
                 'customer_email' => (auth()->user()->email) ? auth()->user()->email : '',
                 'line_items' => [
                     $checkoutArr
                 ],
                 'mode' => 'payment',
-                'success_url' => route('orderPlaced'),
+                'success_url' => route('orderPlaced') . '?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => $prevURL,
             ]);
+
+            $this->recordTransaction($checkoutSessionUrl, $order->id);
+
+            $checkoutSession['success'] = true;
+            $checkoutSession['data'] = $checkoutSessionUrl;
             return $checkoutSession;
         } catch (\Throwable $th) {
             $checkoutSession['success'] = false;
             $checkoutSession['errorMsg'] = $th->getMessage();
             return $checkoutSession;
         }
+    }
+
+    public function clearCartCookies() : void
+    {
+        $past = time() - 3600;
+        foreach ($_COOKIE as $key => $value) {
+            if ($key == "cartTotal" || $key == "cartDetail") {
+                setcookie($key, $value, $past, '/');
+            }
+        }
+    }
+
+    public function recordTransaction($checkoutSession, $orderId, $paymentStatus = 'Pending') : bool
+    {
+        $paymentTransactionRepository = new \App\Repositories\Admin\PaymentTransactionRepository;
+        $transactionData = [
+            'user_id' => auth()->user()->id,
+            'order_id' => $orderId,
+            'product_price' => ($checkoutSession->amount_total / 100),
+            'currency' => $checkoutSession->currency,
+            'txn_id' => '',
+            'stripe_checkout_session_id' => $checkoutSession->id,
+            'payment_status' => $paymentStatus,
+            'other_data' => json_encode($checkoutSession),
+        ];
+        $createRecord = $paymentTransactionRepository->create($transactionData);
+
+        if ($createRecord) {
+            return true;
+        }
+
+        return false;
     }
 }

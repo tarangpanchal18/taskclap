@@ -44,7 +44,7 @@ return new class extends Migration
             $table->float('total')->comment('including taxes, discount, etc.');
             $table->float('cancellation_charge')->nullable();
             $table->enum('is_warranty_order', ['Yes', 'No'])->default('No');
-            $table->enum('payment_type', ['Cash', 'NetBanking', 'Upi'])->nullable();
+            $table->enum('payment_type', ['Cash', 'Card', 'NetBanking', 'Upi'])->nullable();
             $table->json('payment_json')->nullable();
             $table->enum('payment_status', ['Started', 'Pending', 'Completed', 'Failed']);
             $table->enum('order_status', ['Placed', 'Completed', 'Pending', 'Cancelled', 'Failed', 'Rejected']);
