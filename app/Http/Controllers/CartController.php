@@ -227,16 +227,16 @@ class CartController extends Controller
                 }
             }
 
-            $discountPromo = $this->getDiscountValueFromPromo($promocode, $total);
+            $couponDiscount = $this->getDiscountValueFromPromo($promocode, $total);
             $this->orderRepository->update($orderId->id, [
                 'product_count' => $productCount,
                 'subtotal' => $total,
-                'discount' => $discountPromo,
-                'total' => ($total - $discountPromo),
+                'discount' => $couponDiscount,
+                'total' => ($total - $couponDiscount),
             ]);
 
             if ($request->payment_method == "card") {
-                $this->bookingController->charge($request, $orderId);
+                $this->bookingController->charge($request, $orderId, $couponDiscount);
                 exit;
             } else {
                 $this->clearCartCookies();

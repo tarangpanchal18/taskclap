@@ -38,26 +38,27 @@ trait StripeFunctions {
         }
     }
 
-    public function generateCheckoutSession(array $cartItems, Order $order): array|object
+    public function generateCheckoutSession(array $cartItems, Order $order, $couponDiscount = 0): array|object
     {
         $checkoutSession = $checkoutArr = [];
         $stripeSecret = config('app.stripe_secret');
         if (empty($stripeSecret)) {
             return $stripeSecret;
         }
-
+        $successURL = route('orderPlaced') . '?session_id={CHECKOUT_SESSION_ID}';
         $prevURL = route('checkout', [
             'category' => $cartItems[0]['category']['slug'],
             'subcategory' => $cartItems[0]['sub_category']['slug']
         ]);
 
+        $couponDiscount = number_format(($couponDiscount / count($cartItems)), 2);
         foreach ($cartItems as $items) {
             $productName = $items['title'];
             if (! empty($items['sub_category']['name'])) {
                 $productName = $items['sub_category']['name'] . " > " . $items['title'];
             }
 
-            $totalPrice = ($items['price'] * 100);
+            $totalPrice = (($items['price'] - $couponDiscount) * 100);
             $priceStripeId = $this->generatePriceId($totalPrice, $productName, [
                 'category_id' => $items['category_id'],
                 'sub_category_id' => $items['sub_category_id'],
@@ -82,13 +83,22 @@ trait StripeFunctions {
         try {
             \Stripe\Stripe::setApiKey($stripeSecret);
             $checkoutSessionUrl = \Stripe\Checkout\Session::create([
+                'submit_type' => 'book',
                 'customer_email' => (auth()->user()->email) ? auth()->user()->email : '',
                 'line_items' => [
                     $checkoutArr
                 ],
                 'mode' => 'payment',
-                'success_url' => route('orderPlaced') . '?session_id={CHECKOUT_SESSION_ID}',
+                'success_url' => $successURL,
                 'cancel_url' => $prevURL,
+                'consent_collection' => [
+                    'terms_of_service' => 'required',
+                ],
+                'custom_text' => [
+                    'terms_of_service_acceptance' => [
+                        'message' => 'I agree to the [Terms of Service](https://example.com/terms)',
+                    ],
+                ],
             ]);
 
             $this->recordTransaction($checkoutSessionUrl, $order->id);
