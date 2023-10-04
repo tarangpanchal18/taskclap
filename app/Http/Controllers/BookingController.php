@@ -51,7 +51,7 @@ class BookingController extends Controller
         ]);
     }
 
-    public function charge(Request $request, Order $order) {
+    public function charge(Request $request, Order $order, $couponDiscount = 0) {
         header('Content-Type: application/json');
         $cartItems = json_decode(base64_decode($request->cartArray), true);
         $cartDetail = array_filter(getCartItems());
@@ -60,7 +60,7 @@ class BookingController extends Controller
             $cartItems[$i]['qty'] = $cartDetail[$cartItems[$i]['id']];
         }
 
-        $checkout_session = $this->generateCheckoutSession($cartItems, $order);
+        $checkout_session = $this->generateCheckoutSession($cartItems, $order, $couponDiscount);
         if ($checkout_session['success'] != true) {
             header("Location: " . route('orderFailed', [
                 'error' => base64_encode($checkout_session['errorMsg'])
