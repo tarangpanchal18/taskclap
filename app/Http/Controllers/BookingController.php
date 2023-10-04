@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\GeneralFunctions;
 use App\Http\Traits\StripeFunctions;
+use App\Models\Order;
 use App\Repositories\Admin\OrderRepository;
 use Illuminate\Http\RedirectResponse;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -50,8 +51,8 @@ class BookingController extends Controller
         ]);
     }
 
-    public function charge(Request $request) {
-        // header('Content-Type: application/json');
+    public function charge(Request $request, Order $order) {
+        header('Content-Type: application/json');
         $cartItems = json_decode(base64_decode($request->cartArray), true);
         $cartDetail = array_filter(getCartItems());
 
@@ -59,13 +60,16 @@ class BookingController extends Controller
             $cartItems[$i]['qty'] = $cartDetail[$cartItems[$i]['id']];
         }
 
-        $checkout_session = $this->generateCheckoutSession($cartItems);
-        if (empty($checkout_session)) {
-            header("Location: " . route('orderFailed', $checkout_session));
+        $checkout_session = $this->generateCheckoutSession($cartItems, $order);
+        if ($checkout_session['success'] != true) {
+            header("Location: " . route('orderFailed', [
+                'error' => base64_encode($checkout_session['errorMsg'])
+            ]));
+            exit;
         }
 
         header("HTTP/1.1 303 See Other");
-        header("Location: " . $checkout_session->url);
+        header("Location: " . $checkout_session['data']->url);
         exit;
     }
 
