@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use Validator;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -16,10 +17,15 @@ class CategoryApiController extends BaseApiController
 
 
 
-    public function getSubCategory($category)
+    public function getSubCategory(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), ['category' => 'required',]);
+        if ($validator->fails()){
+            return $this->sendFailedResponse('All Fields are required', self::HTTP_UNPROCESSABLE, $validator->errors() );
+        }
+
+        $category = $this->categoryRepository->getById($request->category);
         $urlPrefix = asset('storage' . DIRECTORY_SEPARATOR  . Category::UPLOAD_PATH . DIRECTORY_SEPARATOR );
-        $category = $this->categoryRepository->getById($category, true);
         if (empty($category) || empty($category)) {
             return $this->sendFailedResponse('Invalid category selected', self::HTTP_UNPROCESSABLE);
         }
