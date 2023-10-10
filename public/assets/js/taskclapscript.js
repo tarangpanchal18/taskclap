@@ -525,11 +525,11 @@ $(document).ready(function () {
                 success : function(response) {
                     if (response.success) {
                         var table = $(".billing-summary");
-                        var billingTotal = (parseFloat($(".billing-total").html().trim()) - parseFloat(response.discount));
-                        var billingDiscount = (parseFloat($(".billing-discount").html().trim()) + parseFloat(response.discount));
+                        var billingTotal = (parseFloat($(".billing-total").html().trim().replace(/,/g, "")) - parseFloat(response.discount));
+                        var billingDiscount = (parseFloat($(".billing-discount").html().trim().replace(/,/g, "")) + parseFloat(response.discount));
                         table.append('<tr style="background: #1b8b1b17;"><th><p class="text-dark">Promocode Discount</p></th><td><p style="float: right" class="text-dark">₹ '+ response.discount +'</p></td></tr>');
-                        $(".billing-total").html(billingTotal);
-                        $(".billing-discount").html(billingDiscount);
+                        $(".billing-total").html(billingTotal.toFixed(2));
+                        $(".billing-discount").html(billingDiscount.toFixed(2));
                         $(".promocode-input").prop('disabled', true);
                         $(".promocode-btn").html('Applied').attr('disabled', true);
                         $(".submit-tc-promocode").val(response.promo);
