@@ -81,4 +81,13 @@ trait GeneralFunctions {
 
         return $orderID;
     }
+
+    /**
+     * Round the number to the nearest half
+     * @param int $string
+     * @return string
+     */
+    function roundToHalf($number) {
+        return round($number * 2) / 2;
+    }
 }

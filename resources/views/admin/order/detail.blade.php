@@ -73,7 +73,7 @@
                             <label>Payment Type</label>
                             <select class="form-control select2" name="payment_type">
                                 <option value="" disabled selected>Select Payment Type</option>
-                                @foreach(['Upi', 'NetBanking', 'Cash'] as $status)
+                                @foreach(['Upi', 'NetBanking', 'Cash', 'Card'] as $status)
                                 <option value="{{ $status }}">{{ $status }}</option>
                                 @endforeach
                             </select>
@@ -299,6 +299,8 @@
                                 <img src="<?= asset('assets/img/payment/upi.png') ?>" alt="Cash" style="height: 30px;">
                                 @elseif($order->payment_type == "NetBanking")
                                 <img src="<?= asset('assets/img/payment/net_banking.png') ?>" alt="Cash" style="height: 32px;">
+                                @elseif($order->payment_type == "Card")
+                                <img src="<?= asset('assets/img/payment/card.jpeg') ?>" alt="Cash" style="height: 50px;">
                                 @else
                                 <img src="<?= asset('assets/img/payment/pending.jpg') ?>" alt="Cash" style="height: 40px;">
                                 @endif
