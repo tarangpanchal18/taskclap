@@ -360,11 +360,13 @@ class CartController extends Controller
             $discount_type = $getPromo[0]['discount_type'];
             $value = $discount = $getPromo[0]['value'];
 
-            if ($discount_type  != "Flat") {
+            if ($discount_type  == "Percentage") {
                 $discount = (($totalAmount * $value) / 100);
+            } else {
+                $discount = $value;
             }
         }
 
-        return $discount;
+        return number_format($discount, 2);
     }
 }
