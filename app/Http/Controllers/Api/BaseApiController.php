@@ -39,8 +39,8 @@ class BaseApiController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data'    => $data,
             'message' => $message,
+            'data'    => $data,
         ], self::HTTP_OK);
     }
 

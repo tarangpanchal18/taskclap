@@ -15,7 +15,6 @@ class HomeApiController extends BaseApiController
 
     public function getHomeData()
     {
-        $authUser = auth('sanctum')->user();
         $fieldToGet =  ['id', 'slug', 'name', 'description', 'image'];
         $urlPrefix = asset('storage' . DIRECTORY_SEPARATOR  . Category::UPLOAD_PATH . DIRECTORY_SEPARATOR );
 
@@ -31,9 +30,6 @@ class HomeApiController extends BaseApiController
             return $category->children->count() == 0;
         });
         $returnArr['category'] = array_values($categories->toArray());
-        if ($authUser) {
-            $returnArr['user'] = $authUser;
-        }
 
         return $this->sendSuccessResponse('Data listed successfully!', $returnArr);
     }

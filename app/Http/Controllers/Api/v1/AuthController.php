@@ -60,6 +60,5 @@ class AuthController extends BaseApiController
         $user->tokens()->delete();
 
         return $this->sendSuccessResponse('User Logged out successfully.');
-
     }
 }
