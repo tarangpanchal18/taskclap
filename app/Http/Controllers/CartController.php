@@ -308,7 +308,25 @@ class CartController extends Controller
             'comment' => $validated['comment'],
         ];
 
-        return ($this->ratingRepository->create($rating)) ? true : false;
+        $addRating = $this->ratingRepository->create($rating);
+        if (! $addRating) return false;
+
+        $getCurrentAverage = $this->ratingRepository->getRaw()
+        ->select(\DB::raw('AVG(rating) as average'))
+        ->where([
+            'product_id' => $orderDetail->product_id,
+            'status' => 'Active'
+        ])
+        ->get();
+
+        $this->productRepository->update(
+            $orderDetail->product_id,
+            [
+                'rating' => $this->roundToHalf($getCurrentAverage[0]->average)
+            ]
+        );
+
+        return true;
     }
 
     public function applyPromocode(Request $request)
